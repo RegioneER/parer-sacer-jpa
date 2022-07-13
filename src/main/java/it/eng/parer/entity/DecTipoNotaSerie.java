@@ -1,0 +1,134 @@
+package it.eng.parer.entity;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.List;
+
+/**
+ * The persistent class for the DEC_TIPO_NOTA_SERIE database table.
+ * 
+ */
+@Entity
+@Table(name = "DEC_TIPO_NOTA_SERIE")
+@NamedQuery(name = "DecTipoNotaSerie.findAll", query = "SELECT d FROM DecTipoNotaSerie d")
+public class DecTipoNotaSerie implements Serializable {
+    private static final long serialVersionUID = 1L;
+    private long idTipoNotaSerie;
+    private String cdTipoNotaSerie;
+    private String dsTipoNotaSerie;
+    private String flMolt;
+    private String flObblig;
+    private BigDecimal niOrd;
+    private List<DecNotaTipoSerie> decNotaTipoSeries;
+    private List<SerNotaVerSerie> serNotaVerSeries;
+
+    public DecTipoNotaSerie() {
+    }
+
+    @Id
+    @SequenceGenerator(name = "DEC_TIPO_NOTA_SERIE_IDTIPONOTASERIE_GENERATOR", sequenceName = "SDEC_TIPO_NOTA_SERIE", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DEC_TIPO_NOTA_SERIE_IDTIPONOTASERIE_GENERATOR")
+    @Column(name = "ID_TIPO_NOTA_SERIE")
+    public long getIdTipoNotaSerie() {
+        return this.idTipoNotaSerie;
+    }
+
+    public void setIdTipoNotaSerie(long idTipoNotaSerie) {
+        this.idTipoNotaSerie = idTipoNotaSerie;
+    }
+
+    @Column(name = "CD_TIPO_NOTA_SERIE")
+    public String getCdTipoNotaSerie() {
+        return this.cdTipoNotaSerie;
+    }
+
+    public void setCdTipoNotaSerie(String cdTipoNotaSerie) {
+        this.cdTipoNotaSerie = cdTipoNotaSerie;
+    }
+
+    @Column(name = "DS_TIPO_NOTA_SERIE")
+    public String getDsTipoNotaSerie() {
+        return this.dsTipoNotaSerie;
+    }
+
+    public void setDsTipoNotaSerie(String dsTipoNotaSerie) {
+        this.dsTipoNotaSerie = dsTipoNotaSerie;
+    }
+
+    @Column(name = "FL_MOLT")
+    public String getFlMolt() {
+        return this.flMolt;
+    }
+
+    public void setFlMolt(String flMolt) {
+        this.flMolt = flMolt;
+    }
+
+    @Column(name = "FL_OBBLIG")
+    public String getFlObblig() {
+        return this.flObblig;
+    }
+
+    public void setFlObblig(String flObblig) {
+        this.flObblig = flObblig;
+    }
+
+    @Column(name = "NI_ORD")
+    public BigDecimal getNiOrd() {
+        return this.niOrd;
+    }
+
+    public void setNiOrd(BigDecimal niOrd) {
+        this.niOrd = niOrd;
+    }
+
+    // bi-directional many-to-one association to DecNotaTipoSerie
+    @OneToMany(mappedBy = "decTipoNotaSerie")
+    public List<DecNotaTipoSerie> getDecNotaTipoSeries() {
+        return this.decNotaTipoSeries;
+    }
+
+    public void setDecNotaTipoSeries(List<DecNotaTipoSerie> decNotaTipoSeries) {
+        this.decNotaTipoSeries = decNotaTipoSeries;
+    }
+
+    public DecNotaTipoSerie addDecNotaTipoSery(DecNotaTipoSerie decNotaTipoSery) {
+        getDecNotaTipoSeries().add(decNotaTipoSery);
+        decNotaTipoSery.setDecTipoNotaSerie(this);
+
+        return decNotaTipoSery;
+    }
+
+    public DecNotaTipoSerie removeDecNotaTipoSery(DecNotaTipoSerie decNotaTipoSery) {
+        getDecNotaTipoSeries().remove(decNotaTipoSery);
+        decNotaTipoSery.setDecTipoNotaSerie(null);
+
+        return decNotaTipoSery;
+    }
+
+    // bi-directional many-to-one association to SerNotaVerSerie
+    @OneToMany(mappedBy = "decTipoNotaSerie")
+    public List<SerNotaVerSerie> getSerNotaVerSeries() {
+        return this.serNotaVerSeries;
+    }
+
+    public void setSerNotaVerSeries(List<SerNotaVerSerie> serNotaVerSeries) {
+        this.serNotaVerSeries = serNotaVerSeries;
+    }
+
+    public SerNotaVerSerie addSerNotaVerSery(SerNotaVerSerie serNotaVerSery) {
+        getSerNotaVerSeries().add(serNotaVerSery);
+        serNotaVerSery.setDecTipoNotaSerie(this);
+
+        return serNotaVerSery;
+    }
+
+    public SerNotaVerSerie removeSerNotaVerSery(SerNotaVerSerie serNotaVerSery) {
+        getSerNotaVerSeries().remove(serNotaVerSery);
+        serNotaVerSery.setDecTipoNotaSerie(null);
+
+        return serNotaVerSery;
+    }
+
+}

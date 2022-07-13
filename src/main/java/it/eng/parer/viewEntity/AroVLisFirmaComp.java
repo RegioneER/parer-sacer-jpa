@@ -1,0 +1,163 @@
+package it.eng.parer.viewEntity;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.Date;
+
+/**
+ * The persistent class for the ARO_V_LIS_FIRMA_COMP database table.
+ * 
+ */
+@Entity
+@Table(name = "ARO_V_LIS_FIRMA_COMP")
+@NamedQuery(name = "AroVLisFirmaComp.findAll", query = "SELECT a FROM AroVLisFirmaComp a")
+public class AroVLisFirmaComp implements Serializable {
+    private static final long serialVersionUID = 1L;
+    private String cdFirmatario;
+    private String dsMsgEsitoVerifFirma;
+    private String dsMsgVerifFirmaDtVers;
+    private BigDecimal idCompDoc;
+    private BigDecimal idFirmaComp;
+    private String nmCognomeFirmatario;
+    private String nmFirmatario;
+    private BigDecimal pgFirma;
+    private String tiEsitoContrConforme;
+    private String tiEsitoVerifFirma;
+    private String tiEsitoVerifFirmaDtVers;
+    private String tiFormatoFirma;
+    private String tiRifTempUsato;
+    private Date tmRifTempUsato;
+
+    public AroVLisFirmaComp() {
+    }
+
+    @Column(name = "CD_FIRMATARIO")
+    public String getCdFirmatario() {
+        return this.cdFirmatario;
+    }
+
+    public void setCdFirmatario(String cdFirmatario) {
+        this.cdFirmatario = cdFirmatario;
+    }
+
+    @Column(name = "DS_MSG_ESITO_VERIF_FIRMA")
+    public String getDsMsgEsitoVerifFirma() {
+        return this.dsMsgEsitoVerifFirma;
+    }
+
+    public void setDsMsgEsitoVerifFirma(String dsMsgEsitoVerifFirma) {
+        this.dsMsgEsitoVerifFirma = dsMsgEsitoVerifFirma;
+    }
+
+    @Column(name = "DS_MSG_VERIF_FIRMA_DT_VERS")
+    public String getDsMsgVerifFirmaDtVers() {
+        return this.dsMsgVerifFirmaDtVers;
+    }
+
+    public void setDsMsgVerifFirmaDtVers(String dsMsgVerifFirmaDtVers) {
+        this.dsMsgVerifFirmaDtVers = dsMsgVerifFirmaDtVers;
+    }
+
+    @Column(name = "ID_COMP_DOC")
+    public BigDecimal getIdCompDoc() {
+        return this.idCompDoc;
+    }
+
+    public void setIdCompDoc(BigDecimal idCompDoc) {
+        this.idCompDoc = idCompDoc;
+    }
+
+    @Id
+    @Column(name = "ID_FIRMA_COMP")
+    public BigDecimal getIdFirmaComp() {
+        return this.idFirmaComp;
+    }
+
+    public void setIdFirmaComp(BigDecimal idFirmaComp) {
+        this.idFirmaComp = idFirmaComp;
+    }
+
+    @Column(name = "NM_COGNOME_FIRMATARIO")
+    public String getNmCognomeFirmatario() {
+        return this.nmCognomeFirmatario;
+    }
+
+    public void setNmCognomeFirmatario(String nmCognomeFirmatario) {
+        this.nmCognomeFirmatario = nmCognomeFirmatario;
+    }
+
+    @Column(name = "NM_FIRMATARIO")
+    public String getNmFirmatario() {
+        return this.nmFirmatario;
+    }
+
+    public void setNmFirmatario(String nmFirmatario) {
+        this.nmFirmatario = nmFirmatario;
+    }
+
+    @Column(name = "PG_FIRMA")
+    public BigDecimal getPgFirma() {
+        return this.pgFirma;
+    }
+
+    public void setPgFirma(BigDecimal pgFirma) {
+        this.pgFirma = pgFirma;
+    }
+
+    @Column(name = "TI_ESITO_CONTR_CONFORME")
+    public String getTiEsitoContrConforme() {
+        return this.tiEsitoContrConforme;
+    }
+
+    public void setTiEsitoContrConforme(String tiEsitoContrConforme) {
+        this.tiEsitoContrConforme = tiEsitoContrConforme;
+    }
+
+    @Column(name = "TI_ESITO_VERIF_FIRMA")
+    public String getTiEsitoVerifFirma() {
+        return this.tiEsitoVerifFirma;
+    }
+
+    public void setTiEsitoVerifFirma(String tiEsitoVerifFirma) {
+        this.tiEsitoVerifFirma = tiEsitoVerifFirma;
+    }
+
+    @Column(name = "TI_ESITO_VERIF_FIRMA_DT_VERS")
+    public String getTiEsitoVerifFirmaDtVers() {
+        return this.tiEsitoVerifFirmaDtVers;
+    }
+
+    public void setTiEsitoVerifFirmaDtVers(String tiEsitoVerifFirmaDtVers) {
+        this.tiEsitoVerifFirmaDtVers = tiEsitoVerifFirmaDtVers;
+    }
+
+    @Column(name = "TI_FORMATO_FIRMA")
+    public String getTiFormatoFirma() {
+        return this.tiFormatoFirma;
+    }
+
+    public void setTiFormatoFirma(String tiFormatoFirma) {
+        this.tiFormatoFirma = tiFormatoFirma;
+    }
+
+    @Column(name = "TI_RIF_TEMP_USATO")
+    public String getTiRifTempUsato() {
+        return this.tiRifTempUsato;
+    }
+
+    public void setTiRifTempUsato(String tiRifTempUsato) {
+        this.tiRifTempUsato = tiRifTempUsato;
+    }
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "TM_RIF_TEMP_USATO")
+    public Date getTmRifTempUsato() {
+        return this.tmRifTempUsato;
+    }
+
+    public void setTmRifTempUsato(Date tmRifTempUsato) {
+        this.tmRifTempUsato = tmRifTempUsato;
+    }
+
+}
