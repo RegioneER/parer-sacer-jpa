@@ -21,16 +21,16 @@
             <id>github</id>
             <url>https://maven.pkg.github.com/RegioneER/parer.sacer.parent</url>            
         </repository>
-		<repository>
-			<id>central</id>
-			<url>https://repo1.maven.org/maven2</url>
-		</repository>              
+        <repository>
+            <id>eclipselink</id>
+            <url>https://maven.pkg.github.com/RegioneER/parer.sacer.parent</url>
+        </repository>		            
 	</repositories>
     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
          <!-- spagofat bom -->
-        <spagofat.version>4.1.25</spagofat.version>
+        <spagofat.version>4.1.26</spagofat.version>
     </properties>
 
     <dependencyManagement>
