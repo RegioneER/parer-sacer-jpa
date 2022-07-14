@@ -20,11 +20,7 @@
         <repository>
             <id>github</id>
             <url>https://maven.pkg.github.com/RegioneER/parer.sacer.parent</url>            
-        </repository>
-        <repository>
-            <id>eclipselink</id>
-            <url>https://maven.pkg.github.com/RegioneER/parer.sacer.parent</url>
-        </repository>		            
+        </repository>        	            
 	</repositories>
     
     <properties>
