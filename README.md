@@ -11,7 +11,7 @@ La compilazione del progetto maven, necessita della configurazione di un apposit
 	  <id>github</id>
 	  <name>GitHub eclipselink</name>
 	  <url>https://maven.pkg.github.com/RegioneER/parer.sacer.parent</url>
-	  <mirrorOf>eclipselink</mirrorOf>
+	  <mirrorOf>*,!central,!pentaho</mirrorOf>
    </mirror>
 ```
 
