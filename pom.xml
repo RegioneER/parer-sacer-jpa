@@ -7,13 +7,13 @@
     </parent>
     <groupId>it.eng.parer</groupId>
     <artifactId>sacer-jpa-el</artifactId>
-    <version>1.5.2-SNAPSHOT</version>
+    <version>1.5.1</version>
     <name>sacer-jpa</name>
     <description>Progetto SACER-JPA. Strato jpa comune ai progetti sacer e sacerws.</description>
     
     <scm>
         <developerConnection>scm:git:https://github.com/RegioneER/parer.sacer.jpa.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>sacer-jpa-el-1.5.1</tag>
     </scm>
 
     <repositories>
