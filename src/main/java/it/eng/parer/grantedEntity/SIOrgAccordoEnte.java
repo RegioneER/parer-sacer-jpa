@@ -43,6 +43,7 @@ public class SIOrgAccordoEnte implements Serializable {
     private SIOrgEnteSiam orgEnteSiamByIdEnteConvenzAmministratore;
     private SIOrgEnteSiam orgEnteSiamByIdEnteConvenzConserv;
     private SIOrgEnteSiam orgEnteSiamByIdEnteConvenzGestore;
+    private SIOrgTipoAccordo siOrgTipoAccordo;
 
     public SIOrgAccordoEnte() {
     }
@@ -315,6 +316,17 @@ public class SIOrgAccordoEnte implements Serializable {
 
     public void setSiOrgEnteConvenz(SIOrgEnteSiam siOrgEnteConvenz) {
         this.siOrgEnteConvenz = siOrgEnteConvenz;
+    }
+
+    // bi-directional many-to-one association to OrgTipoAccordo
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_TIPO_ACCORDO")
+    public SIOrgTipoAccordo getSIOrgTipoAccordo() {
+        return this.siOrgTipoAccordo;
+    }
+
+    public void setSIOrgTipoAccordo(SIOrgTipoAccordo siOrgTipoAccordo) {
+        this.siOrgTipoAccordo = siOrgTipoAccordo;
     }
 
     // bi-directional many-to-one association to OrgEnteSiam
