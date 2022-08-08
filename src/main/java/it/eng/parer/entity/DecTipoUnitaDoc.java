@@ -497,6 +497,7 @@ public class DecTipoUnitaDoc implements Serializable {
 
     // bi-directional many-to-one association to DecTipoRapprAmmesso
     @OneToMany(mappedBy = "decTipoUnitaDoc", cascade = CascadeType.PERSIST)
+    @XmlTransient
     public List<DecUsoModelloXsdUniDoc> getDecUsoModelloXsdUniDocs() {
         return this.decUsoModelloXsdUniDocs;
     }

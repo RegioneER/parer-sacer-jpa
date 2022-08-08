@@ -31,6 +31,7 @@ public class AroVRicUnitaDoc implements Serializable {
     private Date dtRegUnitaDoc;
     private String flDocAggiunti;
     private String flDocAnnul;
+    private String flEsisteProfiloNormativo;
     private String flForzaAccettazione;
     private String flForzaCollegamento;
     private String flForzaConservazione;
@@ -85,6 +86,34 @@ public class AroVRicUnitaDoc implements Serializable {
         this.nmTipoDocPrinc = nmTipoDocPrinc;
         this.dsListaStatiElencoVers = dsListaStatiElencoVers;
         this.tiStatoConservazione = tiStatoConservazione;
+    }
+
+    public AroVRicUnitaDoc(BigDecimal idUnitaDoc, BigDecimal aaKeyUnitaDoc, String cdKeyUnitaDoc,
+            String cdRegistroKeyUnitaDoc, Date dtCreazione, Date dtRegUnitaDoc, String flUnitaDocFirmato,
+            String tiEsitoVerifFirme, String dsMsgEsitoVerifFirme, String nmTipoUnitaDoc, String flForzaAccettazione,
+            String flForzaConservazione, String dsKeyOrd, BigDecimal niAlleg, BigDecimal niAnnessi, BigDecimal niAnnot,
+            String nmTipoDocPrinc, String dsListaStatiElencoVers, String tiStatoConservazione,
+            String flEsisteProfiloNormativo) {
+        this.idUnitaDoc = idUnitaDoc;
+        this.aaKeyUnitaDoc = aaKeyUnitaDoc;
+        this.cdKeyUnitaDoc = cdKeyUnitaDoc;
+        this.cdRegistroKeyUnitaDoc = cdRegistroKeyUnitaDoc;
+        this.dtCreazione = dtCreazione;
+        this.dtRegUnitaDoc = dtRegUnitaDoc;
+        this.flUnitaDocFirmato = flUnitaDocFirmato;
+        this.tiEsitoVerifFirme = tiEsitoVerifFirme;
+        this.dsMsgEsitoVerifFirme = dsMsgEsitoVerifFirme;
+        this.nmTipoUnitaDoc = nmTipoUnitaDoc;
+        this.flForzaAccettazione = flForzaAccettazione;
+        this.flForzaConservazione = flForzaConservazione;
+        this.dsKeyOrd = dsKeyOrd;
+        this.niAlleg = niAlleg;
+        this.niAnnessi = niAnnessi;
+        this.niAnnot = niAnnot;
+        this.nmTipoDocPrinc = nmTipoDocPrinc;
+        this.dsListaStatiElencoVers = dsListaStatiElencoVers;
+        this.tiStatoConservazione = tiStatoConservazione;
+        this.flEsisteProfiloNormativo = flEsisteProfiloNormativo;
     }
 
     @Column(name = "AA_KEY_UNITA_DOC")
@@ -231,6 +260,15 @@ public class AroVRicUnitaDoc implements Serializable {
 
     public void setFlDocAnnul(String flDocAnnul) {
         this.flDocAnnul = flDocAnnul;
+    }
+
+    @Column(name = "FL_ESISTE_PROFILO_NORMATIVO")
+    public String getFlEsisteProfiloNormativo() {
+        return this.flEsisteProfiloNormativo;
+    }
+
+    public void setFlEsisteProfiloNormativo(String flEsisteProfiloNormativo) {
+        this.flEsisteProfiloNormativo = flEsisteProfiloNormativo;
     }
 
     @Column(name = "FL_FORZA_ACCETTAZIONE")
