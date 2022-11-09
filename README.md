@@ -1,4 +1,4 @@
-# SACER PA
+# SACER JPA
 
 Questo progetto contiene lo "strato" JPA del progetto SACER, composto dall'insieme di tutti gli entity bean relativi alle tabelle e viste definite sul database. Lo strato JPA era un modulo del progetto sacer che ora è stato scorporato.
 
