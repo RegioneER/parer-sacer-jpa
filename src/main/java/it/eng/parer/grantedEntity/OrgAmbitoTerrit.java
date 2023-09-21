@@ -1,37 +1,65 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.grantedEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlTransient;
-import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 
 /**
  * The persistent class for the ORG_AMBITO_TERRIT database table.
- * 
  */
 @Entity
-@Table(name = "SACER_IAM.ORG_AMBITO_TERRIT")
+@Table(schema = "SACER_IAM", name = "ORG_AMBITO_TERRIT")
 public class OrgAmbitoTerrit implements Serializable {
-    private static final long serialVersionUID = 1L;
-    private long idAmbitoTerrit;
-    private String cdAmbitoTerrit;
-    private String tiAmbitoTerrit;
-    private OrgAmbitoTerrit orgAmbitoTerrit;
-    private List<OrgAmbitoTerrit> orgAmbitoTerrits;
 
-    public OrgAmbitoTerrit() {
+    private static final long serialVersionUID = 1L;
+
+    private Long idAmbitoTerrit;
+
+    private String cdAmbitoTerrit;
+
+    private String tiAmbitoTerrit;
+
+    private OrgAmbitoTerrit orgAmbitoTerrit;
+
+    private List<OrgAmbitoTerrit> orgAmbitoTerrits = new ArrayList<>();
+
+    public OrgAmbitoTerrit() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "ORG_AMBITO_TERRIT_IDAMBITOTERRIT_GENERATOR", sequenceName = "SORG_AMBITO_TERRIT", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ORG_AMBITO_TERRIT_IDAMBITOTERRIT_GENERATOR")
     @Column(name = "ID_AMBITO_TERRIT")
-    public long getIdAmbitoTerrit() {
+    public Long getIdAmbitoTerrit() {
         return this.idAmbitoTerrit;
     }
 
-    public void setIdAmbitoTerrit(long idAmbitoTerrit) {
+    public void setIdAmbitoTerrit(Long idAmbitoTerrit) {
         this.idAmbitoTerrit = idAmbitoTerrit;
     }
 
@@ -74,5 +102,4 @@ public class OrgAmbitoTerrit implements Serializable {
     public void setOrgAmbitoTerrits(List<OrgAmbitoTerrit> orgAmbitoTerrits) {
         this.orgAmbitoTerrits = orgAmbitoTerrits;
     }
-
 }

@@ -1,14 +1,41 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
-import it.eng.parer.entity.DecVoceTitol;
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import it.eng.parer.entity.DecVoceTitol;
+
 /**
  * The persistent class for the ELV_V_RIC_ELENCO_FASC_BY_FAS database table.
- *
  */
 @Entity
 @Table(name = "ELV_V_RIC_ELENCO_FASC_BY_FAS")
@@ -16,36 +43,60 @@ import java.util.Date;
 public class ElvVRicElencoFascByFas implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     private BigDecimal aaFascicoloElenco;
+
     private String cdKeyFascicolo;
+
     private Date dtChiusura;
+
     private Date tsCreazioneElenco;
+
     private Date dtFirma;
+
     private String dlMotivoChius;
+
     private String flElencoStandard;
+
     private BigDecimal idAmbiente;
+
     private BigDecimal idCriterioRaggrFasc;
-    private BigDecimal idElencoVersFasc;
+
     private BigDecimal idTipoFascicolo;
+
     private DecVoceTitol decVoceTitol;
+
     private BigDecimal idEnte;
+
     private BigDecimal idStrut;
-    private BigDecimal idFascicolo;
+
     private BigDecimal idUserIam;
+
     private BigDecimal aaFascicolo;
+
     private BigDecimal niFascVersElenco;
+
     private String nmAmbiente;
+
     private String nmCriterioRaggr;
+
     private String nmEnte;
+
     private String nmStrut;
+
     private String ntElencoChiuso;
+
     private String ntIndiceElenco;
+
     private String tiStato;
+
     private String cdVoceTitol;
+
     private String nmTipoFascicolo;
+
     private BigDecimal idStatoElencoVersFascCor;
 
-    public ElvVRicElencoFascByFas() {
+    public ElvVRicElencoFascByFas() {/* Hibernate */
     }
 
     public ElvVRicElencoFascByFas(BigDecimal idElencoVersFasc, String tiStato, BigDecimal aaFascicoloElenco,
@@ -53,7 +104,8 @@ public class ElvVRicElencoFascByFas implements Serializable {
             BigDecimal idCriterioRaggrFasc, String nmCriterioRaggr, String ntElencoChiuso, String ntIndiceElenco,
             String nmAmbiente, String nmEnte, String nmStrut, String flElencoStandard, String cdVoceTitol,
             String nmTipoFascicolo) {
-        this.idElencoVersFasc = idElencoVersFasc;
+        this.elvVRicElencoFascByFasId = new ElvVRicElencoFascByFasId();
+        this.elvVRicElencoFascByFasId.setIdElencoVersFasc(idElencoVersFasc);
         this.tiStato = tiStato;
         this.aaFascicoloElenco = aaFascicoloElenco;
         this.niFascVersElenco = niFascVersElenco;
@@ -130,7 +182,7 @@ public class ElvVRicElencoFascByFas implements Serializable {
         this.dlMotivoChius = dlMotivoChius;
     }
 
-    @Column(name = "FL_ELENCO_STANDARD")
+    @Column(name = "FL_ELENCO_STANDARD", columnDefinition = "char(1)")
     public String getFlElencoStandard() {
         return this.flElencoStandard;
     }
@@ -155,16 +207,6 @@ public class ElvVRicElencoFascByFas implements Serializable {
 
     public void setIdCriterioRaggrFasc(BigDecimal idCriterioRaggrFasc) {
         this.idCriterioRaggrFasc = idCriterioRaggrFasc;
-    }
-
-    @Id
-    @Column(name = "ID_ELENCO_VERS_FASC")
-    public BigDecimal getIdElencoVersFasc() {
-        return this.idElencoVersFasc;
-    }
-
-    public void setIdElencoVersFasc(BigDecimal idElencoVersFasc) {
-        this.idElencoVersFasc = idElencoVersFasc;
     }
 
     @Column(name = "ID_TIPO_FASCICOLO")
@@ -203,16 +245,6 @@ public class ElvVRicElencoFascByFas implements Serializable {
 
     public void setIdStrut(BigDecimal idStrut) {
         this.idStrut = idStrut;
-    }
-
-    @Id
-    @Column(name = "ID_FASCICOLO")
-    public BigDecimal getIdFascicolo() {
-        return this.idFascicolo;
-    }
-
-    public void setIdFascicolo(BigDecimal idFascicolo) {
-        this.idFascicolo = idFascicolo;
     }
 
     @Column(name = "ID_USER_IAM")
@@ -330,5 +362,16 @@ public class ElvVRicElencoFascByFas implements Serializable {
 
     public void setIdStatoElencoVersFascCor(BigDecimal idStatoElencoVersFascCor) {
         this.idStatoElencoVersFascCor = idStatoElencoVersFascCor;
+    }
+
+    private ElvVRicElencoFascByFasId elvVRicElencoFascByFasId;
+
+    @EmbeddedId()
+    public ElvVRicElencoFascByFasId getElvVRicElencoFascByFasId() {
+        return elvVRicElencoFascByFasId;
+    }
+
+    public void setElvVRicElencoFascByFasId(ElvVRicElencoFascByFasId elvVRicElencoFascByFasId) {
+        this.elvVRicElencoFascByFasId = elvVRicElencoFascByFasId;
     }
 }

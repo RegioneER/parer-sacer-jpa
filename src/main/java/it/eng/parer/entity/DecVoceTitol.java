@@ -1,3 +1,20 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
@@ -5,6 +22,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,46 +33,65 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
+
 /**
  * The persistent class for the DEC_VOCE_TITOL database table.
- * 
  */
 @Entity
 @Table(name = "DEC_VOCE_TITOL")
 public class DecVoceTitol implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    private long idVoceTitol;
+
+    private Long idVoceTitol;
+
     private String cdCompositoVoceTitol;
+
     private String cdVoceTitol;
+
     private Date dtIstituz;
+
     private Date dtSoppres;
+
     private BigDecimal niFascic;
+
     private BigDecimal niFascicVociFiglie;
+
     private BigDecimal niOrdVoceTitol;
     private List<DecValVoceTitol> decValVoceTitols = new ArrayList<DecValVoceTitol>();
     private DecLivelloTitol decLivelloTitol;
+
     private DecTitol decTitol;
+
     private DecVoceTitol decVoceTitol;
     private List<DecVoceTitol> decVoceTitols = new ArrayList<DecVoceTitol>();
     private List<OrgOperVoceTitol> orgOperVoceTitols = new ArrayList<OrgOperVoceTitol>();
 
-    public DecVoceTitol() {
+    public DecVoceTitol() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "DEC_VOCE_TITOL_IDVOCETITOL_GENERATOR", sequenceName = "SDEC_VOCE_TITOL", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DEC_VOCE_TITOL_IDVOCETITOL_GENERATOR")
+    // "DEC_VOCE_TITOL_IDVOCETITOL_GENERATOR",
+    // sequenceName = "SDEC_VOCE_TITOL", allocationSize
+    // = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DEC_VOCE_TITOL_IDVOCETITOL_GENERATOR")
     @Column(name = "ID_VOCE_TITOL")
-    public long getIdVoceTitol() {
+    @GenericGenerator(name = "SDEC_VOCE_TITOL_ID_VOCE_TITOL_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SDEC_VOCE_TITOL"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SDEC_VOCE_TITOL_ID_VOCE_TITOL_GENERATOR")
+    public Long getIdVoceTitol() {
         return this.idVoceTitol;
     }
 
-    public void setIdVoceTitol(long idVoceTitol) {
+    public void setIdVoceTitol(Long idVoceTitol) {
         this.idVoceTitol = idVoceTitol;
     }
 
@@ -136,14 +173,12 @@ public class DecVoceTitol implements Serializable {
     public DecValVoceTitol addDecValVoceTitol(DecValVoceTitol decValVoceTitol) {
         getDecValVoceTitols().add(decValVoceTitol);
         decValVoceTitol.setDecVoceTitol(this);
-
         return decValVoceTitol;
     }
 
     public DecValVoceTitol removeDecValVoceTitol(DecValVoceTitol decValVoceTitol) {
         getDecValVoceTitols().remove(decValVoceTitol);
         decValVoceTitol.setDecVoceTitol(null);
-
         return decValVoceTitol;
     }
 
@@ -193,14 +228,12 @@ public class DecVoceTitol implements Serializable {
     public DecVoceTitol addDecVoceTitol(DecVoceTitol decVoceTitol) {
         getDecVoceTitols().add(decVoceTitol);
         decVoceTitol.setDecVoceTitol(this);
-
         return decVoceTitol;
     }
 
     public DecVoceTitol removeDecVoceTitol(DecVoceTitol decVoceTitol) {
         getDecVoceTitols().remove(decVoceTitol);
         decVoceTitol.setDecVoceTitol(null);
-
         return decVoceTitol;
     }
 
@@ -217,14 +250,12 @@ public class DecVoceTitol implements Serializable {
     public OrgOperVoceTitol addOrgOperVoceTitol(OrgOperVoceTitol orgOperVoceTitol) {
         getOrgOperVoceTitols().add(orgOperVoceTitol);
         orgOperVoceTitol.setDecVoceTitol(this);
-
         return orgOperVoceTitol;
     }
 
     public OrgOperVoceTitol removeOrgOperVoceTitol(OrgOperVoceTitol orgOperVoceTitol) {
         getOrgOperVoceTitols().remove(orgOperVoceTitol);
         orgOperVoceTitol.setDecVoceTitol(null);
-
         return orgOperVoceTitol;
     }
 

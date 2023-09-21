@@ -1,16 +1,40 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.grantedViewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the ORG_V_RIC_ENTE_CONVENZ_BY_ESTERNO database table.
  *
  */
 @Entity
-@Table(name = "SACER_IAM.ORG_V_RIC_ENTE_CONVENZ_BY_EST")
+@Table(schema = "SACER_IAM", name = "ORG_V_RIC_ENTE_CONVENZ_BY_EST")
 @NamedQuery(name = "OrgVRicEnteConvenzByEsterno.findAll", query = "SELECT o FROM OrgVRicEnteConvenzByEsterno o")
 public class OrgVRicEnteConvenzByEsterno implements Serializable {
 
@@ -28,13 +52,22 @@ public class OrgVRicEnteConvenzByEsterno implements Serializable {
     private BigDecimal idAmbitoTerrit;
     private BigDecimal idCategEnte;
     private BigDecimal idEnteConserv;
-    private BigDecimal idEnteConvenz;
     private BigDecimal idEnteGestore;
-    private BigDecimal idUserIamCor;
     private String nmEnteConvenz;
     private String tiEnteConvenz;
+    private OrgVRicEnteConvenzByEsternoId id;
 
     public OrgVRicEnteConvenzByEsterno() {
+        // hibernate
+    }
+
+    @EmbeddedId
+    public OrgVRicEnteConvenzByEsternoId getId() {
+        return id;
+    }
+
+    public void setId(OrgVRicEnteConvenzByEsternoId id) {
+        this.id = id;
     }
 
     @Temporal(TemporalType.DATE)
@@ -87,7 +120,7 @@ public class OrgVRicEnteConvenzByEsterno implements Serializable {
         this.dtFineValidAccordo = dtFineValidAccordo;
     }
 
-    @Column(name = "ENTE_ATTIVO")
+    @Column(name = "ENTE_ATTIVO", columnDefinition = "char")
     public String getEnteAttivo() {
         return this.enteAttivo;
     }
@@ -96,7 +129,7 @@ public class OrgVRicEnteConvenzByEsterno implements Serializable {
         this.enteAttivo = enteAttivo;
     }
 
-    @Column(name = "FL_IN_CORSO_CONVENZ")
+    @Column(name = "FL_IN_CORSO_CONVENZ", columnDefinition = "char(1)")
     public String getFlInCorsoConvenz() {
         return this.flInCorsoConvenz;
     }
@@ -105,7 +138,7 @@ public class OrgVRicEnteConvenzByEsterno implements Serializable {
         this.flInCorsoConvenz = flInCorsoConvenz;
     }
 
-    @Column(name = "FL_NON_CONVENZ")
+    @Column(name = "FL_NON_CONVENZ", columnDefinition = "char(1)")
     public String getFlNonConvenz() {
         return this.flNonConvenz;
     }
@@ -114,7 +147,7 @@ public class OrgVRicEnteConvenzByEsterno implements Serializable {
         this.flNonConvenz = flNonConvenz;
     }
 
-    @Column(name = "FL_RECESSO")
+    @Column(name = "FL_RECESSO", columnDefinition = "char(1)")
     public String getFlRecesso() {
         return this.flRecesso;
     }
@@ -159,16 +192,6 @@ public class OrgVRicEnteConvenzByEsterno implements Serializable {
         this.idEnteConserv = idEnteConserv;
     }
 
-    @Id
-    @Column(name = "ID_ENTE_CONVENZ")
-    public BigDecimal getIdEnteConvenz() {
-        return this.idEnteConvenz;
-    }
-
-    public void setIdEnteConvenz(BigDecimal idEnteConvenz) {
-        this.idEnteConvenz = idEnteConvenz;
-    }
-
     @Column(name = "ID_ENTE_GESTORE")
     public BigDecimal getIdEnteGestore() {
         return this.idEnteGestore;
@@ -176,15 +199,6 @@ public class OrgVRicEnteConvenzByEsterno implements Serializable {
 
     public void setIdEnteGestore(BigDecimal idEnteGestore) {
         this.idEnteGestore = idEnteGestore;
-    }
-
-    @Column(name = "ID_USER_IAM_COR")
-    public BigDecimal getIdUserIamCor() {
-        return this.idUserIamCor;
-    }
-
-    public void setIdUserIamCor(BigDecimal idUserIamCor) {
-        this.idUserIamCor = idUserIamCor;
     }
 
     @Column(name = "NM_ENTE_CONVENZ")

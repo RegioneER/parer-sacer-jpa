@@ -1,9 +1,33 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the SER_V_RIC_SERIE_UD database table.
@@ -52,7 +76,7 @@ public class SerVRicSerieUd implements Serializable {
     private String tiStatoSerie;
     private String tiStatoVerSerie;
 
-    public SerVRicSerieUd() {
+    public SerVRicSerieUd() {/* Hibernate */
     }
 
     @Column(name = "AA_SERIE")
@@ -120,7 +144,7 @@ public class SerVRicSerieUd implements Serializable {
         this.dtInizioSelSerie = dtInizioSelSerie;
     }
 
-    @Column(name = "FL_DA_RIGENERA")
+    @Column(name = "FL_DA_RIGENERA", columnDefinition = "char(1)")
     public String getFlDaRigenera() {
         return this.flDaRigenera;
     }
@@ -129,7 +153,7 @@ public class SerVRicSerieUd implements Serializable {
         this.flDaRigenera = flDaRigenera;
     }
 
-    @Column(name = "FL_ERR_CONTENUTO_ACQ")
+    @Column(name = "FL_ERR_CONTENUTO_ACQ", columnDefinition = "char(1)")
     public String getFlErrContenutoAcq() {
         return this.flErrContenutoAcq;
     }
@@ -138,7 +162,7 @@ public class SerVRicSerieUd implements Serializable {
         this.flErrContenutoAcq = flErrContenutoAcq;
     }
 
-    @Column(name = "FL_ERR_CONTENUTO_CALC")
+    @Column(name = "FL_ERR_CONTENUTO_CALC", columnDefinition = "char(1)")
     public String getFlErrContenutoCalc() {
         return this.flErrContenutoCalc;
     }
@@ -147,7 +171,7 @@ public class SerVRicSerieUd implements Serializable {
         this.flErrContenutoCalc = flErrContenutoCalc;
     }
 
-    @Column(name = "FL_ERR_CONTENUTO_EFF")
+    @Column(name = "FL_ERR_CONTENUTO_EFF", columnDefinition = "char(1)")
     public String getFlErrContenutoEff() {
         return this.flErrContenutoEff;
     }
@@ -156,7 +180,7 @@ public class SerVRicSerieUd implements Serializable {
         this.flErrContenutoEff = flErrContenutoEff;
     }
 
-    @Column(name = "FL_ERR_CONTENUTO_FILE")
+    @Column(name = "FL_ERR_CONTENUTO_FILE", columnDefinition = "char(1)")
     public String getFlErrContenutoFile() {
         return this.flErrContenutoFile;
     }
@@ -165,7 +189,7 @@ public class SerVRicSerieUd implements Serializable {
         this.flErrContenutoFile = flErrContenutoFile;
     }
 
-    @Column(name = "FL_ERR_VALIDAZIONE")
+    @Column(name = "FL_ERR_VALIDAZIONE", columnDefinition = "char(1)")
     public String getFlErrValidazione() {
         return this.flErrValidazione;
     }
@@ -174,7 +198,7 @@ public class SerVRicSerieUd implements Serializable {
         this.flErrValidazione = flErrValidazione;
     }
 
-    @Column(name = "FL_PRESENZA_CONSIST_ATTESA")
+    @Column(name = "FL_PRESENZA_CONSIST_ATTESA", columnDefinition = "char(1)")
     public String getFlPresenzaConsistAttesa() {
         return this.flPresenzaConsistAttesa;
     }
@@ -183,7 +207,7 @@ public class SerVRicSerieUd implements Serializable {
         this.flPresenzaConsistAttesa = flPresenzaConsistAttesa;
     }
 
-    @Column(name = "FL_UPD_ANNUL_UNITA_DOC")
+    @Column(name = "FL_UPD_ANNUL_UNITA_DOC", columnDefinition = "char(1)")
     public String getFlUpdAnnulUnitaDoc() {
         return this.flUpdAnnulUnitaDoc;
     }

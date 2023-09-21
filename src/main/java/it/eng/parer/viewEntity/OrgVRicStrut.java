@@ -1,8 +1,30 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the ORG_V_RIC_STRUT database table.
@@ -26,9 +48,6 @@ public class OrgVRicStrut implements Serializable {
     private BigDecimal idCategEnte;
     private BigDecimal idEnte;
     private BigDecimal idEnteConvenz;
-    private BigDecimal idSistemaVersante;
-    private BigDecimal idStrut;
-    private BigDecimal idUserIamCor;
     private String nmAmbiente;
     private String nmAmbienteEnteConvenz;
     private String nmEnte;
@@ -36,8 +55,9 @@ public class OrgVRicStrut implements Serializable {
     private String nmSistemaVersante;
     private String nmStrut;
     private String tiAmbitoTerrit;
+    private OrgVRicStrutId orgVRicStrutId;
 
-    public OrgVRicStrut() {
+    public OrgVRicStrut() {/* Hibernate */
     }
 
     public OrgVRicStrut(BigDecimal idAmbiente, String nmAmbiente, BigDecimal idEnte, String nmEnte, BigDecimal idStrut,
@@ -48,7 +68,8 @@ public class OrgVRicStrut implements Serializable {
         this.nmAmbiente = nmAmbiente;
         this.idEnte = idEnte;
         this.nmEnte = nmEnte;
-        this.idStrut = idStrut;
+        this.orgVRicStrutId = new OrgVRicStrutId();
+        orgVRicStrutId.setIdStrut(idStrut);
         this.nmStrut = nmStrut;
         this.dsStrut = dsStrut;
         this.flTemplate = flTemplate;
@@ -97,7 +118,7 @@ public class OrgVRicStrut implements Serializable {
         this.dsTreeIdAmbitoTerrit = dsTreeIdAmbitoTerrit;
     }
 
-    @Column(name = "FL_PART_OK")
+    @Column(name = "FL_PART_OK", columnDefinition = "char(1)")
     public String getFlPartOk() {
         return this.flPartOk;
     }
@@ -106,7 +127,7 @@ public class OrgVRicStrut implements Serializable {
         this.flPartOk = flPartOk;
     }
 
-    @Column(name = "FL_TEMPLATE")
+    @Column(name = "FL_TEMPLATE", columnDefinition = "char(1)")
     public String getFlTemplate() {
         return this.flTemplate;
     }
@@ -149,36 +170,6 @@ public class OrgVRicStrut implements Serializable {
 
     public void setIdEnte(BigDecimal idEnte) {
         this.idEnte = idEnte;
-    }
-
-    @Id
-    @Column(name = "ID_SISTEMA_VERSANTE")
-    public BigDecimal getIdSistemaVersante() {
-        return this.idSistemaVersante;
-    }
-
-    public void setIdSistemaVersante(BigDecimal idSistemaVersante) {
-        this.idSistemaVersante = idSistemaVersante;
-    }
-
-    @Id
-    @Column(name = "ID_STRUT")
-    public BigDecimal getIdStrut() {
-        return this.idStrut;
-    }
-
-    public void setIdStrut(BigDecimal idStrut) {
-        this.idStrut = idStrut;
-    }
-
-    @Id
-    @Column(name = "ID_USER_IAM_COR")
-    public BigDecimal getIdUserIamCor() {
-        return this.idUserIamCor;
-    }
-
-    public void setIdUserIamCor(BigDecimal idUserIamCor) {
-        this.idUserIamCor = idUserIamCor;
     }
 
     @Column(name = "NM_AMBIENTE")
@@ -260,6 +251,15 @@ public class OrgVRicStrut implements Serializable {
 
     public void setNmEnteConvenz(String nmEnteConvenz) {
         this.nmEnteConvenz = nmEnteConvenz;
+    }
+
+    @EmbeddedId
+    public OrgVRicStrutId getOrgVRicStrutId() {
+        return orgVRicStrutId;
+    }
+
+    public void setOrgVRicStrutId(OrgVRicStrutId orgVRicStrutId) {
+        this.orgVRicStrutId = orgVRicStrutId;
     }
 
 }

@@ -1,13 +1,50 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-
-import javax.persistence.*;
-import it.eng.parer.entity.converter.NeverendingDateConverter;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
+
+import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
+
+import it.eng.parer.entity.converter.NeverendingDateConverter;
 
 /**
  * The persistent class for the FIR_CERTIF_CA database table.
@@ -19,32 +56,46 @@ import java.util.TimeZone;
 public class FirCertifCa implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idCertifCa;
-    private List<FirUrlDistribCrl> firUrlDistribCrls;
-    private List<FirUrlDistribOcsp> firUrlDistribOcsps;
+
+    private Long idCertifCa;
+
+    private List<FirUrlDistribCrl> firUrlDistribCrls = new ArrayList<>();
+
+    private List<FirUrlDistribOcsp> firUrlDistribOcsps = new ArrayList<>();
+
     private Date dtFinValCertifCa;
+
     private Date dtIniValCertifCa;
+
     private BigDecimal niSerialCertifCa;
-    private List<FirCertifFirmatario> firCertifFirmatarios;
-    private List<FirCrl> firCrls;
-    private List<FirCertifOcsp> firCertifOcsps;
+
+    private List<FirCertifFirmatario> firCertifFirmatarios = new ArrayList<>();
+
+    private List<FirCrl> firCrls = new ArrayList<>();
+
+    private List<FirCertifOcsp> firCertifOcsps = new ArrayList<>();
+
     private FirFilePerFirma firFilePerFirma;
+
     private String dsSubjectKeyId;
+
     private String dlDnIssuerCertifCa;
     private String dlDnSubjectCertifCa;
 
-    public FirCertifCa() {
+    public FirCertifCa() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "FIR_CERTIF_CA_IDCERTIFCA_GENERATOR", sequenceName = "SFIR_CERTIF_CA", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "FIR_CERTIF_CA_IDCERTIFCA_GENERATOR")
     @Column(name = "ID_CERTIF_CA")
-    public long getIdCertifCa() {
+    @GenericGenerator(name = "SFIR_CERTIF_CA_ID_CERTIF_CA_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SFIR_CERTIF_CA"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SFIR_CERTIF_CA_ID_CERTIF_CA_GENERATOR")
+    public Long getIdCertifCa() {
         return this.idCertifCa;
     }
 
-    public void setIdCertifCa(long idCertifCa) {
+    public void setIdCertifCa(Long idCertifCa) {
         this.idCertifCa = idCertifCa;
     }
 
@@ -181,6 +232,5 @@ public class FirCertifCa implements Serializable {
     void preUpdate() {
         this.dtFinValCertifCa = NeverendingDateConverter.verifyOverZoneId(this.dtFinValCertifCa,
                 TimeZone.getTimeZone("UTC").toZoneId());
-
     }
 }

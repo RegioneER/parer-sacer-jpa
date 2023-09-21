@@ -1,43 +1,94 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 /**
  * The persistent class for the VRS_XML_DATI_SESSIONE_VERS database table.
- *
  */
 @Entity
 @Table(name = "VRS_XML_DATI_SESSIONE_VERS")
 public class VrsXmlDatiSessioneVers implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    private long idXmlDatiSessioneVers;
+
+    private Long idXmlDatiSessioneVers;
+
     private String blXml;
+
     private String cdEncodingHashXmlVers;
+
     private String cdVersioneXml;
+
     private String dsAlgoHashXmlVers;
+
     private String dsHashXmlVers;
+
     private String dsUrnXmlVers;
+
     private BigDecimal idStrut;
+
     private String tiXmlDati;
     private String flCanonicalized;
     private VrsDatiSessioneVers vrsDatiSessioneVers;
-    private List<VrsUrnXmlSessioneVers> vrsUrnXmlSessioneVers;
+    private List<VrsUrnXmlSessioneVers> vrsUrnXmlSessioneVers = new ArrayList<>();
 
     public VrsXmlDatiSessioneVers() {
+        // hibernate
     }
 
     @Id
-    @SequenceGenerator(name = "VRS_XML_DATI_SESSIONE_VERS_IDXMLDATISESSIONEVERS_GENERATOR", sequenceName = "SVRS_XML_DATI_SESSIONE_VERS", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VRS_XML_DATI_SESSIONE_VERS_IDXMLDATISESSIONEVERS_GENERATOR")
+    // "VRS_XML_DATI_SESSIONE_VERS_IDXMLDATISESSIONEVERS_GENERATOR",
+    // sequenceName =
+    // "SVRS_XML_DATI_SESSIONE_VERS",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
+    // "VRS_XML_DATI_SESSIONE_VERS_IDXMLDATISESSIONEVERS_GENERATOR")
     @Column(name = "ID_XML_DATI_SESSIONE_VERS")
-    public long getIdXmlDatiSessioneVers() {
+    @GenericGenerator(name = "SVRS_XML_DATI_SESSIONE_VERS_ID_XML_DATI_SESSIONE_VERS_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SVRS_XML_DATI_SESSIONE_VERS"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SVRS_XML_DATI_SESSIONE_VERS_ID_XML_DATI_SESSIONE_VERS_GENERATOR")
+    public Long getIdXmlDatiSessioneVers() {
         return this.idXmlDatiSessioneVers;
     }
 
-    public void setIdXmlDatiSessioneVers(long idXmlDatiSessioneVers) {
+    public void setIdXmlDatiSessioneVers(Long idXmlDatiSessioneVers) {
         this.idXmlDatiSessioneVers = idXmlDatiSessioneVers;
     }
 
@@ -125,7 +176,7 @@ public class VrsXmlDatiSessioneVers implements Serializable {
         this.vrsDatiSessioneVers = vrsDatiSessioneVers;
     }
 
-    @Column(name = "FL_CANONICALIZED")
+    @Column(name = "FL_CANONICALIZED", columnDefinition = "CHAR")
     public String getFlCanonicalized() {
         return this.flCanonicalized;
     }
@@ -143,5 +194,4 @@ public class VrsXmlDatiSessioneVers implements Serializable {
     public void setVrsUrnXmlSessioneVers(List<VrsUrnXmlSessioneVers> vrsUrnXmlSessioneVers) {
         this.vrsUrnXmlSessioneVers = vrsUrnXmlSessioneVers;
     }
-
 }

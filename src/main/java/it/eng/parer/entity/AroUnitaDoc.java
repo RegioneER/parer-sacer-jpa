@@ -1,102 +1,213 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
+
 /**
  * The persistent class for the ARO_UNITA_DOC database table.
- *
  */
 @Entity
 @Table(name = "ARO_UNITA_DOC")
 public class AroUnitaDoc implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idUnitaDoc;
-    private BigDecimal aaKeyUnitaDoc;
-    private String cdFascicPrinc;
-    private String cdKeyUnitaDoc;
-    private String cdKeyUnitaDocNormaliz;
-    private String cdRegistroKeyUnitaDoc;
-    private String cdSottofascicPrinc;
-    private String dlOggettoUnitaDoc;
-    private String dsClassifPrinc;
-    private String dsKeyOrd;
-    private String dsMsgEsitoVerifFirme;
-    private String dsOggettoFascicPrinc;
-    private String dsOggettoSottofascicPrinc;
-    private String dsUffCompUnitaDoc;
-    private Date dtAnnul;
-    private Date dtCreazione;
-    private Date dtRegUnitaDoc;
-    private String flCartaceo;
-    private String flForzaAccettazione;
-    private String flForzaCollegamento;
-    private String flForzaConservazione;
-    private String flUnitaDocFirmato;
-    private BigDecimal niAlleg;
-    private BigDecimal niAnnessi;
-    private BigDecimal niAnnot;
-    private BigDecimal niResetStato;
-    private String nmSistemaMigraz;
-    private String ntAnnul;
-    private String ntUnitaDoc;
-    private BigDecimal pgUnitaDoc;
-    private String tiAnnul;
-    private String tiConservazione;
-    private String tiEsitoVerifFirme;
-    private String tiStatoConservazione;
-    private String tiStatoUdElencoVers;
-    private Date tsStatoElencoVers;
-    private Date tsLastResetStato;
-    private List<AroArchivSec> aroArchivSecs;
-    private List<AroCompDoc> aroCompDocs;
-    private List<AroDoc> aroDocs;
-    private List<AroIndiceAipUd> aroIndiceAipUds;
-    private List<AroIndiceAipUdDaElab> aroIndiceAipUdDaElabs;
-    private List<AroLinkUnitaDoc> aroLinkUnitaDocLinks;
-    private List<AroLinkUnitaDoc> aroLinkUnitaDocs;
-    private List<AroNotaUnitaDoc> aroNotaUnitaDocs;
-    private List<AroUdAppartVerSerie> aroUdAppartVerSeries;
-    private DecRegistroUnitaDoc decRegistroUnitaDoc;
-    private long idDecRegistroUnitaDoc;
-    private DecTipoUnitaDoc decTipoUnitaDoc;
-    private long idDecTipoUnitaDoc;
-    private OrgStrut orgStrut;
-    private long idOrgStrut;
-    private OrgSubStrut orgSubStrut;
-    private long idOrgSubStrut;
-    private IamUser iamUser;
-    private List<AroUsoXsdDatiSpec> aroUsoXsdDatiSpecs;
-    private List<AroWarnUnitaDoc> aroWarnUnitaDocs;
-    private List<RecUnitaDocRecup> recUnitaDocRecups;
-    private List<SerUdErrFileInput> serUdErrFileInputs;
-    private List<VolAppartUnitaDocVolume> volAppartUnitaDocVolumes;
-    private List<VrsSessioneVers> vrsSessioneVers;
-    private ElvElencoVer elvElencoVer;
-    private List<ElvUdVersDaElabElenco> elvUdVersDaElabElencos;
-    private List<AroItemRichAnnulVers> aroItemRichAnnulVers;
-    private List<ElvElencoVersUdAnnul> elvElencoVersUdAnnuls;
-    private List<VolVolumeVersUdAnnul> volVolumeVersUdAnnuls;
-    private List<FasUnitaDocFascicolo> fasUnitaDocFascicolos;
-    private List<AroVersIniUnitaDoc> aroVersIniUnitaDocs;
-    private List<AroUpdUnitaDoc> aroUpdUnitaDocs;
 
-    public AroUnitaDoc() {
+    private Long idUnitaDoc;
+
+    private BigDecimal aaKeyUnitaDoc;
+
+    private String cdFascicPrinc;
+
+    private String cdKeyUnitaDoc;
+
+    private String cdKeyUnitaDocNormaliz;
+
+    private String cdRegistroKeyUnitaDoc;
+
+    private String cdSottofascicPrinc;
+
+    private String dlOggettoUnitaDoc;
+
+    private String dsClassifPrinc;
+
+    private String dsKeyOrd;
+
+    private String dsMsgEsitoVerifFirme;
+
+    private String dsOggettoFascicPrinc;
+
+    private String dsOggettoSottofascicPrinc;
+
+    private String dsUffCompUnitaDoc;
+
+    private Date dtAnnul;
+
+    private Date dtCreazione;
+
+    private Date dtRegUnitaDoc;
+
+    private String flCartaceo;
+
+    private String flForzaAccettazione;
+
+    private String flForzaCollegamento;
+
+    private String flForzaConservazione;
+
+    private String flUnitaDocFirmato;
+
+    private BigDecimal niAlleg;
+
+    private BigDecimal niAnnessi;
+
+    private BigDecimal niAnnot;
+
+    private BigDecimal niResetStato;
+
+    private String nmSistemaMigraz;
+
+    private String ntAnnul;
+
+    private String ntUnitaDoc;
+
+    private BigDecimal pgUnitaDoc;
+
+    private String tiAnnul;
+
+    private String tiConservazione;
+
+    private String tiEsitoVerifFirme;
+
+    private String tiStatoConservazione;
+
+    private String tiStatoUdElencoVers;
+
+    private Date tsStatoElencoVers;
+
+    private Date tsLastResetStato;
+
+    private List<AroArchivSec> aroArchivSecs = new ArrayList<>();
+
+    private List<AroCompDoc> aroCompDocs = new ArrayList<>();
+
+    private List<AroDoc> aroDocs = new ArrayList<>();
+
+    private List<AroIndiceAipUd> aroIndiceAipUds = new ArrayList<>();
+
+    private List<AroIndiceAipUdDaElab> aroIndiceAipUdDaElabs = new ArrayList<>();
+
+    private List<AroLinkUnitaDoc> aroLinkUnitaDocLinks = new ArrayList<>();
+
+    private List<AroLinkUnitaDoc> aroLinkUnitaDocs = new ArrayList<>();
+    private List<AroNotaUnitaDoc> aroNotaUnitaDocs = new ArrayList<>();
+    private List<AroUdAppartVerSerie> aroUdAppartVerSeries = new ArrayList<>();
+
+    private DecRegistroUnitaDoc decRegistroUnitaDoc;
+
+    private Long idDecRegistroUnitaDoc;
+
+    private DecTipoUnitaDoc decTipoUnitaDoc;
+
+    private Long idDecTipoUnitaDoc;
+
+    private OrgStrut orgStrut;
+
+    private Long idOrgStrut;
+
+    private OrgSubStrut orgSubStrut;
+
+    private Long idOrgSubStrut;
+
+    private IamUser iamUser;
+
+    private List<AroUsoXsdDatiSpec> aroUsoXsdDatiSpecs = new ArrayList<>();
+
+    private List<AroWarnUnitaDoc> aroWarnUnitaDocs = new ArrayList<>();
+
+    private List<RecUnitaDocRecup> recUnitaDocRecups = new ArrayList<>();
+
+    private List<SerUdErrFileInput> serUdErrFileInputs = new ArrayList<>();
+
+    private List<VolAppartUnitaDocVolume> volAppartUnitaDocVolumes = new ArrayList<>();
+
+    private List<VrsSessioneVers> vrsSessioneVers = new ArrayList<>();
+
+    private ElvElencoVer elvElencoVer;
+
+    private AroXmlUnitaDocObjectStorage aroXmlUnitaDocObjectStorage;
+
+    private List<ElvUdVersDaElabElenco> elvUdVersDaElabElencos = new ArrayList<>();
+
+    private List<AroItemRichAnnulVers> aroItemRichAnnulVers = new ArrayList<>();
+
+    private List<ElvElencoVersUdAnnul> elvElencoVersUdAnnuls = new ArrayList<>();
+
+    private List<VolVolumeVersUdAnnul> volVolumeVersUdAnnuls = new ArrayList<>();
+
+    private List<FasUnitaDocFascicolo> fasUnitaDocFascicolos = new ArrayList<>();
+
+    private List<AroVersIniUnitaDoc> aroVersIniUnitaDocs = new ArrayList<>();
+
+    private List<AroUpdUnitaDoc> aroUpdUnitaDocs = new ArrayList<>();
+
+    public AroUnitaDoc() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "ARO_UNITA_DOC_IDUNITADOC_GENERATOR", sequenceName = "SARO_UNITA_DOC", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ARO_UNITA_DOC_IDUNITADOC_GENERATOR")
+    // "ARO_UNITA_DOC_IDUNITADOC_GENERATOR",
+    // sequenceName = "SARO_UNITA_DOC", allocationSize =
+    // 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ARO_UNITA_DOC_IDUNITADOC_GENERATOR")
     @Column(name = "ID_UNITA_DOC")
-    public long getIdUnitaDoc() {
+    @GenericGenerator(name = "SARO_UNITA_DOC_ID_UNITA_DOC_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SARO_UNITA_DOC"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SARO_UNITA_DOC_ID_UNITA_DOC_GENERATOR")
+    public Long getIdUnitaDoc() {
         return this.idUnitaDoc;
     }
 
-    public void setIdUnitaDoc(long idUnitaDoc) {
+    public void setIdUnitaDoc(Long idUnitaDoc) {
         this.idUnitaDoc = idUnitaDoc;
     }
 
@@ -247,7 +358,7 @@ public class AroUnitaDoc implements Serializable {
         this.dtRegUnitaDoc = dtRegUnitaDoc;
     }
 
-    @Column(name = "FL_CARTACEO")
+    @Column(name = "FL_CARTACEO", columnDefinition = "char(1)")
     public String getFlCartaceo() {
         return this.flCartaceo;
     }
@@ -256,7 +367,7 @@ public class AroUnitaDoc implements Serializable {
         this.flCartaceo = flCartaceo;
     }
 
-    @Column(name = "FL_FORZA_ACCETTAZIONE")
+    @Column(name = "FL_FORZA_ACCETTAZIONE", columnDefinition = "char(1)")
     public String getFlForzaAccettazione() {
         return this.flForzaAccettazione;
     }
@@ -265,7 +376,7 @@ public class AroUnitaDoc implements Serializable {
         this.flForzaAccettazione = flForzaAccettazione;
     }
 
-    @Column(name = "FL_FORZA_COLLEGAMENTO")
+    @Column(name = "FL_FORZA_COLLEGAMENTO", columnDefinition = "char(1)")
     public String getFlForzaCollegamento() {
         return this.flForzaCollegamento;
     }
@@ -274,7 +385,7 @@ public class AroUnitaDoc implements Serializable {
         this.flForzaCollegamento = flForzaCollegamento;
     }
 
-    @Column(name = "FL_FORZA_CONSERVAZIONE")
+    @Column(name = "FL_FORZA_CONSERVAZIONE", columnDefinition = "char(1)")
     public String getFlForzaConservazione() {
         return this.flForzaConservazione;
     }
@@ -283,7 +394,7 @@ public class AroUnitaDoc implements Serializable {
         this.flForzaConservazione = flForzaConservazione;
     }
 
-    @Column(name = "FL_UNITA_DOC_FIRMATO")
+    @Column(name = "FL_UNITA_DOC_FIRMATO", columnDefinition = "char(1)")
     public String getFlUnitaDocFirmato() {
         return this.flUnitaDocFirmato;
     }
@@ -558,38 +669,38 @@ public class AroUnitaDoc implements Serializable {
     }
 
     @Column(name = "ID_REGISTRO_UNITA_DOC", insertable = false, updatable = false)
-    public long getIdDecRegistroUnitaDoc() {
+    public Long getIdDecRegistroUnitaDoc() {
         return idDecRegistroUnitaDoc;
     }
 
-    public void setIdDecRegistroUnitaDoc(long idDecRegistroUnitaDoc) {
+    public void setIdDecRegistroUnitaDoc(Long idDecRegistroUnitaDoc) {
         this.idDecRegistroUnitaDoc = idDecRegistroUnitaDoc;
     }
 
     @Column(name = "ID_TIPO_UNITA_DOC", insertable = false, updatable = false)
-    public long getIdDecTipoUnitaDoc() {
+    public Long getIdDecTipoUnitaDoc() {
         return idDecTipoUnitaDoc;
     }
 
-    public void setIdDecTipoUnitaDoc(long idDecTipoUnitaDoc) {
+    public void setIdDecTipoUnitaDoc(Long idDecTipoUnitaDoc) {
         this.idDecTipoUnitaDoc = idDecTipoUnitaDoc;
     }
 
     @Column(name = "ID_STRUT", insertable = false, updatable = false)
-    public long getIdOrgStrut() {
+    public Long getIdOrgStrut() {
         return idOrgStrut;
     }
 
-    public void setIdOrgStrut(long idOrgStrut) {
+    public void setIdOrgStrut(Long idOrgStrut) {
         this.idOrgStrut = idOrgStrut;
     }
 
     @Column(name = "ID_SUB_STRUT", insertable = false, updatable = false)
-    public long getIdOrgSubStrut() {
+    public Long getIdOrgSubStrut() {
         return idOrgSubStrut;
     }
 
-    public void setIdOrgSubStrut(long idOrgSubStrut) {
+    public void setIdOrgSubStrut(Long idOrgSubStrut) {
         this.idOrgSubStrut = idOrgSubStrut;
     }
 
@@ -718,14 +829,12 @@ public class AroUnitaDoc implements Serializable {
     public AroItemRichAnnulVers addAroItemRichAnnulVer(AroItemRichAnnulVers aroItemRichAnnulVer) {
         getAroItemRichAnnulVers().add(aroItemRichAnnulVer);
         aroItemRichAnnulVer.setAroUnitaDoc(this);
-
         return aroItemRichAnnulVer;
     }
 
     public AroItemRichAnnulVers removeAroItemRichAnnulVer(AroItemRichAnnulVers aroItemRichAnnulVer) {
         getAroItemRichAnnulVers().remove(aroItemRichAnnulVer);
         aroItemRichAnnulVer.setAroUnitaDoc(null);
-
         return aroItemRichAnnulVer;
     }
 
@@ -742,14 +851,12 @@ public class AroUnitaDoc implements Serializable {
     public ElvElencoVersUdAnnul addElvElencoVersUdAnnul(ElvElencoVersUdAnnul elvElencoVersUdAnnul) {
         getElvElencoVersUdAnnuls().add(elvElencoVersUdAnnul);
         elvElencoVersUdAnnul.setAroUnitaDoc(this);
-
         return elvElencoVersUdAnnul;
     }
 
     public ElvElencoVersUdAnnul removeElvElencoVersUdAnnul(ElvElencoVersUdAnnul elvElencoVersUdAnnul) {
         getElvElencoVersUdAnnuls().remove(elvElencoVersUdAnnul);
         elvElencoVersUdAnnul.setAroUnitaDoc(null);
-
         return elvElencoVersUdAnnul;
     }
 
@@ -766,14 +873,12 @@ public class AroUnitaDoc implements Serializable {
     public VolVolumeVersUdAnnul addVolVolumeVersUdAnnul(VolVolumeVersUdAnnul volVolumeVersUdAnnul) {
         getVolVolumeVersUdAnnuls().add(volVolumeVersUdAnnul);
         volVolumeVersUdAnnul.setAroUnitaDoc(this);
-
         return volVolumeVersUdAnnul;
     }
 
     public VolVolumeVersUdAnnul removeVolVolumeVersUdAnnul(VolVolumeVersUdAnnul volVolumeVersUdAnnul) {
         getVolVolumeVersUdAnnuls().remove(volVolumeVersUdAnnul);
         volVolumeVersUdAnnul.setAroUnitaDoc(null);
-
         return volVolumeVersUdAnnul;
     }
 
@@ -790,14 +895,12 @@ public class AroUnitaDoc implements Serializable {
     public FasUnitaDocFascicolo addFasUnitaDocFascicolo(FasUnitaDocFascicolo fasUnitaDocFascicolo) {
         getFasUnitaDocFascicolos().add(fasUnitaDocFascicolo);
         fasUnitaDocFascicolo.setAroUnitaDoc(this);
-
         return fasUnitaDocFascicolo;
     }
 
     public FasUnitaDocFascicolo removeFasUnitaDocFascicolo(FasUnitaDocFascicolo fasUnitaDocFascicolo) {
         getFasUnitaDocFascicolos().remove(fasUnitaDocFascicolo);
         fasUnitaDocFascicolo.setAroUnitaDoc(null);
-
         return fasUnitaDocFascicolo;
     }
 
@@ -819,6 +922,16 @@ public class AroUnitaDoc implements Serializable {
 
     public void setAroUpdUnitaDocs(List<AroUpdUnitaDoc> aroUpdUnitaDocs) {
         this.aroUpdUnitaDocs = aroUpdUnitaDocs;
+    }
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    public AroXmlUnitaDocObjectStorage getAroXmlUnitaDocObjectStorage() {
+        return aroXmlUnitaDocObjectStorage;
+    }
+
+    public void setAroXmlUnitaDocObjectStorage(AroXmlUnitaDocObjectStorage aroXmlUnitaDocObjectStorage) {
+        this.aroXmlUnitaDocObjectStorage = aroXmlUnitaDocObjectStorage;
     }
 
 }

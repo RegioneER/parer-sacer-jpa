@@ -1,9 +1,32 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the TPI_V_LIS_DT_SCHED database table.
@@ -29,7 +52,7 @@ public class TpiVLisDtSched implements Serializable {
     private BigDecimal idDtSched;
     private String tiStatoDtSched;
 
-    public TpiVLisDtSched() {
+    public TpiVLisDtSched() {/* Hibernate */
     }
 
     @Temporal(TemporalType.DATE)
@@ -42,7 +65,7 @@ public class TpiVLisDtSched implements Serializable {
         this.dtSched = dtSched;
     }
 
-    @Column(name = "FL_ANOMALIA_ARK_PRIM")
+    @Column(name = "FL_ANOMALIA_ARK_PRIM", columnDefinition = "char(1)")
     public String getFlAnomaliaArkPrim() {
         return this.flAnomaliaArkPrim;
     }
@@ -51,7 +74,7 @@ public class TpiVLisDtSched implements Serializable {
         this.flAnomaliaArkPrim = flAnomaliaArkPrim;
     }
 
-    @Column(name = "FL_ANOMALIA_ARK_SECOND")
+    @Column(name = "FL_ANOMALIA_ARK_SECOND", columnDefinition = "char(1)")
     public String getFlAnomaliaArkSecond() {
         return this.flAnomaliaArkSecond;
     }
@@ -60,7 +83,7 @@ public class TpiVLisDtSched implements Serializable {
         this.flAnomaliaArkSecond = flAnomaliaArkSecond;
     }
 
-    @Column(name = "FL_ANOMALIA_BACKUP_PRIM")
+    @Column(name = "FL_ANOMALIA_BACKUP_PRIM", columnDefinition = "char(1)")
     public String getFlAnomaliaBackupPrim() {
         return this.flAnomaliaBackupPrim;
     }
@@ -69,7 +92,7 @@ public class TpiVLisDtSched implements Serializable {
         this.flAnomaliaBackupPrim = flAnomaliaBackupPrim;
     }
 
-    @Column(name = "FL_ANOMALIA_BACKUP_SECOND")
+    @Column(name = "FL_ANOMALIA_BACKUP_SECOND", columnDefinition = "char(1)")
     public String getFlAnomaliaBackupSecond() {
         return this.flAnomaliaBackupSecond;
     }
@@ -78,7 +101,7 @@ public class TpiVLisDtSched implements Serializable {
         this.flAnomaliaBackupSecond = flAnomaliaBackupSecond;
     }
 
-    @Column(name = "FL_ANOMALIA_COPIA_PRIM")
+    @Column(name = "FL_ANOMALIA_COPIA_PRIM", columnDefinition = "char(1)")
     public String getFlAnomaliaCopiaPrim() {
         return this.flAnomaliaCopiaPrim;
     }
@@ -87,7 +110,7 @@ public class TpiVLisDtSched implements Serializable {
         this.flAnomaliaCopiaPrim = flAnomaliaCopiaPrim;
     }
 
-    @Column(name = "FL_ANOMALIA_COPIA_SECOND")
+    @Column(name = "FL_ANOMALIA_COPIA_SECOND", columnDefinition = "char(1)")
     public String getFlAnomaliaCopiaSecond() {
         return this.flAnomaliaCopiaSecond;
     }
@@ -96,7 +119,7 @@ public class TpiVLisDtSched implements Serializable {
         this.flAnomaliaCopiaSecond = flAnomaliaCopiaSecond;
     }
 
-    @Column(name = "FL_ANOMALIA_MIGRATE_PRIM")
+    @Column(name = "FL_ANOMALIA_MIGRATE_PRIM", columnDefinition = "char(1)")
     public String getFlAnomaliaMigratePrim() {
         return this.flAnomaliaMigratePrim;
     }
@@ -105,7 +128,7 @@ public class TpiVLisDtSched implements Serializable {
         this.flAnomaliaMigratePrim = flAnomaliaMigratePrim;
     }
 
-    @Column(name = "FL_ANOMALIA_MIGRATE_SECOND")
+    @Column(name = "FL_ANOMALIA_MIGRATE_SECOND", columnDefinition = "char(1)")
     public String getFlAnomaliaMigrateSecond() {
         return this.flAnomaliaMigrateSecond;
     }
@@ -114,7 +137,7 @@ public class TpiVLisDtSched implements Serializable {
         this.flAnomaliaMigrateSecond = flAnomaliaMigrateSecond;
     }
 
-    @Column(name = "FL_ANOMALIA_RI_ARK_PRIM")
+    @Column(name = "FL_ANOMALIA_RI_ARK_PRIM", columnDefinition = "char(1)")
     public String getFlAnomaliaRiArkPrim() {
         return this.flAnomaliaRiArkPrim;
     }
@@ -123,7 +146,7 @@ public class TpiVLisDtSched implements Serializable {
         this.flAnomaliaRiArkPrim = flAnomaliaRiArkPrim;
     }
 
-    @Column(name = "FL_ANOMALIA_RI_ARK_SECOND")
+    @Column(name = "FL_ANOMALIA_RI_ARK_SECOND", columnDefinition = "char(1)")
     public String getFlAnomaliaRiArkSecond() {
         return this.flAnomaliaRiArkSecond;
     }
@@ -132,7 +155,7 @@ public class TpiVLisDtSched implements Serializable {
         this.flAnomaliaRiArkSecond = flAnomaliaRiArkSecond;
     }
 
-    @Column(name = "FL_MIGRAZ_IN_CORSO")
+    @Column(name = "FL_MIGRAZ_IN_CORSO", columnDefinition = "char(1)")
     public String getFlMigrazInCorso() {
         return this.flMigrazInCorso;
     }
@@ -141,7 +164,7 @@ public class TpiVLisDtSched implements Serializable {
         this.flMigrazInCorso = flMigrazInCorso;
     }
 
-    @Column(name = "FL_PRESENZA_SECONDARIO")
+    @Column(name = "FL_PRESENZA_SECONDARIO", columnDefinition = "char(1)")
     public String getFlPresenzaSecondario() {
         return this.flPresenzaSecondario;
     }

@@ -1,9 +1,34 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the FAS_V_VIS_FASCICOLO database table.
@@ -85,7 +110,7 @@ public class FasVVisFascicolo implements Serializable {
     private String tiCodiceAmminTitol;
     private Date tsIniSes;
 
-    public FasVVisFascicolo() {
+    public FasVVisFascicolo() {/* Hibernate */
     }
 
     @Column(name = "AA_FASCICOLO")
@@ -472,7 +497,7 @@ public class FasVVisFascicolo implements Serializable {
         this.dtChiuFascicolo = dtChiuFascicolo;
     }
 
-    @Column(name = "FL_DEFAULT_PROFILO")
+    @Column(name = "FL_DEFAULT_PROFILO", columnDefinition = "char(1)")
     public String getFlDefaultProfilo() {
         return this.flDefaultProfilo;
     }
@@ -481,7 +506,7 @@ public class FasVVisFascicolo implements Serializable {
         this.flDefaultProfilo = flDefaultProfilo;
     }
 
-    @Column(name = "FL_DEFAULT_SEGNATURA")
+    @Column(name = "FL_DEFAULT_SEGNATURA", columnDefinition = "char(1)")
     public String getFlDefaultSegnatura() {
         return this.flDefaultSegnatura;
     }
@@ -490,7 +515,7 @@ public class FasVVisFascicolo implements Serializable {
         this.flDefaultSegnatura = flDefaultSegnatura;
     }
 
-    @Column(name = "FL_FORZA_CONTR_CLASSIF")
+    @Column(name = "FL_FORZA_CONTR_CLASSIF", columnDefinition = "char(1)")
     public String getFlForzaContrClassif() {
         return this.flForzaContrClassif;
     }
@@ -499,7 +524,7 @@ public class FasVVisFascicolo implements Serializable {
         this.flForzaContrClassif = flForzaContrClassif;
     }
 
-    @Column(name = "FL_FORZA_CONTR_COLLEG")
+    @Column(name = "FL_FORZA_CONTR_COLLEG", columnDefinition = "char(1)")
     public String getFlForzaContrColleg() {
         return this.flForzaContrColleg;
     }
@@ -508,7 +533,7 @@ public class FasVVisFascicolo implements Serializable {
         this.flForzaContrColleg = flForzaContrColleg;
     }
 
-    @Column(name = "FL_FORZA_CONTR_NUMERO")
+    @Column(name = "FL_FORZA_CONTR_NUMERO", columnDefinition = "char(1)")
     public String getFlForzaContrNumero() {
         return this.flForzaContrNumero;
     }
@@ -517,7 +542,7 @@ public class FasVVisFascicolo implements Serializable {
         this.flForzaContrNumero = flForzaContrNumero;
     }
 
-    @Column(name = "FL_UPD_ANNUL_UNITA_DOC")
+    @Column(name = "FL_UPD_ANNUL_UNITA_DOC", columnDefinition = "char(1)")
     public String getFlUpdAnnulUnitaDoc() {
         return this.flUpdAnnulUnitaDoc;
     }
@@ -526,7 +551,7 @@ public class FasVVisFascicolo implements Serializable {
         this.flUpdAnnulUnitaDoc = flUpdAnnulUnitaDoc;
     }
 
-    @Column(name = "FL_UPD_MODIF_UNITA_DOC")
+    @Column(name = "FL_UPD_MODIF_UNITA_DOC", columnDefinition = "char(1)")
     public String getFlUpdModifUnitaDoc() {
         return this.flUpdModifUnitaDoc;
     }

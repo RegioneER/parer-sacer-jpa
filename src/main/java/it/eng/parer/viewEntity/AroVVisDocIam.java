@@ -1,9 +1,34 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the ARO_V_VIS_DOC_IAM database table.
@@ -13,6 +38,7 @@ import java.util.Date;
 @Table(name = "ARO_V_VIS_DOC_IAM")
 @NamedQuery(name = "AroVVisDocIam.findAll", query = "SELECT a FROM AroVVisDocIam a")
 public class AroVVisDocIam implements Serializable {
+
     private static final long serialVersionUID = 1L;
     private BigDecimal aaKeyUnitaDoc;
     private String blXmlRappDoc;
@@ -84,8 +110,9 @@ public class AroVVisDocIam implements Serializable {
     private String tiStatoVolumeConserv;
     private String utenteVers;
     private String utente;
+    private BigDecimal idSessioneVers;
 
-    public AroVVisDocIam() {
+    public AroVVisDocIam() {/* Hibernate */
     }
 
     @Column(name = "AA_KEY_UNITA_DOC")
@@ -420,7 +447,7 @@ public class AroVVisDocIam implements Serializable {
         this.dtRegUnitaDoc = dtRegUnitaDoc;
     }
 
-    @Column(name = "FL_DOC_FIRMATO")
+    @Column(name = "FL_DOC_FIRMATO", columnDefinition = "char(1)")
     public String getFlDocFirmato() {
         return this.flDocFirmato;
     }
@@ -429,7 +456,7 @@ public class AroVVisDocIam implements Serializable {
         this.flDocFirmato = flDocFirmato;
     }
 
-    @Column(name = "FL_FORZA_ACCETTAZIONE")
+    @Column(name = "FL_FORZA_ACCETTAZIONE", columnDefinition = "char(1)")
     public String getFlForzaAccettazione() {
         return this.flForzaAccettazione;
     }
@@ -438,7 +465,7 @@ public class AroVVisDocIam implements Serializable {
         this.flForzaAccettazione = flForzaAccettazione;
     }
 
-    @Column(name = "FL_FORZA_CONSERVAZIONE")
+    @Column(name = "FL_FORZA_CONSERVAZIONE", columnDefinition = "char(1)")
     public String getFlForzaConservazione() {
         return this.flForzaConservazione;
     }
@@ -725,6 +752,15 @@ public class AroVVisDocIam implements Serializable {
 
     public void setUtente(String utente) {
         this.utente = utente;
+    }
+
+    @Column(name = "ID_SESSIONE_VERS")
+    public BigDecimal getIdSessioneVers() {
+        return idSessioneVers;
+    }
+
+    public void setIdSessioneVers(BigDecimal idSessioneVers) {
+        this.idSessioneVers = idSessioneVers;
     }
 
 }

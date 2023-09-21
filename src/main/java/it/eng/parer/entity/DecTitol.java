@@ -1,3 +1,20 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
@@ -5,6 +22,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,48 +33,68 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
+
 /**
  * The persistent class for the DEC_TITOL database table.
- * 
  */
 @Entity
 @Table(name = "DEC_TITOL")
 public class DecTitol implements Serializable {
-    private static final long serialVersionUID = 1L;
-    private long idTitol;
-    private String cdSepFascicolo;
-    private String dlNote;
-    private Date dtIstituz;
-    private Date dtSoppres;
-    private BigDecimal niLivelli;
-    private String nmTitol;
-    private String tiStatoTitol;
-    private List<DecLivelloTitol> decLivelloTitols = new ArrayList<DecLivelloTitol>();
-    private OrgStrut orgStrut;
-    private List<DecVoceTitol> decVoceTitols = new ArrayList<DecVoceTitol>();
-    private List<OrgOperTitol> orgOperTitols = new ArrayList<OrgOperTitol>();
 
-    public DecTitol() {
+    private static final long serialVersionUID = 1L;
+
+    private Long idTitol;
+
+    private String cdSepFascicolo;
+
+    private String dlNote;
+
+    private Date dtIstituz;
+
+    private Date dtSoppres;
+
+    private BigDecimal niLivelli;
+
+    private String nmTitol;
+
+    private String tiStatoTitol;
+
+    private List<DecLivelloTitol> decLivelloTitols = new ArrayList<>();
+
+    private OrgStrut orgStrut;
+
+    private List<DecVoceTitol> decVoceTitols = new ArrayList<>();
+
+    private List<OrgOperTitol> orgOperTitols = new ArrayList<>();
+
+    public DecTitol() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "DEC_TITOL_IDTITOL_GENERATOR", sequenceName = "SDEC_TITOL", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DEC_TITOL_IDTITOL_GENERATOR")
+    // "DEC_TITOL_IDTITOL_GENERATOR", sequenceName =
+    // "SDEC_TITOL", allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DEC_TITOL_IDTITOL_GENERATOR")
     @Column(name = "ID_TITOL")
-    public long getIdTitol() {
+    @GenericGenerator(name = "SDEC_TITOL_ID_TITOL_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SDEC_TITOL"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SDEC_TITOL_ID_TITOL_GENERATOR")
+    public Long getIdTitol() {
         return this.idTitol;
     }
 
-    public void setIdTitol(long idTitol) {
+    public void setIdTitol(Long idTitol) {
         this.idTitol = idTitol;
     }
 
-    @Column(name = "CD_SEP_FASCICOLO")
+    @Column(name = "CD_SEP_FASCICOLO", columnDefinition = "char")
     public String getCdSepFascicolo() {
         return this.cdSepFascicolo;
     }
@@ -134,14 +172,12 @@ public class DecTitol implements Serializable {
     public DecLivelloTitol addDecLivelloTitol(DecLivelloTitol decLivelloTitol) {
         getDecLivelloTitols().add(decLivelloTitol);
         decLivelloTitol.setDecTitol(this);
-
         return decLivelloTitol;
     }
 
     public DecLivelloTitol removeDecLivelloTitol(DecLivelloTitol decLivelloTitol) {
         getDecLivelloTitols().remove(decLivelloTitol);
         decLivelloTitol.setDecTitol(null);
-
         return decLivelloTitol;
     }
 
@@ -169,14 +205,12 @@ public class DecTitol implements Serializable {
     public DecVoceTitol addDecVoceTitol(DecVoceTitol decVoceTitol) {
         getDecVoceTitols().add(decVoceTitol);
         decVoceTitol.setDecTitol(this);
-
         return decVoceTitol;
     }
 
     public DecVoceTitol removeDecVoceTitol(DecVoceTitol decVoceTitol) {
         getDecVoceTitols().remove(decVoceTitol);
         decVoceTitol.setDecTitol(null);
-
         return decVoceTitol;
     }
 
@@ -193,14 +227,12 @@ public class DecTitol implements Serializable {
     public OrgOperTitol addOrgOperTitol(OrgOperTitol orgOperTitol) {
         getOrgOperTitols().add(orgOperTitol);
         orgOperTitol.setDecTitol(this);
-
         return orgOperTitol;
     }
 
     public OrgOperTitol removeOrgOperTitol(OrgOperTitol orgOperTitol) {
         getOrgOperTitols().remove(orgOperTitol);
         orgOperTitol.setDecTitol(null);
-
         return orgOperTitol;
     }
 

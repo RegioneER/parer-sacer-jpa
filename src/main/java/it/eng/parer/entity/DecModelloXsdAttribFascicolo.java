@@ -1,9 +1,39 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -16,7 +46,7 @@ import javax.xml.bind.annotation.XmlTransient;
 public class DecModelloXsdAttribFascicolo implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idModelloXsdAttribFasc;
+    private Long idModelloXsdAttribFasc;
     private DecAttribFascicolo decAttribFascicolo;
     private DecModelloXsdFascicolo decModelloXsdFascicolo;
     private BigDecimal niOrdAttrib;
@@ -26,7 +56,7 @@ public class DecModelloXsdAttribFascicolo implements Serializable {
     private String dsValEnum;
     private String dsRegExp;
     private String cdLabel;
-    private List<DecCampoAttribFascVettor> decCampoAttribFascVettors;
+    private List<DecCampoAttribFascVettor> decCampoAttribFascVettors = new ArrayList<>();
 
     public DecModelloXsdAttribFascicolo() {
     }
@@ -35,11 +65,11 @@ public class DecModelloXsdAttribFascicolo implements Serializable {
     @SequenceGenerator(name = "DEC_MODELLO_XSD_ATTRIB_FASC_IDMODELLOXSDATTRIBFASC_GENERATOR", sequenceName = "SDEC_MODELLO_XSD_ATTRIB_FASC", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DEC_MODELLO_XSD_ATTRIB_FASC_IDMODELLOXSDATTRIBFASC_GENERATOR")
     @Column(name = "ID_MODELLO_XSD_ATTRIB_FASC")
-    public long getIdModelloXsdAttribFasc() {
+    public Long getIdModelloXsdAttribFasc() {
         return this.idModelloXsdAttribFasc;
     }
 
-    public void setIdModelloXsdAttribFasc(long idModelloXsdAttribFasc) {
+    public void setIdModelloXsdAttribFasc(Long idModelloXsdAttribFasc) {
         this.idModelloXsdAttribFasc = idModelloXsdAttribFasc;
     }
 
@@ -74,7 +104,7 @@ public class DecModelloXsdAttribFascicolo implements Serializable {
         this.niOrdAttrib = niOrdAttrib;
     }
 
-    @Column(name = "FL_OBBL")
+    @Column(name = "FL_OBBL", columnDefinition = "CHAR")
     public String getCdXsd() {
         return this.flObbl;
     }
@@ -129,7 +159,7 @@ public class DecModelloXsdAttribFascicolo implements Serializable {
     }
 
     // bi-directional one-to-many association to DecCampoAttribFascVettors
-    @OneToMany(mappedBy = "DecModelloXsdAttribFascicolo")
+    @OneToMany(mappedBy = "decModelloXsdAttribFascicolo")
     @XmlTransient
     public List<DecCampoAttribFascVettor> getDecCampoAttribFascVettors() {
         return this.decCampoAttribFascVettors;

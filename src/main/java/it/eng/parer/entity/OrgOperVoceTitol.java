@@ -1,8 +1,26 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,39 +29,55 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
+
 /**
  * The persistent class for the ORG_OPER_VOCE_TITOL database table.
- * 
  */
 @Entity
 @Table(name = "ORG_OPER_VOCE_TITOL")
 public class OrgOperVoceTitol implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    private long idOperVoceTitol;
+
+    private Long idOperVoceTitol;
+
     private String dlNote;
+
     private Date dtValOperVoceTitol;
+
     private BigDecimal pgOperVoceTitol;
+
     private String tiOperVoceTitol;
+
     private DecVoceTitol decVoceTitol;
+
     private OrgOperTitol orgOperTitol;
 
-    public OrgOperVoceTitol() {
+    public OrgOperVoceTitol() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "ORG_OPER_VOCE_TITOL_IDOPERVOCETITOL_GENERATOR", sequenceName = "SORG_OPER_VOCE_TITOL", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ORG_OPER_VOCE_TITOL_IDOPERVOCETITOL_GENERATOR")
+    // "ORG_OPER_VOCE_TITOL_IDOPERVOCETITOL_GENERATOR",
+    // sequenceName = "SORG_OPER_VOCE_TITOL",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ORG_OPER_VOCE_TITOL_IDOPERVOCETITOL_GENERATOR")
     @Column(name = "ID_OPER_VOCE_TITOL")
-    public long getIdOperVoceTitol() {
+    @GenericGenerator(name = "SORG_OPER_VOCE_TITOL_ID_OPER_VOCE_TITOL_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SORG_OPER_VOCE_TITOL"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SORG_OPER_VOCE_TITOL_ID_OPER_VOCE_TITOL_GENERATOR")
+    public Long getIdOperVoceTitol() {
         return this.idOperVoceTitol;
     }
 
-    public void setIdOperVoceTitol(long idOperVoceTitol) {
+    public void setIdOperVoceTitol(Long idOperVoceTitol) {
         this.idOperVoceTitol = idOperVoceTitol;
     }
 
@@ -97,7 +131,7 @@ public class OrgOperVoceTitol implements Serializable {
 
     // bi-directional many-to-one association to OrgOperTitol
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_OPER_TITOL")
+    @JoinColumn(name = "ID_OPER_TITOL", nullable = false)
     public OrgOperTitol getOrgOperTitol() {
         return this.orgOperTitol;
     }

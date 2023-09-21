@@ -1,13 +1,36 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 /**
  * The persistent class for the DEC_V_RIC_CRITERIO_RAGGR database table.
- *
  */
 @Entity
 @Table(name = "DEC_V_RIC_CRITERIO_RAGGR")
@@ -15,36 +38,54 @@ import java.util.Date;
 public class DecVRicCriterioRaggr implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     private BigDecimal aaKeyUnitaDoc;
+
     private BigDecimal aaKeyUnitaDocA;
+
     private BigDecimal aaKeyUnitaDocDa;
+
     private String cdRegistroRangeUnitaDoc;
+
     private String cdRegistroUnitaDoc;
+
     private String dsScadChius;
+
     private Date dtIstituz;
+
     private Date dtSoppres;
+
     private String flCriterioRaggrFisc;
+
     private String flCriterioRaggrStandard;
+
     private BigDecimal idAmbiente;
-    private BigDecimal idCriterioRaggr;
+
     private BigDecimal idEnte;
-    private BigDecimal idRegistroRangeUnitaDoc;
-    private BigDecimal idRegistroUnitaDoc;
+
     private BigDecimal idStrut;
-    private BigDecimal idTipoDoc;
-    private BigDecimal idTipoUnitaDoc;
+
     private BigDecimal niMaxComp;
+
     private String nmAmbiente;
+
     private String nmCriterioRaggr;
+
     private String nmEnte;
+
     private String nmStrut;
+
     private String nmTipoDoc;
+
     private String nmTipoUnitaDoc;
+
     private String tiGestElencoCriterio;
+
     private String tiValidElenco;
+
     private String tiModValidElenco;
 
-    public DecVRicCriterioRaggr() {
+    public DecVRicCriterioRaggr() {/* Hibernate */
     }
 
     public DecVRicCriterioRaggr(BigDecimal idAmbiente, String nmAmbiente, BigDecimal idEnte, String nmEnte,
@@ -59,7 +100,8 @@ public class DecVRicCriterioRaggr implements Serializable {
         this.nmEnte = nmEnte;
         this.idStrut = idStrut;
         this.nmStrut = nmStrut;
-        this.idCriterioRaggr = idCriterioRaggr;
+        this.decVRicCriterioRaggrId = new DecVRicCriterioRaggrId();
+        this.decVRicCriterioRaggrId.setIdCriterioRaggr(idCriterioRaggr);
         this.nmCriterioRaggr = nmCriterioRaggr;
         this.nmTipoUnitaDoc = nmTipoUnitaDoc;
         this.cdRegistroUnitaDoc = cdRegistroUnitaDoc;
@@ -153,7 +195,7 @@ public class DecVRicCriterioRaggr implements Serializable {
         this.dtSoppres = dtSoppres;
     }
 
-    @Column(name = "FL_CRITERIO_RAGGR_FISC")
+    @Column(name = "FL_CRITERIO_RAGGR_FISC", columnDefinition = "char(1)")
     public String getFlCriterioRaggrFisc() {
         return this.flCriterioRaggrFisc;
     }
@@ -162,7 +204,7 @@ public class DecVRicCriterioRaggr implements Serializable {
         this.flCriterioRaggrFisc = flCriterioRaggrFisc;
     }
 
-    @Column(name = "FL_CRITERIO_RAGGR_STANDARD")
+    @Column(name = "FL_CRITERIO_RAGGR_STANDARD", columnDefinition = "char(1)")
     public String getFlCriterioRaggrStandard() {
         return flCriterioRaggrStandard;
     }
@@ -180,16 +222,6 @@ public class DecVRicCriterioRaggr implements Serializable {
         this.idAmbiente = idAmbiente;
     }
 
-    @Id
-    @Column(name = "ID_CRITERIO_RAGGR")
-    public BigDecimal getIdCriterioRaggr() {
-        return this.idCriterioRaggr;
-    }
-
-    public void setIdCriterioRaggr(BigDecimal idCriterioRaggr) {
-        this.idCriterioRaggr = idCriterioRaggr;
-    }
-
     @Column(name = "ID_ENTE")
     public BigDecimal getIdEnte() {
         return this.idEnte;
@@ -199,26 +231,6 @@ public class DecVRicCriterioRaggr implements Serializable {
         this.idEnte = idEnte;
     }
 
-    @Id
-    @Column(name = "ID_REGISTRO_RANGE_UNITA_DOC")
-    public BigDecimal getIdRegistroRangeUnitaDoc() {
-        return this.idRegistroRangeUnitaDoc;
-    }
-
-    public void setIdRegistroRangeUnitaDoc(BigDecimal idRegistroRangeUnitaDoc) {
-        this.idRegistroRangeUnitaDoc = idRegistroRangeUnitaDoc;
-    }
-
-    @Id
-    @Column(name = "ID_REGISTRO_UNITA_DOC")
-    public BigDecimal getIdRegistroUnitaDoc() {
-        return this.idRegistroUnitaDoc;
-    }
-
-    public void setIdRegistroUnitaDoc(BigDecimal idRegistroUnitaDoc) {
-        this.idRegistroUnitaDoc = idRegistroUnitaDoc;
-    }
-
     @Column(name = "ID_STRUT")
     public BigDecimal getIdStrut() {
         return this.idStrut;
@@ -226,26 +238,6 @@ public class DecVRicCriterioRaggr implements Serializable {
 
     public void setIdStrut(BigDecimal idStrut) {
         this.idStrut = idStrut;
-    }
-
-    @Id
-    @Column(name = "ID_TIPO_DOC")
-    public BigDecimal getIdTipoDoc() {
-        return this.idTipoDoc;
-    }
-
-    public void setIdTipoDoc(BigDecimal idTipoDoc) {
-        this.idTipoDoc = idTipoDoc;
-    }
-
-    @Id
-    @Column(name = "ID_TIPO_UNITA_DOC")
-    public BigDecimal getIdTipoUnitaDoc() {
-        return this.idTipoUnitaDoc;
-    }
-
-    public void setIdTipoUnitaDoc(BigDecimal idTipoUnitaDoc) {
-        this.idTipoUnitaDoc = idTipoUnitaDoc;
     }
 
     @Column(name = "NI_MAX_COMP")
@@ -338,4 +330,14 @@ public class DecVRicCriterioRaggr implements Serializable {
         this.tiModValidElenco = tiModValidElenco;
     }
 
+    private DecVRicCriterioRaggrId decVRicCriterioRaggrId;
+
+    @EmbeddedId()
+    public DecVRicCriterioRaggrId getDecVRicCriterioRaggrId() {
+        return decVRicCriterioRaggrId;
+    }
+
+    public void setDecVRicCriterioRaggrId(DecVRicCriterioRaggrId decVRicCriterioRaggrId) {
+        this.decVRicCriterioRaggrId = decVRicCriterioRaggrId;
+    }
 }

@@ -1,9 +1,33 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the ARO_V_RIC_RICH_RA database table.
@@ -20,7 +44,7 @@ public class AroVRicRichRa implements Serializable {
     private BigDecimal idAmbiente;
     private BigDecimal idStrut;
     private BigDecimal idEnteConvenz;
-    private String nmEnteConvenz;
+    private String nmEnteConvenz; // private String nmEnteConvenz;
     private String nmEnteStrut;
     private String cdErrore;
     private String tiStato;
@@ -31,13 +55,15 @@ public class AroVRicRichRa implements Serializable {
     private BigDecimal sumDim;
     private BigDecimal estrattiTotali;
     private BigDecimal priorita;
+    private Date tsInizio;
 
-    public AroVRicRichRa() {
+    public AroVRicRichRa() {/* Hibernate */
     }
 
     public AroVRicRichRa(BigDecimal idRichiestaRa, String nmEnteConvenz, String nmEnteStrut, BigDecimal idEnte,
             BigDecimal idStrut, BigDecimal idEnteConvenz, BigDecimal totali, BigDecimal estratti, BigDecimal errori,
-            BigDecimal estrattiTotali, BigDecimal sumDim, Date maxDtEstrazione, String tiStato, BigDecimal priorita) {
+            BigDecimal estrattiTotali, BigDecimal sumDim, Date maxDtEstrazione, String tiStato, BigDecimal priorita,
+            Date tsInizio) {
         this.idRichiestaRa = idRichiestaRa;
         this.nmEnteConvenz = nmEnteConvenz;
         this.nmEnteStrut = nmEnteStrut;
@@ -52,6 +78,7 @@ public class AroVRicRichRa implements Serializable {
         this.maxDtEstrazione = maxDtEstrazione;
         this.tiStato = tiStato;
         this.priorita = priorita;
+        this.tsInizio = tsInizio;
     }
 
     @Column(name = "TOTALI")
@@ -198,5 +225,15 @@ public class AroVRicRichRa implements Serializable {
 
     public void setSumDim(BigDecimal sumDim) {
         this.sumDim = sumDim;
+    }
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "TS_INIZIO")
+    public Date getTsInizio() {
+        return this.tsInizio;
+    }
+
+    public void setTsInizio(Date tsInizio) {
+        this.tsInizio = tsInizio;
     }
 }

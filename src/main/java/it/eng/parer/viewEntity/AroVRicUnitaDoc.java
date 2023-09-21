@@ -1,9 +1,33 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the ARO_V_RIC_UNITA_DOC database table.
@@ -59,7 +83,7 @@ public class AroVRicUnitaDoc implements Serializable {
     private String tiStatoDocElencoVers;
     private String tiStatoUdElencoVers;
 
-    public AroVRicUnitaDoc() {
+    public AroVRicUnitaDoc() {/* Hibernate */
     }
 
     public AroVRicUnitaDoc(BigDecimal idUnitaDoc, BigDecimal aaKeyUnitaDoc, String cdKeyUnitaDoc,
@@ -244,7 +268,7 @@ public class AroVRicUnitaDoc implements Serializable {
         this.dtRegUnitaDoc = dtRegUnitaDoc;
     }
 
-    @Column(name = "FL_DOC_AGGIUNTI")
+    @Column(name = "FL_DOC_AGGIUNTI", columnDefinition = "char(1)")
     public String getFlDocAggiunti() {
         return this.flDocAggiunti;
     }
@@ -253,7 +277,7 @@ public class AroVRicUnitaDoc implements Serializable {
         this.flDocAggiunti = flDocAggiunti;
     }
 
-    @Column(name = "FL_DOC_ANNUL")
+    @Column(name = "FL_DOC_ANNUL", columnDefinition = "char(1)")
     public String getFlDocAnnul() {
         return this.flDocAnnul;
     }
@@ -262,7 +286,7 @@ public class AroVRicUnitaDoc implements Serializable {
         this.flDocAnnul = flDocAnnul;
     }
 
-    @Column(name = "FL_ESISTE_PROFILO_NORMATIVO")
+    @Column(name = "FL_ESISTE_PROFILO_NORMATIVO", columnDefinition = "char(1)")
     public String getFlEsisteProfiloNormativo() {
         return this.flEsisteProfiloNormativo;
     }
@@ -271,7 +295,7 @@ public class AroVRicUnitaDoc implements Serializable {
         this.flEsisteProfiloNormativo = flEsisteProfiloNormativo;
     }
 
-    @Column(name = "FL_FORZA_ACCETTAZIONE")
+    @Column(name = "FL_FORZA_ACCETTAZIONE", columnDefinition = "char(1)")
     public String getFlForzaAccettazione() {
         return this.flForzaAccettazione;
     }
@@ -280,7 +304,7 @@ public class AroVRicUnitaDoc implements Serializable {
         this.flForzaAccettazione = flForzaAccettazione;
     }
 
-    @Column(name = "FL_FORZA_COLLEGAMENTO")
+    @Column(name = "FL_FORZA_COLLEGAMENTO", columnDefinition = "char(1)")
     public String getFlForzaCollegamento() {
         return this.flForzaCollegamento;
     }
@@ -289,7 +313,7 @@ public class AroVRicUnitaDoc implements Serializable {
         this.flForzaCollegamento = flForzaCollegamento;
     }
 
-    @Column(name = "FL_FORZA_CONSERVAZIONE")
+    @Column(name = "FL_FORZA_CONSERVAZIONE", columnDefinition = "char(1)")
     public String getFlForzaConservazione() {
         return this.flForzaConservazione;
     }
@@ -298,7 +322,7 @@ public class AroVRicUnitaDoc implements Serializable {
         this.flForzaConservazione = flForzaConservazione;
     }
 
-    @Column(name = "FL_HASH_VERS")
+    @Column(name = "FL_HASH_VERS", columnDefinition = "char(1)")
     public String getFlHashVers() {
         return flHashVers;
     }
@@ -307,7 +331,7 @@ public class AroVRicUnitaDoc implements Serializable {
         this.flHashVers = flHashVers;
     }
 
-    @Column(name = "FL_UNITA_DOC_ANNUL")
+    @Column(name = "FL_UNITA_DOC_ANNUL", columnDefinition = "char(1)")
     public String getFlUnitaDocAnnul() {
         return this.flUnitaDocAnnul;
     }
@@ -316,7 +340,7 @@ public class AroVRicUnitaDoc implements Serializable {
         this.flUnitaDocAnnul = flUnitaDocAnnul;
     }
 
-    @Column(name = "FL_UNITA_DOC_FIRMATO")
+    @Column(name = "FL_UNITA_DOC_FIRMATO", columnDefinition = "char(1)")
     public String getFlUnitaDocFirmato() {
         return this.flUnitaDocFirmato;
     }

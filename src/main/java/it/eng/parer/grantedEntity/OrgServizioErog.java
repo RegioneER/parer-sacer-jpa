@@ -1,41 +1,73 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.grantedEntity;
 
-import it.eng.parer.entity.OrgTipoServizio;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import it.eng.parer.entity.OrgTipoServizio;
 
 /**
  * The persistent class for the ORG_SERVIZIO_EROG database table.
- *
  */
 @Entity
-@Table(name = "SACER_IAM.ORG_SERVIZIO_EROG")
+@Table(schema = "SACER_IAM", name = "ORG_SERVIZIO_EROG")
 @NamedQuery(name = "OrgServizioErog.findAll", query = "SELECT o FROM OrgServizioErog o")
 public class OrgServizioErog implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idServizioErogato;
+
+    private Long idServizioErogato;
+
     private Date dtErog;
+
     private String flPagamento;
+
     private BigDecimal imValoreTariffa;
+
     private String nmServizioErogato;
+
     private OrgTipoServizio orgTipoServizio;
+
     private SIOrgAccordoEnte orgAccordoEnte;
 
-    public OrgServizioErog() {
+    public OrgServizioErog() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "ORG_SERVIZIO_EROG_IDSERVIZIOEROGATO_GENERATOR", sequenceName = "SORG_SERVIZIO_EROG", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ORG_SERVIZIO_EROG_IDSERVIZIOEROGATO_GENERATOR")
     @Column(name = "ID_SERVIZIO_EROGATO")
-    public long getIdServizioErogato() {
+    public Long getIdServizioErogato() {
         return this.idServizioErogato;
     }
 
-    public void setIdServizioErogato(long idServizioErogato) {
+    public void setIdServizioErogato(Long idServizioErogato) {
         this.idServizioErogato = idServizioErogato;
     }
 
@@ -49,7 +81,7 @@ public class OrgServizioErog implements Serializable {
         this.dtErog = dtErog;
     }
 
-    @Column(name = "FL_PAGAMENTO")
+    @Column(name = "FL_PAGAMENTO", columnDefinition = "char(1)")
     public String getFlPagamento() {
         return this.flPagamento;
     }

@@ -1,47 +1,102 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
+
 /**
  * The persistent class for the VRS_PATH_DT_VERS database table.
- *
  */
 @Entity
 @Table(name = "VRS_PATH_DT_VERS")
 public class VrsPathDtVers implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    private long idPathDtVers;
+
+    private Long idPathDtVers;
+
     private String dlPath;
+
     private Date dtLastArkPath;
+
     private Date dtLastArkPathSecondario;
+
     private String flCancFileMigraz;
+
     private String flPathArk;
+
     private String flPathArkSecondario;
+
     private String flPathFileNoArk;
+
     private String flPathFileNoArkSecondario;
+
     private BigDecimal niFilePath;
+
     private BigDecimal niFilePathArk;
+
     private BigDecimal niFilePathArkSecondario;
-    private List<VrsArkPathDtVers> vrsArkPathDtVers;
-    private List<VrsFileNoarkPathDtVers> vrsFileNoarkPathDtVers;
+
+    private List<VrsArkPathDtVers> vrsArkPathDtVers = new ArrayList<>();
+
+    private List<VrsFileNoarkPathDtVers> vrsFileNoarkPathDtVers = new ArrayList<>();
+
     private VrsDtVers vrsDtVers;
 
-    public VrsPathDtVers() {
+    public VrsPathDtVers() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "VRS_PATH_DT_VERS_IDPATHDTVERS_GENERATOR", sequenceName = "SVRS_PATH_DT_VERS", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VRS_PATH_DT_VERS_IDPATHDTVERS_GENERATOR")
+    // "VRS_PATH_DT_VERS_IDPATHDTVERS_GENERATOR",
+    // sequenceName = "SVRS_PATH_DT_VERS",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VRS_PATH_DT_VERS_IDPATHDTVERS_GENERATOR")
     @Column(name = "ID_PATH_DT_VERS")
-    public long getIdPathDtVers() {
+    @GenericGenerator(name = "SVRS_PATH_DT_VERS_ID_PATH_DT_VERS_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SVRS_PATH_DT_VERS"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SVRS_PATH_DT_VERS_ID_PATH_DT_VERS_GENERATOR")
+    public Long getIdPathDtVers() {
         return this.idPathDtVers;
     }
 
-    public void setIdPathDtVers(long idPathDtVers) {
+    public void setIdPathDtVers(Long idPathDtVers) {
         this.idPathDtVers = idPathDtVers;
     }
 
@@ -74,7 +129,7 @@ public class VrsPathDtVers implements Serializable {
         this.dtLastArkPathSecondario = dtLastArkPathSecondario;
     }
 
-    @Column(name = "FL_CANC_FILE_MIGRAZ")
+    @Column(name = "FL_CANC_FILE_MIGRAZ", columnDefinition = "char(1)")
     public String getFlCancFileMigraz() {
         return this.flCancFileMigraz;
     }
@@ -83,7 +138,7 @@ public class VrsPathDtVers implements Serializable {
         this.flCancFileMigraz = flCancFileMigraz;
     }
 
-    @Column(name = "FL_PATH_ARK")
+    @Column(name = "FL_PATH_ARK", columnDefinition = "char(1)")
     public String getFlPathArk() {
         return this.flPathArk;
     }
@@ -92,7 +147,7 @@ public class VrsPathDtVers implements Serializable {
         this.flPathArk = flPathArk;
     }
 
-    @Column(name = "FL_PATH_ARK_SECONDARIO")
+    @Column(name = "FL_PATH_ARK_SECONDARIO", columnDefinition = "char(1)")
     public String getFlPathArkSecondario() {
         return this.flPathArkSecondario;
     }
@@ -101,7 +156,7 @@ public class VrsPathDtVers implements Serializable {
         this.flPathArkSecondario = flPathArkSecondario;
     }
 
-    @Column(name = "FL_PATH_FILE_NO_ARK")
+    @Column(name = "FL_PATH_FILE_NO_ARK", columnDefinition = "char(1)")
     public String getFlPathFileNoArk() {
         return this.flPathFileNoArk;
     }
@@ -110,7 +165,7 @@ public class VrsPathDtVers implements Serializable {
         this.flPathFileNoArk = flPathFileNoArk;
     }
 
-    @Column(name = "FL_PATH_FILE_NO_ARK_SECONDARIO")
+    @Column(name = "FL_PATH_FILE_NO_ARK_SECONDARIO", columnDefinition = "char(1)")
     public String getFlPathFileNoArkSecondario() {
         return this.flPathFileNoArkSecondario;
     }
@@ -176,5 +231,4 @@ public class VrsPathDtVers implements Serializable {
     public void setVrsDtVers(VrsDtVers vrsDtVers) {
         this.vrsDtVers = vrsDtVers;
     }
-
 }

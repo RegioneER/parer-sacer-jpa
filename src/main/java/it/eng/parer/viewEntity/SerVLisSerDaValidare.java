@@ -1,39 +1,77 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 /**
  * The persistent class for the SER_V_LIS_SER_DA_VALIDARE database table.
- * 
  */
 @Entity
 @Table(name = "SER_V_LIS_SER_DA_VALIDARE")
 @NamedQuery(name = "SerVLisSerDaValidare.findAll", query = "SELECT s FROM SerVLisSerDaValidare s")
 public class SerVLisSerDaValidare implements Serializable {
+
     private static final long serialVersionUID = 1L;
+
     private BigDecimal aaSerie;
+
     private String cdCompositoSerie;
+
     private String cdVerSerie;
+
     private String dsSerie;
+
     private Date dtFineSelSerie;
+
     private Date dtInizioSelSerie;
+
     private String flErrContenutoEff;
+
     private BigDecimal idAmbiente;
+
     private BigDecimal idContenutoVerSerie;
+
     private BigDecimal idEnte;
+
     private BigDecimal idSerie;
+
     private BigDecimal idStrut;
-    private BigDecimal idUserIam;
-    private BigDecimal idVerSerie;
+
     private String nmAmbiente;
+
     private String nmEnte;
+
     private String nmStrut;
+
     private String nmTipoSerie;
 
-    public SerVLisSerDaValidare() {
+    public SerVLisSerDaValidare() {/* Hibernate */
     }
 
     @Column(name = "AA_SERIE")
@@ -92,7 +130,7 @@ public class SerVLisSerDaValidare implements Serializable {
         this.dtInizioSelSerie = dtInizioSelSerie;
     }
 
-    @Column(name = "FL_ERR_CONTENUTO_EFF")
+    @Column(name = "FL_ERR_CONTENUTO_EFF", columnDefinition = "char(1)")
     public String getFlErrContenutoEff() {
         return this.flErrContenutoEff;
     }
@@ -146,26 +184,6 @@ public class SerVLisSerDaValidare implements Serializable {
         this.idStrut = idStrut;
     }
 
-    @Id
-    @Column(name = "ID_USER_IAM")
-    public BigDecimal getIdUserIam() {
-        return this.idUserIam;
-    }
-
-    public void setIdUserIam(BigDecimal idUserIam) {
-        this.idUserIam = idUserIam;
-    }
-
-    @Id
-    @Column(name = "ID_VER_SERIE")
-    public BigDecimal getIdVerSerie() {
-        return this.idVerSerie;
-    }
-
-    public void setIdVerSerie(BigDecimal idVerSerie) {
-        this.idVerSerie = idVerSerie;
-    }
-
     @Column(name = "NM_AMBIENTE")
     public String getNmAmbiente() {
         return this.nmAmbiente;
@@ -202,4 +220,14 @@ public class SerVLisSerDaValidare implements Serializable {
         this.nmTipoSerie = nmTipoSerie;
     }
 
+    private SerVLisSerDaValidareId serVLisSerDaValidareId;
+
+    @EmbeddedId()
+    public SerVLisSerDaValidareId getSerVLisSerDaValidareId() {
+        return serVLisSerDaValidareId;
+    }
+
+    public void setSerVLisSerDaValidareId(SerVLisSerDaValidareId serVLisSerDaValidareId) {
+        this.serVLisSerDaValidareId = serVLisSerDaValidareId;
+    }
 }

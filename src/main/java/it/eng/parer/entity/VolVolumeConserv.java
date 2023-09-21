@@ -1,75 +1,153 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlID;
-import javax.xml.bind.annotation.XmlIDREF;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 /**
  * The persistent class for the VOL_VOLUME_CONSERV database table.
- *
  */
 @Entity
 @Table(name = "VOL_VOLUME_CONSERV")
 public class VolVolumeConserv implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idVolumeConserv;
+
+    private Long idVolumeConserv;
+
     private String cdEncodingHash;
+
     private String cdVersioneIndice;
+
     private String dlMotivoChius;
+
     private String dsAlgoHash;
+
     private String dsFirmaMarcaBase64;
+
     private String dsHashFileFirma;
+
     private String dsHashFileIndice;
+
     private String dsHashFileMarca;
+
     private String dsVolumeConserv;
+
     private Date dtChius;
+
     private Date dtCreazione;
+
     private Date dtFirmaMarca;
+
     private Date dtScadChius;
+
     private String flElencoVers;
+
     private BigDecimal niCompVolume;
+
     private BigDecimal niKbSize;
+
     private BigDecimal niMaxComp;
+
     private BigDecimal niMaxUnitaDoc;
+
     private BigDecimal niTempoScadChius;
+
     private BigDecimal niTempoScadChiusFirme;
+
     private BigDecimal niUnitaDocVolume;
+
     private String nmVolumeConserv;
+
     private String ntIndiceVolume;
+
     private String ntVolumeChiuso;
+
     private String tiPresenzaFirme;
+
     private String tiScadChiusVolume;
+
     private String tiStatoVolumeConserv;
+
     private String tiTempoScadChius;
+
     private String tiTempoScadChiusFirme;
+
     private String tiValFirme;
+
     private Date tmMarcaFirma;
+
     private Date tmMarcaIndice;
-    private List<VolAppartUnitaDocVolume> volAppartUnitaDocVolumes;
-    private List<VolFileVolumeConserv> volFileVolumeConservs;
+
+    private List<VolAppartUnitaDocVolume> volAppartUnitaDocVolumes = new ArrayList<>();
+
+    private List<VolFileVolumeConserv> volFileVolumeConservs = new ArrayList<>();
+
     private DecCriterioRaggr decCriterioRaggr;
+
     private OrgStrut orgStrut;
+
     private IamUser iamUserCreazione;
+
     private IamUser iamUserFirmaMarca;
 
-    public VolVolumeConserv() {
+    public VolVolumeConserv() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "VOL_VOLUME_CONSERV_IDVOLUMECONSERV_GENERATOR", sequenceName = "SVOL_VOLUME_CONSERV", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VOL_VOLUME_CONSERV_IDVOLUMECONSERV_GENERATOR")
+    // "VOL_VOLUME_CONSERV_IDVOLUMECONSERV_GENERATOR",
+    // sequenceName = "SVOL_VOLUME_CONSERV",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VOL_VOLUME_CONSERV_IDVOLUMECONSERV_GENERATOR")
     @Column(name = "ID_VOLUME_CONSERV")
     @XmlID
-    public long getIdVolumeConserv() {
+    @GenericGenerator(name = "SVOL_VOLUME_CONSERV_ID_VOLUME_CONSERV_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SVOL_VOLUME_CONSERV"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SVOL_VOLUME_CONSERV_ID_VOLUME_CONSERV_GENERATOR")
+    public Long getIdVolumeConserv() {
         return this.idVolumeConserv;
     }
 
-    public void setIdVolumeConserv(long idVolumeConserv) {
+    public void setIdVolumeConserv(Long idVolumeConserv) {
         this.idVolumeConserv = idVolumeConserv;
     }
 
@@ -194,7 +272,7 @@ public class VolVolumeConserv implements Serializable {
         this.dtScadChius = dtScadChius;
     }
 
-    @Column(name = "FL_ELENCO_VERS")
+    @Column(name = "FL_ELENCO_VERS", columnDefinition = "char(1)")
     public String getFlElencoVers() {
         return this.flElencoVers;
     }

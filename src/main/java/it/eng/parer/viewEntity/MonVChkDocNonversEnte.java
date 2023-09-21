@@ -1,8 +1,29 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.math.BigDecimal;
+
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the MON_V_CHK_DOC_NONVERS_ENTE database table.
@@ -16,13 +37,21 @@ public class MonVChkDocNonversEnte implements Serializable {
     private String flDocNonversNorisolub;
     private String flDocNonversNoverif;
     private String flDocNonversVerif;
-    private BigDecimal idEnte;
-    private BigDecimal idUserIam;
+    private MonVChkDocNonversEnteId monVChkDocNonversEnteId;
 
-    public MonVChkDocNonversEnte() {
+    @EmbeddedId
+    public MonVChkDocNonversEnteId getMonVChkDocNonversEnteId() {
+        return monVChkDocNonversEnteId;
     }
 
-    @Column(name = "FL_DOC_NONVERS_NORISOLUB")
+    public void setMonVChkDocNonversEnteId(MonVChkDocNonversEnteId monVChkDocNonversEnteId) {
+        this.monVChkDocNonversEnteId = monVChkDocNonversEnteId;
+    }
+
+    public MonVChkDocNonversEnte() {/* Hibernate */
+    }
+
+    @Column(name = "FL_DOC_NONVERS_NORISOLUB", columnDefinition = "char(1)")
     public String getFlDocNonversNorisolub() {
         return this.flDocNonversNorisolub;
     }
@@ -31,7 +60,7 @@ public class MonVChkDocNonversEnte implements Serializable {
         this.flDocNonversNorisolub = flDocNonversNorisolub;
     }
 
-    @Column(name = "FL_DOC_NONVERS_NOVERIF")
+    @Column(name = "FL_DOC_NONVERS_NOVERIF", columnDefinition = "char(1)")
     public String getFlDocNonversNoverif() {
         return this.flDocNonversNoverif;
     }
@@ -40,7 +69,7 @@ public class MonVChkDocNonversEnte implements Serializable {
         this.flDocNonversNoverif = flDocNonversNoverif;
     }
 
-    @Column(name = "FL_DOC_NONVERS_VERIF")
+    @Column(name = "FL_DOC_NONVERS_VERIF", columnDefinition = "char(1)")
     public String getFlDocNonversVerif() {
         return this.flDocNonversVerif;
     }
@@ -48,25 +77,4 @@ public class MonVChkDocNonversEnte implements Serializable {
     public void setFlDocNonversVerif(String flDocNonversVerif) {
         this.flDocNonversVerif = flDocNonversVerif;
     }
-
-    @Id
-    @Column(name = "ID_ENTE")
-    public BigDecimal getIdEnte() {
-        return this.idEnte;
-    }
-
-    public void setIdEnte(BigDecimal idEnte) {
-        this.idEnte = idEnte;
-    }
-
-    @Id
-    @Column(name = "ID_USER_IAM")
-    public BigDecimal getIdUserIam() {
-        return this.idUserIam;
-    }
-
-    public void setIdUserIam(BigDecimal idUserIam) {
-        this.idUserIam = idUserIam;
-    }
-
 }

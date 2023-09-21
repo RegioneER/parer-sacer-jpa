@@ -1,38 +1,84 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 /**
  * The persistent class for the SER_ERR_FILE_INPUT database table.
- * 
  */
 @Entity
 @Table(name = "SER_ERR_FILE_INPUT")
 @NamedQuery(name = "SerErrFileInput.findAll", query = "SELECT s FROM SerErrFileInput s")
 public class SerErrFileInput implements Serializable {
-    private static final long serialVersionUID = 1L;
-    private long idErrFileInput;
-    private String dsRecErr;
-    private BigDecimal niRecErr;
-    private String tiErrRec;
-    private SerFileInputVerSerie serFileInputVerSerie;
-    private List<SerUdErrFileInput> serUdErrFileInputs;
 
-    public SerErrFileInput() {
+    private static final long serialVersionUID = 1L;
+
+    private Long idErrFileInput;
+
+    private String dsRecErr;
+
+    private BigDecimal niRecErr;
+
+    private String tiErrRec;
+
+    private SerFileInputVerSerie serFileInputVerSerie;
+
+    private List<SerUdErrFileInput> serUdErrFileInputs = new ArrayList<>();
+
+    public SerErrFileInput() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "SER_ERR_FILE_INPUT_IDERRFILEINPUT_GENERATOR", sequenceName = "SSER_ERR_FILE_INPUT", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SER_ERR_FILE_INPUT_IDERRFILEINPUT_GENERATOR")
+    // "SER_ERR_FILE_INPUT_IDERRFILEINPUT_GENERATOR",
+    // sequenceName = "SSER_ERR_FILE_INPUT",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SER_ERR_FILE_INPUT_IDERRFILEINPUT_GENERATOR")
     @Column(name = "ID_ERR_FILE_INPUT")
-    public long getIdErrFileInput() {
+    @GenericGenerator(name = "SSER_ERR_FILE_INPUT_ID_ERR_FILE_INPUT_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SSER_ERR_FILE_INPUT"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SSER_ERR_FILE_INPUT_ID_ERR_FILE_INPUT_GENERATOR")
+    public Long getIdErrFileInput() {
         return this.idErrFileInput;
     }
 
-    public void setIdErrFileInput(long idErrFileInput) {
+    public void setIdErrFileInput(Long idErrFileInput) {
         this.idErrFileInput = idErrFileInput;
     }
 
@@ -87,14 +133,12 @@ public class SerErrFileInput implements Serializable {
     public SerUdErrFileInput addSerUdErrFileInput(SerUdErrFileInput serUdErrFileInput) {
         getSerUdErrFileInputs().add(serUdErrFileInput);
         serUdErrFileInput.setSerErrFileInput(this);
-
         return serUdErrFileInput;
     }
 
     public SerUdErrFileInput removeSerUdErrFileInput(SerUdErrFileInput serUdErrFileInput) {
         getSerUdErrFileInputs().remove(serUdErrFileInput);
         serUdErrFileInput.setSerErrFileInput(null);
-
         return serUdErrFileInput;
     }
 

@@ -1,8 +1,27 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,19 +34,20 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlTransient;
+
 import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 /**
  * The persistent class for the DEC_TIPO_UNITA_DOC database table.
- *
  */
 @Entity
 @Cacheable(true)
@@ -35,54 +55,94 @@ import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 public class DecTipoUnitaDoc implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idTipoUnitaDoc;
+
+    private Long idTipoUnitaDoc;
+
     private String cdSerie;
+
     private String cdSerieDaCreare;
+
     private String dlNoteTipoUd;
+
     private String dsSerieDaCreare;
+
     private String dsTipoSerieDaCreare;
+
     private String dsTipoUnitaDoc;
+
     private Date dtIstituz;
+
     private Date dtSoppres;
+
     private String flCreaTipoSerieStandard;
+
     private String flVersManuale;
+
     private String nmTipoSerieDaCreare;
+
     private String nmTipoUnitaDoc;
+
     private String tiSaveFile;
-    private List<AroUnitaDoc> aroUnitaDocs;
-    private List<DecAttribDatiSpec> decAttribDatiSpecs;
-    private List<DecCriterioFiltroMultiplo> decCriterioFiltroMultiplos;
-    private List<DecTipoSerieUd> decTipoSerieUds;
-    private List<DecTipoStrutUnitaDoc> decTipoStrutUnitaDocs;
+
+    private List<AroUnitaDoc> aroUnitaDocs = new ArrayList<>();
+
+    private List<DecAttribDatiSpec> decAttribDatiSpecs = new ArrayList<>();
+
+    private List<DecCriterioFiltroMultiplo> decCriterioFiltroMultiplos = new ArrayList<>();
+
+    private List<DecTipoSerieUd> decTipoSerieUds = new ArrayList<>();
+
+    private List<DecTipoStrutUnitaDoc> decTipoStrutUnitaDocs = new ArrayList<>();
+
     private DecCategTipoUnitaDoc decCategTipoUnitaDoc;
+
     private OrgStrut orgStrut;
-    private List<DecTipoUnitaDocAmmesso> decTipoUnitaDocAmmessos;
-    private List<DecXsdDatiSpec> decXsdDatiSpecs;
-    private List<MonContaUdDocComp> monContaUdDocComps;
-    private List<OrgRegolaValSubStrut> orgRegolaValSubStruts;
-    private List<DecModelloTipoSerie> decModelloTipoSeries;
+
+    private List<DecTipoUnitaDocAmmesso> decTipoUnitaDocAmmessos = new ArrayList<>();
+
+    private List<DecXsdDatiSpec> decXsdDatiSpecs = new ArrayList<>();
+
+    private List<MonContaUdDocComp> monContaUdDocComps = new ArrayList<>();
+
+    private List<OrgRegolaValSubStrut> orgRegolaValSubStruts = new ArrayList<>();
+
+    private List<DecModelloTipoSerie> decModelloTipoSeries = new ArrayList<>();
+
     private DecModelloTipoSerie decModelloTipoSerie;
+
     private OrgTipoServizio orgTipoServizio;
+
     private OrgTipoServizio orgTipoServizioAttiv;
+
     private OrgTipoServizio orgTipoServAttivTipoUd;
+
     private OrgTipoServizio orgTipoServConservTipoUd;
-    private List<MonTipoUnitaDocUserVers> monTipoUnitaDocUserVers;
-    private List<AplValoreParamApplic> aplValoreParamApplics;
-    private List<DecUsoModelloXsdUniDoc> decUsoModelloXsdUniDocs;
+
+    private List<MonTipoUnitaDocUserVers> monTipoUnitaDocUserVers = new ArrayList<>();
+
+    private List<AplValoreParamApplic> aplValoreParamApplics = new ArrayList<>();
+    private List<DecUsoModelloXsdUniDoc> decUsoModelloXsdUniDocs = new ArrayList<>();
 
     public DecTipoUnitaDoc() {
+        // hibernate
     }
 
     @Id
-    @SequenceGenerator(name = "DEC_TIPO_UNITA_DOC_IDTIPOUNITADOC_GENERATOR", sequenceName = "SDEC_TIPO_UNITA_DOC", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DEC_TIPO_UNITA_DOC_IDTIPOUNITADOC_GENERATOR")
+    // "DEC_TIPO_UNITA_DOC_IDTIPOUNITADOC_GENERATOR",
+    // sequenceName = "SDEC_TIPO_UNITA_DOC",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DEC_TIPO_UNITA_DOC_IDTIPOUNITADOC_GENERATOR")
     @Column(name = "ID_TIPO_UNITA_DOC")
     @XmlID
-    public long getIdTipoUnitaDoc() {
+    @GenericGenerator(name = "SDEC_TIPO_UNITA_DOC_ID_TIPO_UNITA_DOC_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SDEC_TIPO_UNITA_DOC"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SDEC_TIPO_UNITA_DOC_ID_TIPO_UNITA_DOC_GENERATOR")
+    public Long getIdTipoUnitaDoc() {
         return this.idTipoUnitaDoc;
     }
 
-    public void setIdTipoUnitaDoc(long idTipoUnitaDoc) {
+    public void setIdTipoUnitaDoc(Long idTipoUnitaDoc) {
         this.idTipoUnitaDoc = idTipoUnitaDoc;
     }
 
@@ -140,16 +200,6 @@ public class DecTipoUnitaDoc implements Serializable {
         this.dsTipoUnitaDoc = dsTipoUnitaDoc;
     }
 
-    // @XmlTransient
-    // @Temporal(TemporalType.TIMESTAMP)
-    // @Column(name = "DT_FIRST_VERS")
-    // public Date getDtFirstVers() {
-    // return this.dtFirstVers;
-    // }
-    //
-    // public void setDtFirstVers(Date dtFirstVers) {
-    // this.dtFirstVers = dtFirstVers;
-    // }
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "DT_ISTITUZ")
     public Date getDtIstituz() {
@@ -170,6 +220,7 @@ public class DecTipoUnitaDoc implements Serializable {
         this.dtSoppres = dtSoppres;
     }
 
+    // effettivamente mappato come varchar su DB
     @Column(name = "FL_CREA_TIPO_SERIE_STANDARD")
     public String getFlCreaTipoSerieStandard() {
         return this.flCreaTipoSerieStandard;
@@ -179,7 +230,7 @@ public class DecTipoUnitaDoc implements Serializable {
         this.flCreaTipoSerieStandard = flCreaTipoSerieStandard;
     }
 
-    @Column(name = "FL_VERS_MANUALE")
+    @Column(name = "FL_VERS_MANUALE", columnDefinition = "char(1)")
     public String getFlVersManuale() {
         return this.flVersManuale;
     }
@@ -262,14 +313,12 @@ public class DecTipoUnitaDoc implements Serializable {
     public DecTipoSerieUd addDecTipoSerieUd(DecTipoSerieUd decTipoSerieUd) {
         getDecTipoSerieUds().add(decTipoSerieUd);
         decTipoSerieUd.setDecTipoUnitaDoc(this);
-
         return decTipoSerieUd;
     }
 
     public DecTipoSerieUd removeDecTipoSerieUd(DecTipoSerieUd decTipoSerieUd) {
         getDecTipoSerieUds().remove(decTipoSerieUd);
         decTipoSerieUd.setDecTipoUnitaDoc(null);
-
         return decTipoSerieUd;
     }
 
@@ -342,14 +391,12 @@ public class DecTipoUnitaDoc implements Serializable {
     public MonContaUdDocComp addMonContaUdDocComp(MonContaUdDocComp monContaUdDocComp) {
         getMonContaUdDocComps().add(monContaUdDocComp);
         monContaUdDocComp.setDecTipoUnitaDoc(this);
-
         return monContaUdDocComp;
     }
 
     public MonContaUdDocComp removeMonContaUdDocComp(MonContaUdDocComp monContaUdDocComp) {
         getMonContaUdDocComps().remove(monContaUdDocComp);
         monContaUdDocComp.setDecTipoUnitaDoc(null);
-
         return monContaUdDocComp;
     }
 
@@ -377,14 +424,12 @@ public class DecTipoUnitaDoc implements Serializable {
     public DecModelloTipoSerie addDecModelloTipoSery(DecModelloTipoSerie decModelloTipoSery) {
         getDecModelloTipoSeries().add(decModelloTipoSery);
         decModelloTipoSery.setDecTipoUnitaDoc(this);
-
         return decModelloTipoSery;
     }
 
     public DecModelloTipoSerie removeDecModelloTipoSery(DecModelloTipoSerie decModelloTipoSery) {
         getDecModelloTipoSeries().remove(decModelloTipoSery);
         decModelloTipoSery.setDecTipoUnitaDoc(null);
-
         return decModelloTipoSery;
     }
 
@@ -399,16 +444,6 @@ public class DecTipoUnitaDoc implements Serializable {
         this.decModelloTipoSerie = decModelloTipoSerie;
     }
 
-    // //bi-directional many-to-one association to AplSistemaVersante
-    // @ManyToOne(fetch = FetchType.LAZY)
-    // @JoinColumn(name = "ID_SISTEMA_VERSANTE")
-    // public AplSistemaVersante getAplSistemaVersante() {
-    // return this.aplSistemaVersante;
-    // }
-    //
-    // public void setAplSistemaVersante(AplSistemaVersante aplSistemaVersante) {
-    // this.aplSistemaVersante = aplSistemaVersante;
-    // }
     // bi-directional many-to-one association to OrgTipoServizio
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_TIPO_SERVIZIO")
@@ -484,14 +519,12 @@ public class DecTipoUnitaDoc implements Serializable {
     public AplValoreParamApplic addAplValoreParamApplic(AplValoreParamApplic aplValoreParamApplic) {
         getAplValoreParamApplics().add(aplValoreParamApplic);
         aplValoreParamApplic.setDecTipoUnitaDoc(this);
-
         return aplValoreParamApplic;
     }
 
     public AplValoreParamApplic removeAplValoreParamApplic(AplValoreParamApplic aplValoreParamApplic) {
         getAplValoreParamApplics().remove(aplValoreParamApplic);
         aplValoreParamApplic.setDecTipoUnitaDoc(null);
-
         return aplValoreParamApplic;
     }
 
@@ -518,5 +551,4 @@ public class DecTipoUnitaDoc implements Serializable {
             this.flVersManuale = "0";
         }
     }
-
 }

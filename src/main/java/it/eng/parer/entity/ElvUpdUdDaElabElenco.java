@@ -1,65 +1,93 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
+
+import javax.persistence.AssociationOverride;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 import it.eng.parer.entity.constraint.ElvUpdUdDaElabElenco.ElvUpdUdDaElabTiStatoUpdElencoVers;
-
-import java.math.BigDecimal;
-import java.util.Date;
+import it.eng.parer.entity.inheritance.oop.ElvUdDocUpdDaElabElenco;
 
 /**
  * The persistent class for the ELV_UPD_UD_DA_ELAB_ELENCO database table.
- * 
  */
 @Entity
 @Table(name = "ELV_UPD_UD_DA_ELAB_ELENCO")
 @NamedQuery(name = "ElvUpdUdDaElabElenco.findAll", query = "SELECT e FROM ElvUpdUdDaElabElenco e")
-public class ElvUpdUdDaElabElenco implements Serializable {
+@AssociationOverride(name = "udDocUpdObj", joinColumns = @JoinColumn(name = "ID_UPD_UNITA_DOC", insertable = false, updatable = false))
+public class ElvUpdUdDaElabElenco extends ElvUdDocUpdDaElabElenco<AroUpdUnitaDoc> implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    private long idUpdUdDaElabElenco;
-    private BigDecimal aaKeyUnitaDoc;
-    private Date dtCreazione;
+
+    private Long idUpdUdDaElabElenco;
+
     private OrgStrut orgStrut;
+
     private OrgSubStrut orgSubStrut;
+
     private AroUpdUnitaDoc aroUpdUnitaDoc;
+
     private ElvUpdUdDaElabTiStatoUpdElencoVers tiStatoUpdElencoVers;
+
     private DecRegistroUnitaDoc decRegistroUnitaDoc;
+
     private DecTipoUnitaDoc decTipoUnitaDoc;
+
     private DecTipoDoc decTipoDocPrinc;
 
-    public ElvUpdUdDaElabElenco() {
+    public ElvUpdUdDaElabElenco() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "ELV_UPD_UD_DA_ELAB_ELENCO_IDUPDUDDAELABELENCO_GENERATOR", sequenceName = "SELV_UPD_UD_DA_ELAB_ELENCO", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ELV_UPD_UD_DA_ELAB_ELENCO_IDUPDUDDAELABELENCO_GENERATOR")
+    // "ELV_UPD_UD_DA_ELAB_ELENCO_IDUPDUDDAELABELENCO_GENERATOR",
+    // sequenceName =
+    // "SELV_UPD_UD_DA_ELAB_ELENCO",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
+    // "ELV_UPD_UD_DA_ELAB_ELENCO_IDUPDUDDAELABELENCO_GENERATOR")
     @Column(name = "ID_UPD_UD_DA_ELAB_ELENCO")
-    public long getIdUpdUdDaElabElenco() {
+    @GenericGenerator(name = "SELV_UPD_UD_DA_ELAB_ELENCO_ID_UPD_UD_DA_ELAB_ELENCO_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SELV_UPD_UD_DA_ELAB_ELENCO"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SELV_UPD_UD_DA_ELAB_ELENCO_ID_UPD_UD_DA_ELAB_ELENCO_GENERATOR")
+    public Long getIdUpdUdDaElabElenco() {
         return this.idUpdUdDaElabElenco;
     }
 
-    public void setIdUpdUdDaElabElenco(long idUpdUdDaElabElenco) {
+    public void setIdUpdUdDaElabElenco(Long idUpdUdDaElabElenco) {
         this.idUpdUdDaElabElenco = idUpdUdDaElabElenco;
-    }
-
-    @Column(name = "AA_KEY_UNITA_DOC")
-    public BigDecimal getAaKeyUnitaDoc() {
-        return this.aaKeyUnitaDoc;
-    }
-
-    public void setAaKeyUnitaDoc(BigDecimal aaKeyUnitaDoc) {
-        this.aaKeyUnitaDoc = aaKeyUnitaDoc;
-    }
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "DT_CREAZIONE")
-    public Date getDtCreazione() {
-        return this.dtCreazione;
-    }
-
-    public void setDtCreazione(Date dtCreazione) {
-        this.dtCreazione = dtCreazione;
     }
 
     // bi-directional many-to-one association to OrgStrut

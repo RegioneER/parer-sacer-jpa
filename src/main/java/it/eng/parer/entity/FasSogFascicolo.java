@@ -1,11 +1,44 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 /**
  * The persistent class for the FAS_SOG_FASCICOLO database table.
- *
  */
 @Entity
 @Table(name = "FAS_SOG_FASCICOLO")
@@ -13,27 +46,45 @@ import javax.persistence.*;
 public class FasSogFascicolo implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idSogFascicolo;
+
+    private Long idSogFascicolo;
+
     private String cdSog;
+
     private String dsDenomSog;
+
     private String nmCognSog;
+
     private String nmNomeSog;
+
     private String tiCdSog;
+
     private String tiRapp;
+
     private FasFascicolo fasFascicolo;
 
-    public FasSogFascicolo() {
+    private List<FasCodIdeSog> fasCodIdeSogs = new ArrayList<>();
+
+    private List<FasIndRifSog> fasIndRifSogs = new ArrayList<>();
+
+    public FasSogFascicolo() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "FAS_SOG_FASCICOLO_IDSOGFASCICOLO_GENERATOR", sequenceName = "SFAS_SOG_FASCICOLO", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "FAS_SOG_FASCICOLO_IDSOGFASCICOLO_GENERATOR")
+    // "FAS_SOG_FASCICOLO_IDSOGFASCICOLO_GENERATOR",
+    // sequenceName = "SFAS_SOG_FASCICOLO",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "FAS_SOG_FASCICOLO_IDSOGFASCICOLO_GENERATOR")
     @Column(name = "ID_SOG_FASCICOLO")
-    public long getIdSogFascicolo() {
+    @GenericGenerator(name = "SFAS_SOG_FASCICOLO_ID_SOG_FASCICOLO_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SFAS_SOG_FASCICOLO"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SFAS_SOG_FASCICOLO_ID_SOG_FASCICOLO_GENERATOR")
+    public Long getIdSogFascicolo() {
         return this.idSogFascicolo;
     }
 
-    public void setIdSogFascicolo(long idSogFascicolo) {
+    public void setIdSogFascicolo(Long idSogFascicolo) {
         this.idSogFascicolo = idSogFascicolo;
     }
 
@@ -100,5 +151,25 @@ public class FasSogFascicolo implements Serializable {
 
     public void setFasFascicolo(FasFascicolo fasFascicolo) {
         this.fasFascicolo = fasFascicolo;
+    }
+
+    // bi-directional many-to-one association to FasCodIdeSog
+    @OneToMany(mappedBy = "fasSogFascicolo")
+    public List<FasCodIdeSog> getFasCodIdeSogs() {
+        return this.fasCodIdeSogs;
+    }
+
+    public void setFasCodIdeSogs(List<FasCodIdeSog> fasCodIdeSogs) {
+        this.fasCodIdeSogs = fasCodIdeSogs;
+    }
+
+    // bi-directional many-to-one association to FasIndRifSog
+    @OneToMany(mappedBy = "fasSogFascicolo")
+    public List<FasIndRifSog> getFasIndRifSogs() {
+        return this.fasIndRifSogs;
+    }
+
+    public void setFasIndRifSogs(List<FasIndRifSog> fasIndRifSogs) {
+        this.fasIndRifSogs = fasIndRifSogs;
     }
 }

@@ -1,8 +1,31 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the MON_V_VIS_UPD_UD_ERR database table.
@@ -41,7 +64,7 @@ public class MonVVisUpdUdErr implements Serializable {
     private String nmUseridWs;
     private String tiStatoSes;
 
-    public MonVVisUpdUdErr() {
+    public MonVVisUpdUdErr() {/* Hibernate */
     }
 
     @Column(name = "AA_KEY_UNITA_DOC")
@@ -145,7 +168,7 @@ public class MonVVisUpdUdErr implements Serializable {
         this.dsTsIniSes = dsTsIniSes;
     }
 
-    @Column(name = "FL_ESISTE_REGISTRO")
+    @Column(name = "FL_ESISTE_REGISTRO", columnDefinition = "char(1)")
     public String getFlEsisteRegistro() {
         return this.flEsisteRegistro;
     }
@@ -154,7 +177,7 @@ public class MonVVisUpdUdErr implements Serializable {
         this.flEsisteRegistro = flEsisteRegistro;
     }
 
-    @Column(name = "FL_ESISTE_STRUT")
+    @Column(name = "FL_ESISTE_STRUT", columnDefinition = "char(1)")
     public String getFlEsisteStrut() {
         return this.flEsisteStrut;
     }
@@ -163,7 +186,7 @@ public class MonVVisUpdUdErr implements Serializable {
         this.flEsisteStrut = flEsisteStrut;
     }
 
-    @Column(name = "FL_ESISTE_TIPO_DOC_PRINC")
+    @Column(name = "FL_ESISTE_TIPO_DOC_PRINC", columnDefinition = "char(1)")
     public String getFlEsisteTipoDocPrinc() {
         return this.flEsisteTipoDocPrinc;
     }
@@ -172,7 +195,7 @@ public class MonVVisUpdUdErr implements Serializable {
         this.flEsisteTipoDocPrinc = flEsisteTipoDocPrinc;
     }
 
-    @Column(name = "FL_ESISTE_TIPO_UNITA_DOC")
+    @Column(name = "FL_ESISTE_TIPO_UNITA_DOC", columnDefinition = "char(1)")
     public String getFlEsisteTipoUnitaDoc() {
         return this.flEsisteTipoUnitaDoc;
     }

@@ -1,47 +1,98 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.time.LocalDate;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 import it.eng.parer.entity.constraint.AroXmlUpdUnitaDoc.TiXmlUpdUnitaDoc;
 
-import java.math.BigDecimal;
-import java.util.Date;
-
 /**
  * The persistent class for the ARO_XML_UPD_UNITA_DOC database table.
- * 
  */
 @Entity
 @Table(name = "ARO_XML_UPD_UNITA_DOC")
 @NamedQuery(name = "AroXmlUpdUnitaDoc.findAll", query = "SELECT a FROM AroXmlUpdUnitaDoc a")
 public class AroXmlUpdUnitaDoc implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    private long idXmlUpdUnitaDoc;
+
+    private Long idXmlUpdUnitaDoc;
+
     private String blXml;
+
     private String cdEncodingHashXml;
+
     private String cdVersioneXml;
+
     private String dsAlgoHashXml;
+
     private String dsHashXml;
+
     private String dsUrnXml;
+
     private String dsUrnNormalizXml;
-    private Date dtIniSes;
+
+    private LocalDate dtIniSes;
+
     private OrgStrut orgStrut;
+
     private AroUpdUnitaDoc aroUpdUnitaDoc;
+
     private TiXmlUpdUnitaDoc tiXmlUpdUnitaDoc;
 
-    public AroXmlUpdUnitaDoc() {
+    public AroXmlUpdUnitaDoc() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "ARO_XML_UPD_UNITA_DOC_IDXMLUPDUNITADOC_GENERATOR", sequenceName = "SARO_XML_UPD_UNITA_DOC", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ARO_XML_UPD_UNITA_DOC_IDXMLUPDUNITADOC_GENERATOR")
+    // "ARO_XML_UPD_UNITA_DOC_IDXMLUPDUNITADOC_GENERATOR",
+    // sequenceName = "SARO_XML_UPD_UNITA_DOC",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
+    // "ARO_XML_UPD_UNITA_DOC_IDXMLUPDUNITADOC_GENERATOR")
     @Column(name = "ID_XML_UPD_UNITA_DOC")
-    public long getIdXmlUpdUnitaDoc() {
+    @GenericGenerator(name = "SARO_XML_UPD_UNITA_DOC_ID_XML_UPD_UNITA_DOC_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SARO_XML_UPD_UNITA_DOC"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SARO_XML_UPD_UNITA_DOC_ID_XML_UPD_UNITA_DOC_GENERATOR")
+    public Long getIdXmlUpdUnitaDoc() {
         return this.idXmlUpdUnitaDoc;
     }
 
-    public void setIdXmlUpdUnitaDoc(long idXmlUpdUnitaDoc) {
+    public void setIdXmlUpdUnitaDoc(Long idXmlUpdUnitaDoc) {
         this.idXmlUpdUnitaDoc = idXmlUpdUnitaDoc;
     }
 
@@ -109,13 +160,12 @@ public class AroXmlUpdUnitaDoc implements Serializable {
         this.dsUrnNormalizXml = dsUrnNormalizXml;
     }
 
-    @Temporal(TemporalType.DATE)
     @Column(name = "DT_INI_SES")
-    public Date getDtIniSes() {
+    public LocalDate getDtIniSes() {
         return this.dtIniSes;
     }
 
-    public void setDtIniSes(Date dtIniSes) {
+    public void setDtIniSes(LocalDate dtIniSes) {
         this.dtIniSes = dtIniSes;
     }
 

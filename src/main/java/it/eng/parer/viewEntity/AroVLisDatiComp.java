@@ -1,15 +1,37 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+
+import javax.persistence.Column;
+import javax.persistence.Id;
 
 /**
  * The persistent class for the ARO_V_LIS_DATI_COMP database table.
  * 
  */
-@Entity
-@Table(name = "ARO_V_LIS_DATI_COMP")
+/*
+ * @Entity
+ * 
+ * @Table(name = "ARO_V_LIS_DATI_COMP")
+ */
 public class AroVLisDatiComp implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -23,7 +45,7 @@ public class AroVLisDatiComp implements Serializable {
     private BigDecimal idCompDoc;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    // @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID_DATI_COMP")
     private BigDecimal idDatiComp;
 
@@ -33,7 +55,7 @@ public class AroVLisDatiComp implements Serializable {
     @Column(name = "NM_ATTRIB_TIPO_COMP")
     private String nmAttribTipoComp;
 
-    public AroVLisDatiComp() {
+    public AroVLisDatiComp() {/* Hibernate */
     }
 
     public String getDlValore() {

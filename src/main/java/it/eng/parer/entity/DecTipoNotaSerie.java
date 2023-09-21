@@ -1,40 +1,84 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 /**
  * The persistent class for the DEC_TIPO_NOTA_SERIE database table.
- * 
  */
 @Entity
 @Table(name = "DEC_TIPO_NOTA_SERIE")
 @NamedQuery(name = "DecTipoNotaSerie.findAll", query = "SELECT d FROM DecTipoNotaSerie d")
 public class DecTipoNotaSerie implements Serializable {
-    private static final long serialVersionUID = 1L;
-    private long idTipoNotaSerie;
-    private String cdTipoNotaSerie;
-    private String dsTipoNotaSerie;
-    private String flMolt;
-    private String flObblig;
-    private BigDecimal niOrd;
-    private List<DecNotaTipoSerie> decNotaTipoSeries;
-    private List<SerNotaVerSerie> serNotaVerSeries;
 
-    public DecTipoNotaSerie() {
+    private static final long serialVersionUID = 1L;
+
+    private Long idTipoNotaSerie;
+
+    private String cdTipoNotaSerie;
+
+    private String dsTipoNotaSerie;
+
+    private String flMolt;
+
+    private String flObblig;
+
+    private BigDecimal niOrd;
+
+    private List<DecNotaTipoSerie> decNotaTipoSeries = new ArrayList<>();
+
+    private List<SerNotaVerSerie> serNotaVerSeries = new ArrayList<>();
+
+    public DecTipoNotaSerie() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "DEC_TIPO_NOTA_SERIE_IDTIPONOTASERIE_GENERATOR", sequenceName = "SDEC_TIPO_NOTA_SERIE", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DEC_TIPO_NOTA_SERIE_IDTIPONOTASERIE_GENERATOR")
+    // "DEC_TIPO_NOTA_SERIE_IDTIPONOTASERIE_GENERATOR",
+    // sequenceName = "SDEC_TIPO_NOTA_SERIE",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DEC_TIPO_NOTA_SERIE_IDTIPONOTASERIE_GENERATOR")
     @Column(name = "ID_TIPO_NOTA_SERIE")
-    public long getIdTipoNotaSerie() {
+    @GenericGenerator(name = "SDEC_TIPO_NOTA_SERIE_ID_TIPO_NOTA_SERIE_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SDEC_TIPO_NOTA_SERIE"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SDEC_TIPO_NOTA_SERIE_ID_TIPO_NOTA_SERIE_GENERATOR")
+    public Long getIdTipoNotaSerie() {
         return this.idTipoNotaSerie;
     }
 
-    public void setIdTipoNotaSerie(long idTipoNotaSerie) {
+    public void setIdTipoNotaSerie(Long idTipoNotaSerie) {
         this.idTipoNotaSerie = idTipoNotaSerie;
     }
 
@@ -56,7 +100,7 @@ public class DecTipoNotaSerie implements Serializable {
         this.dsTipoNotaSerie = dsTipoNotaSerie;
     }
 
-    @Column(name = "FL_MOLT")
+    @Column(name = "FL_MOLT", columnDefinition = "char(1)")
     public String getFlMolt() {
         return this.flMolt;
     }
@@ -65,7 +109,7 @@ public class DecTipoNotaSerie implements Serializable {
         this.flMolt = flMolt;
     }
 
-    @Column(name = "FL_OBBLIG")
+    @Column(name = "FL_OBBLIG", columnDefinition = "char(1)")
     public String getFlObblig() {
         return this.flObblig;
     }
@@ -96,14 +140,12 @@ public class DecTipoNotaSerie implements Serializable {
     public DecNotaTipoSerie addDecNotaTipoSery(DecNotaTipoSerie decNotaTipoSery) {
         getDecNotaTipoSeries().add(decNotaTipoSery);
         decNotaTipoSery.setDecTipoNotaSerie(this);
-
         return decNotaTipoSery;
     }
 
     public DecNotaTipoSerie removeDecNotaTipoSery(DecNotaTipoSerie decNotaTipoSery) {
         getDecNotaTipoSeries().remove(decNotaTipoSery);
         decNotaTipoSery.setDecTipoNotaSerie(null);
-
         return decNotaTipoSery;
     }
 
@@ -120,14 +162,12 @@ public class DecTipoNotaSerie implements Serializable {
     public SerNotaVerSerie addSerNotaVerSery(SerNotaVerSerie serNotaVerSery) {
         getSerNotaVerSeries().add(serNotaVerSery);
         serNotaVerSery.setDecTipoNotaSerie(this);
-
         return serNotaVerSery;
     }
 
     public SerNotaVerSerie removeSerNotaVerSery(SerNotaVerSerie serNotaVerSery) {
         getSerNotaVerSeries().remove(serNotaVerSery);
         serNotaVerSery.setDecTipoNotaSerie(null);
-
         return serNotaVerSery;
     }
 

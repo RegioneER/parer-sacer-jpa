@@ -1,9 +1,33 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the MON_V_LIS_UNI_DOC_DA_ANNUL database table.
@@ -39,7 +63,7 @@ public class MonVLisUniDocDaAnnul implements Serializable {
     private String tiDoc;
     private String tiStatoAnnul;
 
-    public MonVLisUniDocDaAnnul() {
+    public MonVLisUniDocDaAnnul() {/* Hibernate */
     }
 
     @Column(name = "AA_KEY_UNITA_DOC")
@@ -98,7 +122,7 @@ public class MonVLisUniDocDaAnnul implements Serializable {
         this.dtCreazione = dtCreazione;
     }
 
-    @Column(name = "FL_VERS_NUOVO")
+    @Column(name = "FL_VERS_NUOVO", columnDefinition = "char(1)")
     public String getFlVersNuovo() {
         return this.flVersNuovo;
     }

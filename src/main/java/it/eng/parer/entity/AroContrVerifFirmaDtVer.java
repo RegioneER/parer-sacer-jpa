@@ -1,3 +1,20 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
@@ -12,12 +29,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 /**
  * The persistent class for the ARO_CONTR_VERIF_FIRMA_DT_VERS database table.
- *
  */
 @Entity
 @Table(name = "ARO_CONTR_VERIF_FIRMA_DT_VERS")
@@ -25,26 +44,41 @@ import javax.persistence.Table;
 public class AroContrVerifFirmaDtVer implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idContrVerifFirmaDtVers;
+
+    private Long idContrVerifFirmaDtVers;
+
     private String dsMsgContrVerif;
+
     private FirCrl firCrl;
+
     private FirOcsp firOcsp;
+
     private String tiContr;
+
     private String tiEsitoContrVerif;
+
     private AroVerifFirmaDtVer aroVerifFirmaDtVer;
 
-    public AroContrVerifFirmaDtVer() {
+    public AroContrVerifFirmaDtVer() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "ARO_CONTR_VERIF_FIRMA_DT_VERS_IDCONTRVERIFFIRMADTVERS_GENERATOR", sequenceName = "SARO_CONTR_VERIF_FIRMA_DT_VERS", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ARO_CONTR_VERIF_FIRMA_DT_VERS_IDCONTRVERIFFIRMADTVERS_GENERATOR")
+    // "ARO_CONTR_VERIF_FIRMA_DT_VERS_IDCONTRVERIFFIRMADTVERS_GENERATOR",
+    // sequenceName =
+    // "SARO_CONTR_VERIF_FIRMA_DT_VERS",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
+    // "ARO_CONTR_VERIF_FIRMA_DT_VERS_IDCONTRVERIFFIRMADTVERS_GENERATOR")
     @Column(name = "ID_CONTR_VERIF_FIRMA_DT_VERS")
-    public long getIdContrVerifFirmaDtVers() {
+    @GenericGenerator(name = "SARO_CONTR_VERIF_FIRMA_DT_VERS_ID_CONTR_VERIF_FIRMA_DT_VERS_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SARO_CONTR_VERIF_FIRMA_DT_VERS"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SARO_CONTR_VERIF_FIRMA_DT_VERS_ID_CONTR_VERIF_FIRMA_DT_VERS_GENERATOR")
+    public Long getIdContrVerifFirmaDtVers() {
         return this.idContrVerifFirmaDtVers;
     }
 
-    public void setIdContrVerifFirmaDtVers(long idContrVerifFirmaDtVers) {
+    public void setIdContrVerifFirmaDtVers(Long idContrVerifFirmaDtVers) {
         this.idContrVerifFirmaDtVers = idContrVerifFirmaDtVers;
     }
 
@@ -108,5 +142,4 @@ public class AroContrVerifFirmaDtVer implements Serializable {
     public void setAroVerifFirmaDtVer(AroVerifFirmaDtVer aroVerifFirmaDtVer) {
         this.aroVerifFirmaDtVer = aroVerifFirmaDtVer;
     }
-
 }

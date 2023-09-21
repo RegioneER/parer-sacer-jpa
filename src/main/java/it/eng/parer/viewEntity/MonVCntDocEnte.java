@@ -1,45 +1,46 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the MON_V_CNT_DOC_ENTE database table.
- * 
+ *
  */
 @Entity
 @Table(name = "MON_V_CNT_DOC_ENTE")
 @NamedQuery(name = "MonVCntDocEnte.findAll", query = "SELECT m FROM MonVCntDocEnte m")
 public class MonVCntDocEnte implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    private BigDecimal idEnte;
-    private BigDecimal idUserIam;
+
     private BigDecimal niDoc;
-    private String tiDtCreazione;
-    private String tiStatoDoc;
+    private MonVCntDocEnteId monVCntDocEnteId;
 
-    public MonVCntDocEnte() {
-    }
-
-    @Id
-    @Column(name = "ID_ENTE")
-    public BigDecimal getIdEnte() {
-        return this.idEnte;
-    }
-
-    public void setIdEnte(BigDecimal idEnte) {
-        this.idEnte = idEnte;
-    }
-
-    @Id
-    @Column(name = "ID_USER_IAM")
-    public BigDecimal getIdUserIam() {
-        return this.idUserIam;
-    }
-
-    public void setIdUserIam(BigDecimal idUserIam) {
-        this.idUserIam = idUserIam;
+    public MonVCntDocEnte() {/* Hibernate */
     }
 
     @Column(name = "NI_DOC")
@@ -51,24 +52,13 @@ public class MonVCntDocEnte implements Serializable {
         this.niDoc = niDoc;
     }
 
-    @Id
-    @Column(name = "TI_DT_CREAZIONE")
-    public String getTiDtCreazione() {
-        return this.tiDtCreazione;
+    @EmbeddedId
+    public MonVCntDocEnteId getMonVCntDocEnteId() {
+        return monVCntDocEnteId;
     }
 
-    public void setTiDtCreazione(String tiDtCreazione) {
-        this.tiDtCreazione = tiDtCreazione;
-    }
-
-    @Id
-    @Column(name = "TI_STATO_DOC")
-    public String getTiStatoDoc() {
-        return this.tiStatoDoc;
-    }
-
-    public void setTiStatoDoc(String tiStatoDoc) {
-        this.tiStatoDoc = tiStatoDoc;
+    public void setMonVCntDocEnteId(MonVCntDocEnteId monVCntDocEnteId) {
+        this.monVCntDocEnteId = monVCntDocEnteId;
     }
 
 }

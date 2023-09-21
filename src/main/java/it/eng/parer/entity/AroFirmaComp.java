@@ -1,14 +1,50 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
+
 /**
  * The persistent class for the ARO_FIRMA_COMP database table.
- *
  */
 @Entity
 @Table(name = "ARO_FIRMA_COMP")
@@ -16,49 +52,85 @@ import java.util.List;
 public class AroFirmaComp implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idFirmaComp;
-    private String cdFirmatario;
-    private String dlDnFirmatario;
-    private String dsAlgoFirma;
-    private String dsFirmaBase64;
-    private String blFirmaBase64;
-    private String dsMsgEsitoContrConforme;
-    private String dsMsgEsitoVerifFirma;
-    private Date dtFirma;
-    private BigDecimal idStrut;
-    private String nmCognomeFirmatario;
-    private String nmFirmatario;
-    private BigDecimal pgBusta;
-    private BigDecimal pgFirma;
-    private String tiEsitoContrConforme;
-    private String tiEsitoVerifFirma;
-    private String tiFirma;
-    private String tiFormatoFirma;
-    private String tiRifTempUsato;
-    private String dsNote;
-    private Date tmRifTempUsato;
-    private List<AroControfirmaFirma> aroControfirmaFirmaFiglios;
-    private List<AroControfirmaFirma> aroControfirmaFirmaPadres;
-    private List<AroContrFirmaComp> aroContrFirmaComps;
-    private AroBustaCrittog aroBustaCrittog;
-    private AroCompDoc aroCompDoc;
-    private AroMarcaComp aroMarcaComp;
-    private FirCertifFirmatario firCertifFirmatario;
-    private List<VolAppartFirmaVolume> volAppartFirmaVolumes;
-    private List<AroVerifFirmaDtVer> aroVerifFirmaDtVers;
 
-    public AroFirmaComp() {
+    private Long idFirmaComp;
+
+    private String cdFirmatario;
+
+    private String dlDnFirmatario;
+
+    private String dsAlgoFirma;
+
+    private String dsFirmaBase64;
+
+    private String blFirmaBase64;
+
+    private String dsMsgEsitoContrConforme;
+
+    private String dsMsgEsitoVerifFirma;
+
+    private Date dtFirma;
+
+    private BigDecimal idStrut;
+
+    private String nmCognomeFirmatario;
+
+    private String nmFirmatario;
+
+    private BigDecimal pgBusta;
+
+    private BigDecimal pgFirma;
+
+    private String tiEsitoContrConforme;
+
+    private String tiEsitoVerifFirma;
+
+    private String tiFirma;
+
+    private String tiFormatoFirma;
+
+    private String tiRifTempUsato;
+
+    private String dsNote;
+
+    private Date tmRifTempUsato;
+
+    private List<AroControfirmaFirma> aroControfirmaFirmaFiglios = new ArrayList<>();
+
+    private List<AroControfirmaFirma> aroControfirmaFirmaPadres = new ArrayList<>();
+
+    private List<AroContrFirmaComp> aroContrFirmaComps = new ArrayList<>();
+
+    private AroBustaCrittog aroBustaCrittog;
+
+    private AroCompDoc aroCompDoc;
+
+    private AroMarcaComp aroMarcaComp;
+
+    private FirCertifFirmatario firCertifFirmatario;
+
+    private List<VolAppartFirmaVolume> volAppartFirmaVolumes = new ArrayList<>();
+
+    private List<AroVerifFirmaDtVer> aroVerifFirmaDtVers = new ArrayList<>();
+
+    public AroFirmaComp() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "ARO_FIRMA_COMP_IDFIRMACOMP_GENERATOR", sequenceName = "SARO_FIRMA_COMP", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ARO_FIRMA_COMP_IDFIRMACOMP_GENERATOR")
+    // "ARO_FIRMA_COMP_IDFIRMACOMP_GENERATOR",
+    // sequenceName = "SARO_FIRMA_COMP", allocationSize
+    // = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ARO_FIRMA_COMP_IDFIRMACOMP_GENERATOR")
     @Column(name = "ID_FIRMA_COMP")
-    public long getIdFirmaComp() {
+    @GenericGenerator(name = "SARO_FIRMA_COMP_ID_FIRMA_COMP_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SARO_FIRMA_COMP"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SARO_FIRMA_COMP_ID_FIRMA_COMP_GENERATOR")
+    public Long getIdFirmaComp() {
         return this.idFirmaComp;
     }
 
-    public void setIdFirmaComp(long idFirmaComp) {
+    public void setIdFirmaComp(Long idFirmaComp) {
         this.idFirmaComp = idFirmaComp;
     }
 
@@ -288,8 +360,8 @@ public class AroFirmaComp implements Serializable {
     }
 
     // bi-directional many-to-one association to AroCompDoc
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_COMP_DOC")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "ID_COMP_DOC", nullable = false)
     public AroCompDoc getAroCompDoc() {
         return this.aroCompDoc;
     }
@@ -299,7 +371,7 @@ public class AroFirmaComp implements Serializable {
     }
 
     // bi-directional many-to-one association to AroMarcaComp
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "ID_MARCA_COMP")
     public AroMarcaComp getAroMarcaComp() {
         return this.aroMarcaComp;
@@ -310,7 +382,7 @@ public class AroFirmaComp implements Serializable {
     }
 
     // uni-directional many-to-one association to FirCertifFirmatario
-    @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH,
+    @ManyToOne(cascade = { CascadeType.PERSIST, // CascadeType.MERGE, CascadeType.REFRESH,
             CascadeType.DETACH }, fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_CERTIF_FIRMATARIO")
     public FirCertifFirmatario getFirCertifFirmatario() {
@@ -341,5 +413,4 @@ public class AroFirmaComp implements Serializable {
     public void setAroVerifFirmaDtVers(List<AroVerifFirmaDtVer> aroVerifFirmaDtVers) {
         this.aroVerifFirmaDtVers = aroVerifFirmaDtVers;
     }
-
 }

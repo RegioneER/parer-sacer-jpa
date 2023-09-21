@@ -1,13 +1,40 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
+
+import java.math.BigDecimal;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 import it.eng.parer.jboss.timer.common.JobTable;
 import it.eng.parer.jboss.timer.common.entity.JobDefinition;
-import java.math.BigDecimal;
-import javax.persistence.*;
 
 /**
  * The persistent class for the DEC_JOB database table.
- *
  */
 /* DEC_JOB */
 @Entity
@@ -15,28 +42,35 @@ import javax.persistence.*;
 public class DecJob extends JobDefinition implements JobTable {
 
     private static final long serialVersionUID = 1L;
-    private long idJob;
+
+    private Long idJob;
+
     private String nmJob;
     private String dsJob;
     private String tiSchedJob;
+
     private String tiScopoJob;
     private String nmAmbito;
     private BigDecimal niOrdExec;
 
-    public DecJob() {
+    public DecJob() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "DEC_JOB_IDJOB_GENERATOR", sequenceName = "SDEC_JOB", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DEC_JOB_IDJOB_GENERATOR")
+    // sequenceName = "SDEC_JOB", allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DEC_JOB_IDJOB_GENERATOR")
     @Column(name = "ID_JOB")
     @Override
-    public long getIdJob() {
+    @GenericGenerator(name = "SDEC_JOB_ID_JOB_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SDEC_JOB"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SDEC_JOB_ID_JOB_GENERATOR")
+    public Long getIdJob() {
         return idJob;
     }
 
     @Override
-    public void setIdJob(long idJob) {
+    public void setIdJob(Long idJob) {
         this.idJob = idJob;
     }
 

@@ -1,16 +1,54 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 import it.eng.parer.entity.constraint.HsmSessioneFirma.TiEsitoSessioneFirma;
 import it.eng.parer.entity.constraint.HsmSessioneFirma.TiSessioneFirma;
 
 /**
  * The persistent class for the HSM_SESSIONE_FIRMA database table.
- *
  */
 @Entity
 @Table(name = "HSM_SESSIONE_FIRMA")
@@ -18,30 +56,47 @@ import it.eng.parer.entity.constraint.HsmSessioneFirma.TiSessioneFirma;
 public class HsmSessioneFirma implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idSessioneFirma;
-    private String cdErr;
-    private String dsErr;
-    private TiEsitoSessioneFirma tiEsitoSessioneFirma;
-    private TiSessioneFirma tiSessioneFirma;
-    private Date tsFine;
-    private Date tsInizio;
-    private List<HsmElencoSessioneFirma> hsmElencoSessioneFirmas;
-    private IamUser iamUser;
-    private List<HsmVerSerieSessioneFirma> hsmVerSerieSessioneFirmas;
-    private List<HsmElencoFascSesFirma> hsmElencoFascSesFirmas;
 
-    public HsmSessioneFirma() {
+    private Long idSessioneFirma;
+
+    private String cdErr;
+
+    private String dsErr;
+
+    private TiEsitoSessioneFirma tiEsitoSessioneFirma;
+
+    private TiSessioneFirma tiSessioneFirma;
+
+    private Date tsFine;
+
+    private Date tsInizio;
+
+    private List<HsmElencoSessioneFirma> hsmElencoSessioneFirmas = new ArrayList<>();
+
+    private IamUser iamUser;
+
+    private List<HsmVerSerieSessioneFirma> hsmVerSerieSessioneFirmas = new ArrayList<>();
+
+    private List<HsmElencoFascSesFirma> hsmElencoFascSesFirmas = new ArrayList<>();
+
+    public HsmSessioneFirma() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "HSM_SESSIONE_FIRMA_IDSESSIONEFIRMA_GENERATOR", sequenceName = "SHSM_SESSIONE_FIRMA", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "HSM_SESSIONE_FIRMA_IDSESSIONEFIRMA_GENERATOR")
+    // "HSM_SESSIONE_FIRMA_IDSESSIONEFIRMA_GENERATOR",
+    // sequenceName = "SHSM_SESSIONE_FIRMA",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "HSM_SESSIONE_FIRMA_IDSESSIONEFIRMA_GENERATOR")
     @Column(name = "ID_SESSIONE_FIRMA")
-    public long getIdSessioneFirma() {
+    @GenericGenerator(name = "SHSM_SESSIONE_FIRMA_ID_SESSIONE_FIRMA_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SHSM_SESSIONE_FIRMA"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SHSM_SESSIONE_FIRMA_ID_SESSIONE_FIRMA_GENERATOR")
+    public Long getIdSessioneFirma() {
         return this.idSessioneFirma;
     }
 
-    public void setIdSessioneFirma(long idSessioneFirma) {
+    public void setIdSessioneFirma(Long idSessioneFirma) {
         this.idSessioneFirma = idSessioneFirma;
     }
 
@@ -116,14 +171,12 @@ public class HsmSessioneFirma implements Serializable {
     public HsmElencoSessioneFirma addHsmElencoSessioneFirma(HsmElencoSessioneFirma hsmElencoSessioneFirma) {
         getHsmElencoSessioneFirmas().add(hsmElencoSessioneFirma);
         hsmElencoSessioneFirma.setHsmSessioneFirma(this);
-
         return hsmElencoSessioneFirma;
     }
 
     public HsmElencoSessioneFirma removeHsmElencoSessioneFirma(HsmElencoSessioneFirma hsmElencoSessioneFirma) {
         getHsmElencoSessioneFirmas().remove(hsmElencoSessioneFirma);
         hsmElencoSessioneFirma.setHsmSessioneFirma(null);
-
         return hsmElencoSessioneFirma;
     }
 
@@ -151,14 +204,12 @@ public class HsmSessioneFirma implements Serializable {
     public HsmVerSerieSessioneFirma addHsmVerSerieSessioneFirma(HsmVerSerieSessioneFirma hsmVerSerieSessioneFirma) {
         getHsmVerSerieSessioneFirmas().add(hsmVerSerieSessioneFirma);
         hsmVerSerieSessioneFirma.setHsmSessioneFirma(this);
-
         return hsmVerSerieSessioneFirma;
     }
 
     public HsmVerSerieSessioneFirma removeHsmVerSerieSessioneFirma(HsmVerSerieSessioneFirma hsmVerSerieSessioneFirma) {
         getHsmVerSerieSessioneFirmas().remove(hsmVerSerieSessioneFirma);
         hsmVerSerieSessioneFirma.setHsmSessioneFirma(null);
-
         return hsmVerSerieSessioneFirma;
     }
 
@@ -175,14 +226,12 @@ public class HsmSessioneFirma implements Serializable {
     public HsmElencoFascSesFirma addHsmElencoFascSesFirma(HsmElencoFascSesFirma hsmElencoFascSesFirma) {
         getHsmElencoFascSesFirmas().add(hsmElencoFascSesFirma);
         hsmElencoFascSesFirma.setHsmSessioneFirma(this);
-
         return hsmElencoFascSesFirma;
     }
 
     public HsmElencoFascSesFirma removeHsmElencoFascSesFirma(HsmElencoFascSesFirma hsmElencoFascSesFirma) {
         getHsmElencoFascSesFirmas().remove(hsmElencoFascSesFirma);
         hsmElencoFascSesFirma.setHsmSessioneFirma(null);
-
         return hsmElencoFascSesFirma;
     }
 
@@ -219,7 +268,6 @@ public class HsmSessioneFirma implements Serializable {
     @Transient
     public int getNumFile() {
         int result = 0;
-
         switch (getTiSessioneFirma()) {
         case ELENCHI:
         case ELENCO_INDICI_AIP:
@@ -227,13 +275,11 @@ public class HsmSessioneFirma implements Serializable {
                 result = getHsmElencoSessioneFirmas().size();
             }
             break;
-
         case SERIE:
             if (getHsmVerSerieSessioneFirmas() != null) {
                 result = getHsmVerSerieSessioneFirmas().size();
             }
             break;
-
         case ELENCHI_FASC:
         case ELENCHI_INDICI_AIP_FASC:
             if (getHsmElencoFascSesFirmas() != null) {
@@ -241,7 +287,6 @@ public class HsmSessioneFirma implements Serializable {
             }
             break;
         }
-
         return result;
     }
 
@@ -250,7 +295,7 @@ public class HsmSessioneFirma implements Serializable {
      *
      * @param index
      *            indice per la sessione di firma
-     * 
+     *
      * @return id file PK
      */
     @Transient

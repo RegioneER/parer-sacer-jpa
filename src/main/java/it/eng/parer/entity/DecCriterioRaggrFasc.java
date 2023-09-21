@@ -1,15 +1,50 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlTransient;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 /**
  * The persistent class for the DEC_CRITERIO_RAGGR_FASC database table.
- *
  */
 @Entity
 @Table(name = "DEC_CRITERIO_RAGGR_FASC")
@@ -17,47 +52,83 @@ import javax.xml.bind.annotation.XmlTransient;
 public class DecCriterioRaggrFasc implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idCriterioRaggrFasc;
-    private BigDecimal aaFascicolo;
-    private BigDecimal aaFascicoloA;
-    private BigDecimal aaFascicoloDa;
-    private String dsCriterioRaggr;
-    private String dsOggettoFascicolo;
-    private Date dtApeFascicoloA;
-    private Date dtApeFascicoloDa;
-    private Date dtChiuFascicoloA;
-    private Date dtChiuFascicoloDa;
-    private Date dtIstituz;
-    private Date dtSoppres;
-    private Date dtVersA;
-    private Date dtVersDa;
-    private String flCriterioRaggrStandard;
-    private String flFiltroSistemaMigraz;
-    private String flFiltroTipoFascicolo;
-    private String flFiltroVoceTitol;
-    private BigDecimal niMaxFasc;
-    private BigDecimal niTempoScadChius;
-    private String nmCriterioRaggr;
-    private String ntCriterioRaggr;
-    private String tiConservazione;
-    private String tiScadChius;
-    private String tiTempoScadChius;
-    private OrgStrut orgStrut;
-    private List<DecSelCriterioRaggrFasc> decSelCriterioRaggrFascicoli;
-    private List<ElvElencoVersFasc> elvElencoVersFasc;
 
-    public DecCriterioRaggrFasc() {
+    private Long idCriterioRaggrFasc;
+
+    private BigDecimal aaFascicolo;
+
+    private BigDecimal aaFascicoloA;
+
+    private BigDecimal aaFascicoloDa;
+
+    private String dsCriterioRaggr;
+
+    private String dsOggettoFascicolo;
+
+    private Date dtApeFascicoloA;
+
+    private Date dtApeFascicoloDa;
+
+    private Date dtChiuFascicoloA;
+
+    private Date dtChiuFascicoloDa;
+
+    private Date dtIstituz;
+
+    private Date dtSoppres;
+
+    private Date dtVersA;
+
+    private Date dtVersDa;
+
+    private String flCriterioRaggrStandard;
+
+    private String flFiltroSistemaMigraz;
+
+    private String flFiltroTipoFascicolo;
+
+    private String flFiltroVoceTitol;
+
+    private BigDecimal niMaxFasc;
+
+    private BigDecimal niTempoScadChius;
+
+    private String nmCriterioRaggr;
+
+    private String ntCriterioRaggr;
+
+    private String tiConservazione;
+
+    private String tiScadChius;
+
+    private String tiTempoScadChius;
+
+    private OrgStrut orgStrut;
+
+    private List<DecSelCriterioRaggrFasc> decSelCriterioRaggrFascicoli = new ArrayList<>();
+
+    private List<ElvElencoVersFasc> elvElencoVersFasc = new ArrayList<>();
+
+    public DecCriterioRaggrFasc() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "DEC_CRITERIO_RAGGR_FASC_IDCRITERIORAGGRFASC_GENERATOR", sequenceName = "SDEC_CRITERIO_RAGGR_FASC", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DEC_CRITERIO_RAGGR_FASC_IDCRITERIORAGGRFASC_GENERATOR")
+    // "DEC_CRITERIO_RAGGR_FASC_IDCRITERIORAGGRFASC_GENERATOR",
+    // sequenceName =
+    // "SDEC_CRITERIO_RAGGR_FASC",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
+    // "DEC_CRITERIO_RAGGR_FASC_IDCRITERIORAGGRFASC_GENERATOR")
     @Column(name = "ID_CRITERIO_RAGGR_FASC")
-    public long getIdCriterioRaggrFasc() {
+    @GenericGenerator(name = "SDEC_CRITERIO_RAGGR_FASC_ID_CRITERIO_RAGGR_FASC_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SDEC_CRITERIO_RAGGR_FASC"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SDEC_CRITERIO_RAGGR_FASC_ID_CRITERIO_RAGGR_FASC_GENERATOR")
+    public Long getIdCriterioRaggrFasc() {
         return this.idCriterioRaggrFasc;
     }
 
-    public void setIdCriterioRaggrFasc(long idCriterioRaggrFasc) {
+    public void setIdCriterioRaggrFasc(Long idCriterioRaggrFasc) {
         this.idCriterioRaggrFasc = idCriterioRaggrFasc;
     }
 
@@ -186,7 +257,7 @@ public class DecCriterioRaggrFasc implements Serializable {
         this.dtVersDa = dtVersDa;
     }
 
-    @Column(name = "FL_CRITERIO_RAGGR_STANDARD")
+    @Column(name = "FL_CRITERIO_RAGGR_STANDARD", columnDefinition = "char(1)")
     public String getFlCriterioRaggrStandard() {
         return this.flCriterioRaggrStandard;
     }
@@ -195,7 +266,7 @@ public class DecCriterioRaggrFasc implements Serializable {
         this.flCriterioRaggrStandard = flCriterioRaggrStandard;
     }
 
-    @Column(name = "FL_FILTRO_SISTEMA_MIGRAZ")
+    @Column(name = "FL_FILTRO_SISTEMA_MIGRAZ", columnDefinition = "char(1)")
     public String getFlFiltroSistemaMigraz() {
         return this.flFiltroSistemaMigraz;
     }
@@ -204,7 +275,7 @@ public class DecCriterioRaggrFasc implements Serializable {
         this.flFiltroSistemaMigraz = flFiltroSistemaMigraz;
     }
 
-    @Column(name = "FL_FILTRO_TIPO_FASCICOLO")
+    @Column(name = "FL_FILTRO_TIPO_FASCICOLO", columnDefinition = "char(1)")
     public String getFlFiltroTipoFascicolo() {
         return this.flFiltroTipoFascicolo;
     }
@@ -213,7 +284,7 @@ public class DecCriterioRaggrFasc implements Serializable {
         this.flFiltroTipoFascicolo = flFiltroTipoFascicolo;
     }
 
-    @Column(name = "FL_FILTRO_VOCE_TITOL")
+    @Column(name = "FL_FILTRO_VOCE_TITOL", columnDefinition = "char(1)")
     public String getFlFiltroVoceTitol() {
         return this.flFiltroVoceTitol;
     }

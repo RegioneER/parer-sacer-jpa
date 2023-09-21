@@ -1,15 +1,48 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 import it.eng.parer.entity.constraint.FasStatoConservFascicolo.TiStatoConservazione;
 
-import java.util.Date;
-
 /**
  * The persistent class for the FAS_STATO_CONSERV_FASCICOLO database table.
- * 
  */
 @Entity
 @Table(name = "FAS_STATO_CONSERV_FASCICOLO")
@@ -17,24 +50,37 @@ import java.util.Date;
 public class FasStatoConservFascicolo implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idStatoConservFascicolo;
+
+    private Long idStatoConservFascicolo;
+
     private FasFascicolo fasFascicolo;
+
     private IamUser iamUser;
+
     private TiStatoConservazione tiStatoConservazione;
+
     private Date tsStato;
 
-    public FasStatoConservFascicolo() {
+    public FasStatoConservFascicolo() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "FAS_STATO_CONSERV_FASCICOLO_IDSTATOCONSERVFASCICOLO_GENERATOR", sequenceName = "SFAS_STATO_CONSERV_FASCICOLO", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "FAS_STATO_CONSERV_FASCICOLO_IDSTATOCONSERVFASCICOLO_GENERATOR")
+    // "FAS_STATO_CONSERV_FASCICOLO_IDSTATOCONSERVFASCICOLO_GENERATOR",
+    // sequenceName =
+    // "SFAS_STATO_CONSERV_FASCICOLO",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
+    // "FAS_STATO_CONSERV_FASCICOLO_IDSTATOCONSERVFASCICOLO_GENERATOR")
     @Column(name = "ID_STATO_CONSERV_FASCICOLO")
-    public long getIdStatoConservFascicolo() {
+    @GenericGenerator(name = "SFAS_STATO_CONSERV_FASCICOLO_ID_STATO_CONSERV_FASCICOLO_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SFAS_STATO_CONSERV_FASCICOLO"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SFAS_STATO_CONSERV_FASCICOLO_ID_STATO_CONSERV_FASCICOLO_GENERATOR")
+    public Long getIdStatoConservFascicolo() {
         return this.idStatoConservFascicolo;
     }
 
-    public void setIdStatoConservFascicolo(long idStatoConservFascicolo) {
+    public void setIdStatoConservFascicolo(Long idStatoConservFascicolo) {
         this.idStatoConservFascicolo = idStatoConservFascicolo;
     }
 

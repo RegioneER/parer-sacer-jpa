@@ -1,14 +1,50 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
+
 /**
  * The persistent class for the SER_VER_SERIE database table.
- *
  */
 @Entity
 @Table(name = "SER_VER_SERIE")
@@ -16,46 +52,79 @@ import java.util.List;
 public class SerVerSerie implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idVerSerie;
+
+    private Long idVerSerie;
+
     private String cdVerSerie;
+
     private String dsListaAnniSelSerie;
+
     private Date dtCreazioneUnitaDocA;
+
     private Date dtCreazioneUnitaDocDa;
+
     private Date dtFineSelSerie;
+
     private Date dtInizioSelSerie;
+
     private Date dtRegUnitaDocA;
+
     private Date dtRegUnitaDocDa;
+
     private String flUpdAnnulUnitaDoc;
+
     private BigDecimal idStatoVerSerieCor;
+
     private BigDecimal niPeriodoSelSerie;
+
     private BigDecimal pgVerSerie;
+
     private String tiPeriodoSelSerie;
-    private List<SerConsistVerSerie> serConsistVerSeries;
-    private List<SerContenutoVerSerie> serContenutoVerSeries;
-    private List<SerFileInputVerSerie> serFileInputVerSeries;
-    private List<SerNotaVerSerie> serNotaVerSeries;
-    private List<SerStatoVerSerie> serStatoVerSeries;
+
+    private List<SerConsistVerSerie> serConsistVerSeries = new ArrayList<>();
+
+    private List<SerContenutoVerSerie> serContenutoVerSeries = new ArrayList<>();
+
+    private List<SerFileInputVerSerie> serFileInputVerSeries = new ArrayList<>();
+
+    private List<SerNotaVerSerie> serNotaVerSeries = new ArrayList<>();
+
+    private List<SerStatoVerSerie> serStatoVerSeries = new ArrayList<>();
+
     private SerSerie serSerie;
+
     private SerVerSerie serVerSerie;
-    private List<SerVerSerieDaElab> serVerSerieDaElabs;
-    private List<SerVerSerie> serVerSeries;
-    private List<SerVolVerSerie> serVolVerSeries;
-    private List<SerFileVerSerie> serFileVerSeries;
-    private List<HsmVerSerieSessioneFirma> hsmVerSerieSessioneFirmas;
+
+    private List<SerVerSerieDaElab> serVerSerieDaElabs = new ArrayList<>();
+
+    private List<SerVerSerie> serVerSeries = new ArrayList<>();
+
+    private List<SerVolVerSerie> serVolVerSeries = new ArrayList<>();
+
+    private List<SerFileVerSerie> serFileVerSeries = new ArrayList<>();
+
+    private List<HsmVerSerieSessioneFirma> hsmVerSerieSessioneFirmas = new ArrayList<>();
+
     private String flUpdModifUnitaDoc;
 
-    public SerVerSerie() {
+    public SerVerSerie() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "SER_VER_SERIE_IDVERSERIE_GENERATOR", sequenceName = "SSER_VER_SERIE", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SER_VER_SERIE_IDVERSERIE_GENERATOR")
+    // "SER_VER_SERIE_IDVERSERIE_GENERATOR",
+    // sequenceName = "SSER_VER_SERIE", allocationSize =
+    // 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SER_VER_SERIE_IDVERSERIE_GENERATOR")
     @Column(name = "ID_VER_SERIE")
-    public long getIdVerSerie() {
+    @GenericGenerator(name = "SSER_VER_SERIE_ID_VER_SERIE_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SSER_VER_SERIE"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SSER_VER_SERIE_ID_VER_SERIE_GENERATOR")
+    public Long getIdVerSerie() {
         return this.idVerSerie;
     }
 
-    public void setIdVerSerie(long idVerSerie) {
+    public void setIdVerSerie(Long idVerSerie) {
         this.idVerSerie = idVerSerie;
     }
 
@@ -137,7 +206,7 @@ public class SerVerSerie implements Serializable {
         this.dtRegUnitaDocDa = dtRegUnitaDocDa;
     }
 
-    @Column(name = "FL_UPD_ANNUL_UNITA_DOC")
+    @Column(name = "FL_UPD_ANNUL_UNITA_DOC", columnDefinition = "char(1)")
     public String getFlUpdAnnulUnitaDoc() {
         return this.flUpdAnnulUnitaDoc;
     }
@@ -195,14 +264,12 @@ public class SerVerSerie implements Serializable {
     public SerConsistVerSerie addSerConsistVerSery(SerConsistVerSerie serConsistVerSery) {
         getSerConsistVerSeries().add(serConsistVerSery);
         serConsistVerSery.setSerVerSerie(this);
-
         return serConsistVerSery;
     }
 
     public SerConsistVerSerie removeSerConsistVerSery(SerConsistVerSerie serConsistVerSery) {
         getSerConsistVerSeries().remove(serConsistVerSery);
         serConsistVerSery.setSerVerSerie(null);
-
         return serConsistVerSery;
     }
 
@@ -219,14 +286,12 @@ public class SerVerSerie implements Serializable {
     public SerContenutoVerSerie addSerContenutoVerSery(SerContenutoVerSerie serContenutoVerSery) {
         getSerContenutoVerSeries().add(serContenutoVerSery);
         serContenutoVerSery.setSerVerSerie(this);
-
         return serContenutoVerSery;
     }
 
     public SerContenutoVerSerie removeSerContenutoVerSery(SerContenutoVerSerie serContenutoVerSery) {
         getSerContenutoVerSeries().remove(serContenutoVerSery);
         serContenutoVerSery.setSerVerSerie(null);
-
         return serContenutoVerSery;
     }
 
@@ -243,14 +308,12 @@ public class SerVerSerie implements Serializable {
     public SerFileInputVerSerie addSerFileInputVerSery(SerFileInputVerSerie serFileInputVerSery) {
         getSerFileInputVerSeries().add(serFileInputVerSery);
         serFileInputVerSery.setSerVerSerie(this);
-
         return serFileInputVerSery;
     }
 
     public SerFileInputVerSerie removeSerFileInputVerSery(SerFileInputVerSerie serFileInputVerSery) {
         getSerFileInputVerSeries().remove(serFileInputVerSery);
         serFileInputVerSery.setSerVerSerie(null);
-
         return serFileInputVerSery;
     }
 
@@ -267,14 +330,12 @@ public class SerVerSerie implements Serializable {
     public SerNotaVerSerie addSerNotaVerSery(SerNotaVerSerie serNotaVerSery) {
         getSerNotaVerSeries().add(serNotaVerSery);
         serNotaVerSery.setSerVerSerie(this);
-
         return serNotaVerSery;
     }
 
     public SerNotaVerSerie removeSerNotaVerSery(SerNotaVerSerie serNotaVerSery) {
         getSerNotaVerSeries().remove(serNotaVerSery);
         serNotaVerSery.setSerVerSerie(null);
-
         return serNotaVerSery;
     }
 
@@ -291,14 +352,12 @@ public class SerVerSerie implements Serializable {
     public SerStatoVerSerie addSerStatoVerSery(SerStatoVerSerie serStatoVerSery) {
         getSerStatoVerSeries().add(serStatoVerSery);
         serStatoVerSery.setSerVerSerie(this);
-
         return serStatoVerSery;
     }
 
     public SerStatoVerSerie removeSerStatoVerSery(SerStatoVerSerie serStatoVerSery) {
         getSerStatoVerSeries().remove(serStatoVerSery);
         serStatoVerSery.setSerVerSerie(null);
-
         return serStatoVerSery;
     }
 
@@ -337,14 +396,12 @@ public class SerVerSerie implements Serializable {
     public SerVerSerie addSerVerSery(SerVerSerie serVerSery) {
         getSerVerSeries().add(serVerSery);
         serVerSery.setSerVerSerie(this);
-
         return serVerSery;
     }
 
     public SerVerSerie removeSerVerSery(SerVerSerie serVerSery) {
         getSerVerSeries().remove(serVerSery);
         serVerSery.setSerVerSerie(null);
-
         return serVerSery;
     }
 
@@ -361,14 +418,12 @@ public class SerVerSerie implements Serializable {
     public SerVerSerieDaElab addSerVerSerieDaElab(SerVerSerieDaElab serVerSerieDaElab) {
         getSerVerSerieDaElabs().add(serVerSerieDaElab);
         serVerSerieDaElab.setSerVerSerie(this);
-
         return serVerSerieDaElab;
     }
 
     public SerVerSerieDaElab removeSerVerSerieDaElab(SerVerSerieDaElab serVerSerieDaElab) {
         getSerVerSerieDaElabs().remove(serVerSerieDaElab);
         serVerSerieDaElab.setSerVerSerie(null);
-
         return serVerSerieDaElab;
     }
 
@@ -385,14 +440,12 @@ public class SerVerSerie implements Serializable {
     public SerVolVerSerie addSerVolVerSery(SerVolVerSerie serVolVerSery) {
         getSerVolVerSeries().add(serVolVerSery);
         serVolVerSery.setSerVerSerie(this);
-
         return serVolVerSery;
     }
 
     public SerVolVerSerie removeSerVolVerSery(SerVolVerSerie serVolVerSery) {
         getSerVolVerSeries().remove(serVolVerSery);
         serVolVerSery.setSerVerSerie(null);
-
         return serVolVerSery;
     }
 
@@ -409,14 +462,12 @@ public class SerVerSerie implements Serializable {
     public SerFileVerSerie addSerFileVerSery(SerFileVerSerie serFileVerSery) {
         getSerFileVerSeries().add(serFileVerSery);
         serFileVerSery.setSerVerSerie(this);
-
         return serFileVerSery;
     }
 
     public SerFileVerSerie removeSerFileVerSery(SerFileVerSerie serFileVerSery) {
         getSerFileVerSeries().remove(serFileVerSery);
         serFileVerSery.setSerVerSerie(null);
-
         return serFileVerSery;
     }
 
@@ -430,7 +481,7 @@ public class SerVerSerie implements Serializable {
         this.hsmVerSerieSessioneFirmas = hsmVerSerieSessioneFirmas;
     }
 
-    @Column(name = "FL_UPD_MODIF_UNITA_DOC")
+    @Column(name = "FL_UPD_MODIF_UNITA_DOC", columnDefinition = "char(1)")
     public String getFlUpdModifUnitaDoc() {
         return this.flUpdModifUnitaDoc;
     }
@@ -442,7 +493,7 @@ public class SerVerSerie implements Serializable {
     /**
      * Gestione dei default. Risulta la migliore pratica in quanto è indipendente dal db utilizzato e sfrutta diretta
      * JPA quindi calabile sotto ogni contesto in termini di ORM
-     * 
+     *
      * ref. https://stackoverflow.com/a/13432234
      */
     @PrePersist

@@ -1,10 +1,28 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
-import it.eng.parer.grantedEntity.SIOrgEnteSiam;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,16 +35,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
+
 /**
  * The persistent class for the ORG_STRUT database table.
- *
  */
 @Entity
 @XmlRootElement
@@ -35,65 +55,118 @@ import javax.xml.bind.annotation.XmlTransient;
 public class OrgStrut implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idStrut;
+
+    private Long idStrut;
+
     private String cdIpa;
+
     private String dlNoteStrut;
+
     private String dsStrut;
+
     private String cdStrutNormaliz;
+
     private Date dtIniVal;
+
     private Date dtFineVal;
+
     private Date dtIniValStrut;
+
     private Date dtFineValStrut;
+
     private String flTemplate;
+
     private BigDecimal idEnteConvenz;
+
     private String nmStrut;
-    private List<AroRichAnnulVers> aroRichAnnulVers;
-    private List<AroUnitaDoc> aroUnitaDocs;
-    private List<DecAttribDatiSpec> decAttribDatiSpecs;
-    private List<DecCriterioRaggr> decCriterioRaggrs;
-    private List<DecFormatoFileDoc> decFormatoFileDocs;
-    private List<DecRegistroUnitaDoc> decRegistroUnitaDocs;
-    private List<DecTipoDoc> decTipoDocs;
-    private List<DecTipoRapprComp> decTipoRapprComps;
-    private List<DecTipoSerie> decTipoSeries;
-    private List<DecTipoStrutDoc> decTipoStrutDocs;
-    private List<DecTipoUnitaDoc> decTipoUnitaDocs;
-    private List<DecTitol> decTitols;
-    private List<DecXsdDatiSpec> decXsdDatiSpecs;
-    private List<ElvElencoVer> elvElencoVers;
-    private List<ElvLogElencoVer> elvLogElencoVers;
-    private List<LogJob> logJobs;
-    private List<LogLockElab> logLockElabs;
-    private List<LogOper> logOpers;
-    private List<OrgOperTitol> orgOperTitols;
-    private List<OrgPartitionStrut> orgPartitionStruts;
+
+    private List<AroRichAnnulVers> aroRichAnnulVers = new ArrayList<>();
+
+    private List<AroUnitaDoc> aroUnitaDocs = new ArrayList<>();
+
+    private List<DecAttribDatiSpec> decAttribDatiSpecs = new ArrayList<>();
+
+    private List<DecCriterioRaggr> decCriterioRaggrs = new ArrayList<>();
+
+    private List<DecCriterioRaggrFasc> decCriterioRaggrFascs = new ArrayList<>();
+
+    private List<DecFormatoFileDoc> decFormatoFileDocs = new ArrayList<>();
+
+    private List<DecRegistroUnitaDoc> decRegistroUnitaDocs = new ArrayList<>();
+
+    private List<DecTipoDoc> decTipoDocs = new ArrayList<>();
+
+    private List<DecTipoRapprComp> decTipoRapprComps = new ArrayList<>();
+
+    private List<DecTipoSerie> decTipoSeries = new ArrayList<>();
+
+    private List<DecTipoStrutDoc> decTipoStrutDocs = new ArrayList<>();
+
+    private List<DecTipoUnitaDoc> decTipoUnitaDocs = new ArrayList<>();
+
+    private List<DecTitol> decTitols = new ArrayList<>();
+
+    private List<DecXsdDatiSpec> decXsdDatiSpecs = new ArrayList<>();
+
+    private List<ElvElencoVer> elvElencoVers = new ArrayList<>();
+
+    private List<ElvLogElencoVer> elvLogElencoVers = new ArrayList<>();
+
+    private List<LogJob> logJobs = new ArrayList<>();
+
+    private List<LogLockElab> logLockElabs = new ArrayList<>();
+
+    private List<LogOper> logOpers = new ArrayList<>();
+
+    private List<OrgOperTitol> orgOperTitols = new ArrayList<>();
+
+    private List<OrgPartitionStrut> orgPartitionStruts = new ArrayList<>();
+
     private OrgCategStrut orgCategStrut;
+
     private OrgEnte orgEnte;
-    private List<DecTipoFascicolo> decTipoFascicolos;
-    private List<OrgSubStrut> orgSubStruts;
-    private List<OrgUsoSistemaMigraz> orgUsoSistemaMigrazs;
-    private List<SerSerie> serSeries;
-    private List<VolVolumeConserv> volVolumeConservs;
-    private List<VrsDocNonVer> vrsDocNonVers;
-    private List<VrsSessioneVers> vrsSessioneVers;
-    private List<VrsUnitaDocNonVer> vrsUnitaDocNonVers;
-    private List<DecUsoModelloTipoSerie> decUsoModelloTipoSeries;
-    private List<AplValoreParamApplic> aplValoreParamApplics;
+
+    private List<DecTipoFascicolo> decTipoFascicolos = new ArrayList<>();
+
+    private List<OrgSubStrut> orgSubStruts = new ArrayList<>();
+
+    private List<OrgUsoSistemaMigraz> orgUsoSistemaMigrazs = new ArrayList<>();
+
+    private List<SerSerie> serSeries = new ArrayList<>();
+
+    private List<VolVolumeConserv> volVolumeConservs = new ArrayList<>();
+
+    private List<VrsDocNonVer> vrsDocNonVers = new ArrayList<>();
+
+    private List<VrsSessioneVers> vrsSessioneVers = new ArrayList<>();
+
+    private List<VrsUnitaDocNonVer> vrsUnitaDocNonVers = new ArrayList<>();
+
+    private List<DecUsoModelloTipoSerie> decUsoModelloTipoSeries = new ArrayList<>();
+
+    private List<AplValoreParamApplic> aplValoreParamApplics = new ArrayList<>();
+
     private String flCessato;
+
     private String flArchivioRestituito;
 
-    public OrgStrut() {
+    public OrgStrut() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "ORG_STRUT_IDSTRUT_GENERATOR", sequenceName = "SORG_STRUT", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ORG_STRUT_IDSTRUT_GENERATOR")
+    // "ORG_STRUT_IDSTRUT_GENERATOR", sequenceName =
+    // "SORG_STRUT", allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ORG_STRUT_IDSTRUT_GENERATOR")
     @Column(name = "ID_STRUT")
-    public long getIdStrut() {
+    @GenericGenerator(name = "SORG_STRUT_ID_STRUT_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SORG_STRUT"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SORG_STRUT_ID_STRUT_GENERATOR")
+    public Long getIdStrut() {
         return this.idStrut;
     }
 
-    public void setIdStrut(long idStrut) {
+    public void setIdStrut(Long idStrut) {
         this.idStrut = idStrut;
     }
 
@@ -173,7 +246,7 @@ public class OrgStrut implements Serializable {
         this.dtFineValStrut = dtFineValStrut;
     }
 
-    @Column(name = "FL_TEMPLATE")
+    @Column(name = "FL_TEMPLATE", columnDefinition = "char(1)")
     public String getFlTemplate() {
         return this.flTemplate;
     }
@@ -200,7 +273,7 @@ public class OrgStrut implements Serializable {
         this.nmStrut = nmStrut;
     }
 
-    @Column(name = "FL_CESSATO")
+    @Column(name = "FL_CESSATO", columnDefinition = "char")
     public String getFlCessato() {
         return this.flCessato;
     }
@@ -209,7 +282,7 @@ public class OrgStrut implements Serializable {
         this.flCessato = flCessato;
     }
 
-    @Column(name = "FL_ARCHIVIO_RESTITUITO")
+    @Column(name = "FL_ARCHIVIO_RESTITUITO", columnDefinition = "char")
     public String getFlArchivioRestituito() {
         return this.flArchivioRestituito;
     }
@@ -232,14 +305,12 @@ public class OrgStrut implements Serializable {
     public AroRichAnnulVers addAroRichAnnulVer(AroRichAnnulVers aroRichAnnulVers) {
         getAroRichAnnulVers().add(aroRichAnnulVers);
         aroRichAnnulVers.setOrgStrut(this);
-
         return aroRichAnnulVers;
     }
 
     public AroRichAnnulVers removeAroRichAnnulVer(AroRichAnnulVers aroRichAnnulVers) {
         getAroRichAnnulVers().remove(aroRichAnnulVers);
         aroRichAnnulVers.setOrgStrut(null);
-
         return aroRichAnnulVers;
     }
 
@@ -272,6 +343,16 @@ public class OrgStrut implements Serializable {
 
     public void setDecCriterioRaggrs(List<DecCriterioRaggr> decCriterioRaggrs) {
         this.decCriterioRaggrs = decCriterioRaggrs;
+    }
+
+    // bi-directional many-to-one association to DecCriterioRaggrFasc
+    @OneToMany(mappedBy = "orgStrut", cascade = CascadeType.PERSIST)
+    public List<DecCriterioRaggrFasc> getDecCriterioRaggrFascs() {
+        return this.decCriterioRaggrFascs;
+    }
+
+    public void setDecCriterioRaggrFascs(List<DecCriterioRaggrFasc> decCriterioRaggrFascs) {
+        this.decCriterioRaggrFascs = decCriterioRaggrFascs;
     }
 
     // bi-directional many-to-one association to DecFormatoFileDoc
@@ -488,7 +569,6 @@ public class OrgStrut implements Serializable {
 
     // bi-directional many-to-one association to OrgUsoSistemaMigraz
     @OneToMany(mappedBy = "orgStrut")
-    @XmlTransient
     public List<OrgUsoSistemaMigraz> getOrgUsoSistemaMigrazs() {
         return this.orgUsoSistemaMigrazs;
     }
@@ -554,8 +634,8 @@ public class OrgStrut implements Serializable {
 
     // bi-directional many-to-one association to DecUsoModelloTipoSerie
     @OneToMany(mappedBy = "orgStrut", cascade = CascadeType.PERSIST)
-    // @XmlTransient
-    public List<DecUsoModelloTipoSerie> getDecUsoModelloTipoSeries() {
+    public // @XmlTransient
+    List<DecUsoModelloTipoSerie> getDecUsoModelloTipoSeries() {
         return this.decUsoModelloTipoSeries;
     }
 
@@ -566,14 +646,12 @@ public class OrgStrut implements Serializable {
     public DecUsoModelloTipoSerie addDecUsoModelloTipoSery(DecUsoModelloTipoSerie decUsoModelloTipoSery) {
         getDecUsoModelloTipoSeries().add(decUsoModelloTipoSery);
         decUsoModelloTipoSery.setOrgStrut(this);
-
         return decUsoModelloTipoSery;
     }
 
     public DecUsoModelloTipoSerie removeDecUsoModelloTipoSery(DecUsoModelloTipoSerie decUsoModelloTipoSery) {
         getDecUsoModelloTipoSeries().remove(decUsoModelloTipoSery);
         decUsoModelloTipoSery.setOrgStrut(null);
-
         return decUsoModelloTipoSery;
     }
 
@@ -590,14 +668,12 @@ public class OrgStrut implements Serializable {
     public AplValoreParamApplic addAplValoreParamApplic(AplValoreParamApplic aplValoreParamApplic) {
         getAplValoreParamApplics().add(aplValoreParamApplic);
         aplValoreParamApplic.setOrgStrut(this);
-
         return aplValoreParamApplic;
     }
 
     public AplValoreParamApplic removeAplValoreParamApplic(AplValoreParamApplic aplValoreParamApplic) {
         getAplValoreParamApplics().remove(aplValoreParamApplic);
         aplValoreParamApplic.setOrgStrut(null);
-
         return aplValoreParamApplic;
     }
 

@@ -1,35 +1,62 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.math.BigDecimal;
+
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the MON_V_CHK_FASC_BY_AMB database table.
- *
  */
 @Entity
 @Table(name = "MON_V_CHK_FASC_BY_AMB")
-@NamedQuery(name = "MonVChkFascByAmb.findByAmbUser", query = "SELECT m FROM MonVChkFascByAmb m WHERE m.idAmbiente = :idAmbiente AND m.idUserIam = :idUser")
+@NamedQuery(name = "MonVChkFascByAmb.findByAmbUser", query = "SELECT m FROM MonVChkFascByAmb m WHERE m.monVChkFascByAmbId.idAmbiente = :idAmbiente AND m.monVChkFascByAmbId.idUserIam = :idUser")
 public class MonVChkFascByAmb implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private String flFasc30gg;
-    private String flFascAttesaSched30gg;
-    private String flFascAttesaSchedB30gg;
-    private String flFascAttesaSchedCorr;
-    private String flFascB30gg;
-    private String flFascCorr;
-    private String flFascNoselSched30gg;
-    private String flFascNoselSchedB30gg;
-    private String flFascNoselSchedCorr;
-    private BigDecimal idAmbiente;
-    private BigDecimal idUserIam;
 
-    public MonVChkFascByAmb() {
+    private String flFasc30gg;
+
+    private String flFascAttesaSched30gg;
+
+    private String flFascAttesaSchedB30gg;
+
+    private String flFascAttesaSchedCorr;
+
+    private String flFascB30gg;
+
+    private String flFascCorr;
+
+    private String flFascNoselSched30gg;
+
+    private String flFascNoselSchedB30gg;
+
+    private String flFascNoselSchedCorr;
+
+    public MonVChkFascByAmb() {/* Hibernate */
     }
 
-    @Column(name = "FL_FASC_30GG")
+    @Column(name = "FL_FASC_30GG", columnDefinition = "char")
     public String getFlFasc30gg() {
         return this.flFasc30gg;
     }
@@ -38,7 +65,7 @@ public class MonVChkFascByAmb implements Serializable {
         this.flFasc30gg = flFasc30gg;
     }
 
-    @Column(name = "FL_FASC_ATTESA_SCHED_30GG")
+    @Column(name = "FL_FASC_ATTESA_SCHED_30GG", columnDefinition = "char")
     public String getFlFascAttesaSched30gg() {
         return this.flFascAttesaSched30gg;
     }
@@ -47,7 +74,7 @@ public class MonVChkFascByAmb implements Serializable {
         this.flFascAttesaSched30gg = flFascAttesaSched30gg;
     }
 
-    @Column(name = "FL_FASC_ATTESA_SCHED_B30GG")
+    @Column(name = "FL_FASC_ATTESA_SCHED_B30GG", columnDefinition = "char")
     public String getFlFascAttesaSchedB30gg() {
         return this.flFascAttesaSchedB30gg;
     }
@@ -56,7 +83,7 @@ public class MonVChkFascByAmb implements Serializable {
         this.flFascAttesaSchedB30gg = flFascAttesaSchedB30gg;
     }
 
-    @Column(name = "FL_FASC_ATTESA_SCHED_CORR")
+    @Column(name = "FL_FASC_ATTESA_SCHED_CORR", columnDefinition = "char(1)")
     public String getFlFascAttesaSchedCorr() {
         return this.flFascAttesaSchedCorr;
     }
@@ -65,7 +92,7 @@ public class MonVChkFascByAmb implements Serializable {
         this.flFascAttesaSchedCorr = flFascAttesaSchedCorr;
     }
 
-    @Column(name = "FL_FASC_B30GG")
+    @Column(name = "FL_FASC_B30GG", columnDefinition = "char")
     public String getFlFascB30gg() {
         return this.flFascB30gg;
     }
@@ -74,7 +101,7 @@ public class MonVChkFascByAmb implements Serializable {
         this.flFascB30gg = flFascB30gg;
     }
 
-    @Column(name = "FL_FASC_CORR")
+    @Column(name = "FL_FASC_CORR", columnDefinition = "char(1)")
     public String getFlFascCorr() {
         return this.flFascCorr;
     }
@@ -83,7 +110,7 @@ public class MonVChkFascByAmb implements Serializable {
         this.flFascCorr = flFascCorr;
     }
 
-    @Column(name = "FL_FASC_NOSEL_SCHED_30GG")
+    @Column(name = "FL_FASC_NOSEL_SCHED_30GG", columnDefinition = "char")
     public String getFlFascNoselSched30gg() {
         return this.flFascNoselSched30gg;
     }
@@ -92,7 +119,7 @@ public class MonVChkFascByAmb implements Serializable {
         this.flFascNoselSched30gg = flFascNoselSched30gg;
     }
 
-    @Column(name = "FL_FASC_NOSEL_SCHED_B30GG")
+    @Column(name = "FL_FASC_NOSEL_SCHED_B30GG", columnDefinition = "char")
     public String getFlFascNoselSchedB30gg() {
         return this.flFascNoselSchedB30gg;
     }
@@ -101,7 +128,7 @@ public class MonVChkFascByAmb implements Serializable {
         this.flFascNoselSchedB30gg = flFascNoselSchedB30gg;
     }
 
-    @Column(name = "FL_FASC_NOSEL_SCHED_CORR")
+    @Column(name = "FL_FASC_NOSEL_SCHED_CORR", columnDefinition = "char(1)")
     public String getFlFascNoselSchedCorr() {
         return this.flFascNoselSchedCorr;
     }
@@ -110,24 +137,14 @@ public class MonVChkFascByAmb implements Serializable {
         this.flFascNoselSchedCorr = flFascNoselSchedCorr;
     }
 
-    @Id
-    @Column(name = "ID_AMBIENTE")
-    public BigDecimal getIdAmbiente() {
-        return this.idAmbiente;
+    private MonVChkFascByAmbId monVChkFascByAmbId;
+
+    @EmbeddedId()
+    public MonVChkFascByAmbId getMonVChkFascByAmbId() {
+        return monVChkFascByAmbId;
     }
 
-    public void setIdAmbiente(BigDecimal idAmbiente) {
-        this.idAmbiente = idAmbiente;
+    public void setMonVChkFascByAmbId(MonVChkFascByAmbId monVChkFascByAmbId) {
+        this.monVChkFascByAmbId = monVChkFascByAmbId;
     }
-
-    @Id
-    @Column(name = "ID_USER_IAM")
-    public BigDecimal getIdUserIam() {
-        return this.idUserIam;
-    }
-
-    public void setIdUserIam(BigDecimal idUserIam) {
-        this.idUserIam = idUserIam;
-    }
-
 }

@@ -1,9 +1,33 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the ARO_V_VIS_COMP_AIP database table.
@@ -48,7 +72,7 @@ public class AroVVisCompAip implements Serializable {
     private String tiSupportoComp;
     private Date tmRifTempVers;
 
-    public AroVVisCompAip() {
+    public AroVVisCompAip() {/* Hibernate */
     }
 
     @Column(name = "CD_ENCODING_HASH_FILE_CALC")
@@ -186,7 +210,7 @@ public class AroVVisCompAip implements Serializable {
         this.dsUrnCompCalc = dsUrnCompCalc;
     }
 
-    @Column(name = "FL_COMP_FIRMATO")
+    @Column(name = "FL_COMP_FIRMATO", columnDefinition = "char(1)")
     public String getFlCompFirmato() {
         return this.flCompFirmato;
     }
@@ -195,7 +219,7 @@ public class AroVVisCompAip implements Serializable {
         this.flCompFirmato = flCompFirmato;
     }
 
-    @Column(name = "FL_NO_CALC_FMT_VERIF_FIRME")
+    @Column(name = "FL_NO_CALC_FMT_VERIF_FIRME", columnDefinition = "char(1)")
     public String getFlNoCalcFmtVerifFirme() {
         return this.flNoCalcFmtVerifFirme;
     }
@@ -204,7 +228,7 @@ public class AroVVisCompAip implements Serializable {
         this.flNoCalcFmtVerifFirme = flNoCalcFmtVerifFirme;
     }
 
-    @Column(name = "FL_NO_CALC_HASH_FILE")
+    @Column(name = "FL_NO_CALC_HASH_FILE", columnDefinition = "char(1)")
     public String getFlNoCalcHashFile() {
         return this.flNoCalcHashFile;
     }
@@ -213,7 +237,7 @@ public class AroVVisCompAip implements Serializable {
         this.flNoCalcHashFile = flNoCalcHashFile;
     }
 
-    @Column(name = "FL_RIF_TEMP_DATA_FIRMA_VERS")
+    @Column(name = "FL_RIF_TEMP_DATA_FIRMA_VERS", columnDefinition = "char(1)")
     public String getFlRifTempDataFirmaVers() {
         return this.flRifTempDataFirmaVers;
     }

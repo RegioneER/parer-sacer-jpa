@@ -1,44 +1,73 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
-import it.eng.parer.grantedEntity.OrgServizioErog;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlTransient;
 
+import it.eng.parer.grantedEntity.OrgServizioErog;
+
 /**
  * The persistent class for the ORG_TIPO_SERVIZIO database table.
- *
  */
 @Entity
-@Table(name = "SACER_IAM.ORG_TIPO_SERVIZIO")
+@Table(schema = "SACER_IAM", name = "ORG_TIPO_SERVIZIO")
 @NamedQuery(name = "OrgTipoServizio.findAll", query = "SELECT o FROM OrgTipoServizio o")
 public class OrgTipoServizio implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idTipoServizio;
-    private String cdTipoServizio;
-    private String dsTipoServizio;
-    private String ggFatturazione;
-    private String tiClasseTipoServizio;
-    private String tipoFatturazione;
-    private List<OrgServizioErog> orgServizioErogs;
-    // private List<OrgTariffa> orgTariffas;
 
-    public OrgTipoServizio() {
+    private Long idTipoServizio;
+
+    private String cdTipoServizio;
+
+    private String dsTipoServizio;
+
+    private String ggFatturazione;
+
+    private String tiClasseTipoServizio;
+
+    private String tipoFatturazione;
+
+    private List<OrgServizioErog> orgServizioErogs = new ArrayList<>();
+    // private List<OrgTariffa> orgTariffas= new ArrayList<>();
+
+    public OrgTipoServizio() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "ORG_TIPO_SERVIZIO_IDTIPOSERVIZIO_GENERATOR", sequenceName = "SACER_IAM.SORG_TIPO_SERVIZIO", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ORG_TIPO_SERVIZIO_IDTIPOSERVIZIO_GENERATOR")
     @Column(name = "ID_TIPO_SERVIZIO")
     @XmlID
-    public long getIdTipoServizio() {
+    public Long getIdTipoServizio() {
         return this.idTipoServizio;
     }
 
-    public void setIdTipoServizio(long idTipoServizio) {
+    public void setIdTipoServizio(Long idTipoServizio) {
         this.idTipoServizio = idTipoServizio;
     }
 
@@ -62,7 +91,7 @@ public class OrgTipoServizio implements Serializable {
     }
 
     @XmlTransient
-    @Column(name = "GG_FATTURAZIONE")
+    @Column(name = "GG_FATTURAZIONE", columnDefinition = "char")
     public String getGgFatturazione() {
         return this.ggFatturazione;
     }
@@ -105,14 +134,12 @@ public class OrgTipoServizio implements Serializable {
     public OrgServizioErog addOrgServizioErog(OrgServizioErog orgServizioErog) {
         getOrgServizioErogs().add(orgServizioErog);
         orgServizioErog.setOrgTipoServizio(this);
-
         return orgServizioErog;
     }
 
     public OrgServizioErog removeOrgServizioErog(OrgServizioErog orgServizioErog) {
         getOrgServizioErogs().remove(orgServizioErog);
         orgServizioErog.setOrgTipoServizio(null);
-
         return orgServizioErog;
     }
     //

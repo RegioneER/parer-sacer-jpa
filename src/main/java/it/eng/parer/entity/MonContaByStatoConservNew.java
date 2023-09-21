@@ -1,11 +1,42 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 import org.apache.commons.lang3.Validate;
 
 /**
@@ -27,7 +58,7 @@ public class MonContaByStatoConservNew implements Serializable {
     }
 
     private static final long serialVersionUID = 1L;
-    private long idContaByStatoConserv;
+    private Long idContaByStatoConserv;
     private BigDecimal aaKeyUnitaDoc;
     private Date dtRifConta;
     private BigDecimal niCompAipGenerato;
@@ -42,11 +73,11 @@ public class MonContaByStatoConservNew implements Serializable {
     private OrgSubStrut orgSubStrut;
     private BigDecimal idStrut;
     private BigDecimal idSubStrut;
-    private long idDecRegistroUnitaDoc;
-    private long idDecTipoDoc;
-    private long idDecTipoUnitaDoc;
+    private Long idDecRegistroUnitaDoc;
+    private Long idDecTipoDoc;
+    private Long idDecTipoUnitaDoc;
 
-    public MonContaByStatoConservNew() {
+    public MonContaByStatoConservNew() {/* Hibernate */
     }
 
     // // NON MODIFICARE USATO DA CALCOLO CONSISTENZA
@@ -164,11 +195,11 @@ public class MonContaByStatoConservNew implements Serializable {
     @SequenceGenerator(name = "MON_CONTA_BY_STATO_CONSERV_NEW_IDCONTABYSTATOCONSERV_GENERATOR", sequenceName = "SMON_CONTA_BY_STATO_CONSERV_NEW", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MON_CONTA_BY_STATO_CONSERV_NEW_IDCONTABYSTATOCONSERV_GENERATOR")
     @Column(name = "ID_CONTA_BY_STATO_CONSERV")
-    public long getIdContaByStatoConserv() {
+    public Long getIdContaByStatoConserv() {
         return this.idContaByStatoConserv;
     }
 
-    public void setIdContaByStatoConserv(long idContaByStatoConserv) {
+    public void setIdContaByStatoConserv(Long idContaByStatoConserv) {
         this.idContaByStatoConserv = idContaByStatoConserv;
     }
 
@@ -311,29 +342,29 @@ public class MonContaByStatoConservNew implements Serializable {
     }
 
     @Column(name = "ID_REGISTRO_UNITA_DOC")
-    public long getIdDecRegistroUnitaDoc() {
+    public Long getIdDecRegistroUnitaDoc() {
         return idDecRegistroUnitaDoc;
     }
 
-    public void setIdDecRegistroUnitaDoc(long idDecRegistroUnitaDoc) {
+    public void setIdDecRegistroUnitaDoc(Long idDecRegistroUnitaDoc) {
         this.idDecRegistroUnitaDoc = idDecRegistroUnitaDoc;
     }
 
     @Column(name = "ID_TIPO_DOC_PRINC")
-    public long getIdDecTipoDoc() {
+    public Long getIdDecTipoDoc() {
         return idDecTipoDoc;
     }
 
-    public void setIdDecTipoDoc(long idDecTipoDoc) {
+    public void setIdDecTipoDoc(Long idDecTipoDoc) {
         this.idDecTipoDoc = idDecTipoDoc;
     }
 
     @Column(name = "ID_TIPO_UNITA_DOC")
-    public long getIdDecTipoUnitaDoc() {
+    public Long getIdDecTipoUnitaDoc() {
         return idDecTipoUnitaDoc;
     }
 
-    public void setIdDecTipoUnitaDoc(long idDecTipoUnitaDoc) {
+    public void setIdDecTipoUnitaDoc(Long idDecTipoUnitaDoc) {
         this.idDecTipoUnitaDoc = idDecTipoUnitaDoc;
     }
 

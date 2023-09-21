@@ -1,88 +1,103 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 /**
  * The persistent class for the MON_V_LIS_DOC_NON_VERS_IAM database table.
- *
  */
 @Entity
 @Table(name = "MON_V_LIS_DOC_NON_VERS_IAM")
+@NamedQuery(name = "MonVLisDocNonVersIam.findAll", query = "SELECT m FROM MonVLisDocNonVersIam m")
 public class MonVLisDocNonVersIam implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private BigDecimal aaKeyUnitaDoc;
-    private String cdErr;
-    private String cdKeyDocVers;
-    private String cdKeyUnitaDoc;
-    private String cdRegistroKeyUnitaDoc;
+
+    private String cdErrLast;
+
+    private String clErrLast;
+
+    private String dsErrLast;
+
     private String dsKeyOrd;
+
     private Date dtFirstSesErr;
+
     private Date dtLastSesErr;
+
+    private String flDiversiErr;
+
     private String flNonRisolub;
+
     private String flVerif;
+
     private BigDecimal idAmbiente;
+
     private BigDecimal idDocNonVers;
+
     private BigDecimal idEnte;
-    private BigDecimal idStrut;
     private BigDecimal idUserIam;
+
     private String nmAmbiente;
+
     private String nmEnte;
+
     private String nmStrut;
 
-    public MonVLisDocNonVersIam() {
+    public MonVLisDocNonVersIam() {/* Hibernate */
     }
 
-    @Id
-    @Column(name = "AA_KEY_UNITA_DOC")
-    public BigDecimal getAaKeyUnitaDoc() {
-        return this.aaKeyUnitaDoc;
+    @Column(name = "CD_ERR_LAST")
+    public String getCdErrLast() {
+        return this.cdErrLast;
     }
 
-    public void setAaKeyUnitaDoc(BigDecimal aaKeyUnitaDoc) {
-        this.aaKeyUnitaDoc = aaKeyUnitaDoc;
+    public void setCdErrLast(String cdErrLast) {
+        this.cdErrLast = cdErrLast;
     }
 
-    @Column(name = "CD_ERR")
-    public String getCdErr() {
-        return this.cdErr;
+    @Column(name = "CL_ERR_LAST")
+    public String getClErrLast() {
+        return this.clErrLast;
     }
 
-    public void setCdErr(String cdErr) {
-        this.cdErr = cdErr;
+    public void setClErrLast(String clErrLast) {
+        this.clErrLast = clErrLast;
     }
 
-    @Id
-    @Column(name = "CD_KEY_DOC_VERS")
-    public String getCdKeyDocVers() {
-        return this.cdKeyDocVers;
+    @Column(name = "DS_ERR_LAST")
+    public String getDsErrLast() {
+        return this.dsErrLast;
     }
 
-    public void setCdKeyDocVers(String cdKeyDocVers) {
-        this.cdKeyDocVers = cdKeyDocVers;
-    }
-
-    @Id
-    @Column(name = "CD_KEY_UNITA_DOC")
-    public String getCdKeyUnitaDoc() {
-        return this.cdKeyUnitaDoc;
-    }
-
-    public void setCdKeyUnitaDoc(String cdKeyUnitaDoc) {
-        this.cdKeyUnitaDoc = cdKeyUnitaDoc;
-    }
-
-    @Id
-    @Column(name = "CD_REGISTRO_KEY_UNITA_DOC")
-    public String getCdRegistroKeyUnitaDoc() {
-        return this.cdRegistroKeyUnitaDoc;
-    }
-
-    public void setCdRegistroKeyUnitaDoc(String cdRegistroKeyUnitaDoc) {
-        this.cdRegistroKeyUnitaDoc = cdRegistroKeyUnitaDoc;
+    public void setDsErrLast(String dsErrLast) {
+        this.dsErrLast = dsErrLast;
     }
 
     @Column(name = "DS_KEY_ORD")
@@ -94,7 +109,7 @@ public class MonVLisDocNonVersIam implements Serializable {
         this.dsKeyOrd = dsKeyOrd;
     }
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "DT_FIRST_SES_ERR")
     public Date getDtFirstSesErr() {
         return this.dtFirstSesErr;
@@ -104,7 +119,7 @@ public class MonVLisDocNonVersIam implements Serializable {
         this.dtFirstSesErr = dtFirstSesErr;
     }
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "DT_LAST_SES_ERR")
     public Date getDtLastSesErr() {
         return this.dtLastSesErr;
@@ -114,7 +129,16 @@ public class MonVLisDocNonVersIam implements Serializable {
         this.dtLastSesErr = dtLastSesErr;
     }
 
-    @Column(name = "FL_NON_RISOLUB")
+    @Column(name = "FL_DIVERSI_ERR", columnDefinition = "char(1)")
+    public String getFlDiversiErr() {
+        return this.flDiversiErr;
+    }
+
+    public void setFlDiversiErr(String flDiversiErr) {
+        this.flDiversiErr = flDiversiErr;
+    }
+
+    @Column(name = "FL_NON_RISOLUB", columnDefinition = "char(1)")
     public String getFlNonRisolub() {
         return this.flNonRisolub;
     }
@@ -123,7 +147,7 @@ public class MonVLisDocNonVersIam implements Serializable {
         this.flNonRisolub = flNonRisolub;
     }
 
-    @Column(name = "FL_VERIF")
+    @Column(name = "FL_VERIF", columnDefinition = "char(1)")
     public String getFlVerif() {
         return this.flVerif;
     }
@@ -157,16 +181,6 @@ public class MonVLisDocNonVersIam implements Serializable {
 
     public void setIdEnte(BigDecimal idEnte) {
         this.idEnte = idEnte;
-    }
-
-    @Id
-    @Column(name = "ID_STRUT")
-    public BigDecimal getIdStrut() {
-        return this.idStrut;
-    }
-
-    public void setIdStrut(BigDecimal idStrut) {
-        this.idStrut = idStrut;
     }
 
     @Column(name = "ID_USER_IAM")
@@ -205,4 +219,14 @@ public class MonVLisDocNonVersIam implements Serializable {
         this.nmStrut = nmStrut;
     }
 
+    private MonVLisDocNonVersIamId monVLisDocNonVersIamId;
+
+    @EmbeddedId()
+    public MonVLisDocNonVersIamId getMonVLisDocNonVersIamId() {
+        return monVLisDocNonVersIamId;
+    }
+
+    public void setMonVLisDocNonVersIamId(MonVLisDocNonVersIamId monVLisDocNonVersIamId) {
+        this.monVLisDocNonVersIamId = monVLisDocNonVersIamId;
+    }
 }

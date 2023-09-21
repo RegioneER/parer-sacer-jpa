@@ -1,9 +1,34 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the ARO_V_VIS_UPD_UNITA_DOC database table.
@@ -58,8 +83,9 @@ public class AroVVisUpdUnitaDoc implements Serializable {
     private String tiStatoConservazione;
     private String tiStatoUpdElencoVers;
     private Date tsIniSes;
+    private String flUpdProfiloNormativo;
 
-    public AroVVisUpdUnitaDoc() {
+    public AroVVisUpdUnitaDoc() {/* Hibernate */
     }
 
     @Column(name = "AA_KEY_UNITA_DOC")
@@ -217,7 +243,7 @@ public class AroVVisUpdUnitaDoc implements Serializable {
         this.dsUrnNormalizXmlRisp = dsUrnNormalizXmlRisp;
     }
 
-    @Column(name = "FL_FORZA_UPD")
+    @Column(name = "FL_FORZA_UPD", columnDefinition = "char(1)")
     public String getFlForzaUpd() {
         return this.flForzaUpd;
     }
@@ -226,7 +252,7 @@ public class AroVVisUpdUnitaDoc implements Serializable {
         this.flForzaUpd = flForzaUpd;
     }
 
-    @Column(name = "FL_UPD_DATI_SPEC")
+    @Column(name = "FL_UPD_DATI_SPEC", columnDefinition = "char(1)")
     public String getFlUpdDatiSpec() {
         return this.flUpdDatiSpec;
     }
@@ -235,7 +261,7 @@ public class AroVVisUpdUnitaDoc implements Serializable {
         this.flUpdDatiSpec = flUpdDatiSpec;
     }
 
-    @Column(name = "FL_UPD_DATI_SPEC_MIGRAZ")
+    @Column(name = "FL_UPD_DATI_SPEC_MIGRAZ", columnDefinition = "char(1)")
     public String getFlUpdDatiSpecMigraz() {
         return this.flUpdDatiSpecMigraz;
     }
@@ -244,7 +270,7 @@ public class AroVVisUpdUnitaDoc implements Serializable {
         this.flUpdDatiSpecMigraz = flUpdDatiSpecMigraz;
     }
 
-    @Column(name = "FL_UPD_FASCICOLI_SEC")
+    @Column(name = "FL_UPD_FASCICOLI_SEC", columnDefinition = "char(1)")
     public String getFlUpdFascicoliSec() {
         return this.flUpdFascicoliSec;
     }
@@ -253,7 +279,7 @@ public class AroVVisUpdUnitaDoc implements Serializable {
         this.flUpdFascicoliSec = flUpdFascicoliSec;
     }
 
-    @Column(name = "FL_UPD_FASCICOLO_PRINC")
+    @Column(name = "FL_UPD_FASCICOLO_PRINC", columnDefinition = "char(1)")
     public String getFlUpdFascicoloPrinc() {
         return this.flUpdFascicoloPrinc;
     }
@@ -262,7 +288,7 @@ public class AroVVisUpdUnitaDoc implements Serializable {
         this.flUpdFascicoloPrinc = flUpdFascicoloPrinc;
     }
 
-    @Column(name = "FL_UPD_LINK_UNITA_DOC")
+    @Column(name = "FL_UPD_LINK_UNITA_DOC", columnDefinition = "char(1)")
     public String getFlUpdLinkUnitaDoc() {
         return this.flUpdLinkUnitaDoc;
     }
@@ -271,7 +297,7 @@ public class AroVVisUpdUnitaDoc implements Serializable {
         this.flUpdLinkUnitaDoc = flUpdLinkUnitaDoc;
     }
 
-    @Column(name = "FL_UPD_PROFILO_ARCHIV")
+    @Column(name = "FL_UPD_PROFILO_ARCHIV", columnDefinition = "char(1)")
     public String getFlUpdProfiloArchiv() {
         return this.flUpdProfiloArchiv;
     }
@@ -280,7 +306,7 @@ public class AroVVisUpdUnitaDoc implements Serializable {
         this.flUpdProfiloArchiv = flUpdProfiloArchiv;
     }
 
-    @Column(name = "FL_UPD_PROFILO_UNITA_DOC")
+    @Column(name = "FL_UPD_PROFILO_UNITA_DOC", columnDefinition = "char(1)")
     public String getFlUpdProfiloUnitaDoc() {
         return this.flUpdProfiloUnitaDoc;
     }
@@ -460,6 +486,15 @@ public class AroVVisUpdUnitaDoc implements Serializable {
 
     public void setTsIniSes(Date tsIniSes) {
         this.tsIniSes = tsIniSes;
+    }
+
+    @Column(name = "FL_UPD_PROFILO_NORMATIVO", columnDefinition = "char(1)")
+    public String getFlUpdProfiloNormativo() {
+        return flUpdProfiloNormativo;
+    }
+
+    public void setFlUpdProfiloNormativo(String flUpdProfiloNormativo) {
+        this.flUpdProfiloNormativo = flUpdProfiloNormativo;
     }
 
 }

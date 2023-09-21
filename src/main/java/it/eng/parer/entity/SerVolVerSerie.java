@@ -1,40 +1,87 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 /**
  * The persistent class for the SER_VOL_VER_SERIE database table.
- * 
  */
 @Entity
 @Table(name = "SER_VOL_VER_SERIE")
 @NamedQuery(name = "SerVolVerSerie.findAll", query = "SELECT s FROM SerVolVerSerie s")
 public class SerVolVerSerie implements Serializable {
-    private static final long serialVersionUID = 1L;
-    private long idVolVerSerie;
-    private BigDecimal idFirstUdAppartVol;
-    private BigDecimal idLastUdAppartVol;
-    private BigDecimal niUnitaDocVol;
-    private BigDecimal pgVolVerSerie;
-    private List<AroUdAppartVerSerie> aroUdAppartVerSeries;
-    private SerVerSerie serVerSerie;
-    private List<SerIxVolVerSerie> serIxVolVerSeries;
 
-    public SerVolVerSerie() {
+    private static final long serialVersionUID = 1L;
+
+    private Long idVolVerSerie;
+
+    private BigDecimal idFirstUdAppartVol;
+
+    private BigDecimal idLastUdAppartVol;
+
+    private BigDecimal niUnitaDocVol;
+
+    private BigDecimal pgVolVerSerie;
+
+    private List<AroUdAppartVerSerie> aroUdAppartVerSeries = new ArrayList<>();
+
+    private SerVerSerie serVerSerie;
+
+    private List<SerIxVolVerSerie> serIxVolVerSeries = new ArrayList<>();
+
+    public SerVolVerSerie() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "SER_VOL_VER_SERIE_IDVOLVERSERIE_GENERATOR", sequenceName = "SSER_VOL_VER_SERIE", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SER_VOL_VER_SERIE_IDVOLVERSERIE_GENERATOR")
+    // "SER_VOL_VER_SERIE_IDVOLVERSERIE_GENERATOR",
+    // sequenceName = "SSER_VOL_VER_SERIE",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SER_VOL_VER_SERIE_IDVOLVERSERIE_GENERATOR")
     @Column(name = "ID_VOL_VER_SERIE")
-    public long getIdVolVerSerie() {
+    @GenericGenerator(name = "SSER_VOL_VER_SERIE_ID_VOL_VER_SERIE_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SSER_VOL_VER_SERIE"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SSER_VOL_VER_SERIE_ID_VOL_VER_SERIE_GENERATOR")
+    public Long getIdVolVerSerie() {
         return this.idVolVerSerie;
     }
 
-    public void setIdVolVerSerie(long idVolVerSerie) {
+    public void setIdVolVerSerie(Long idVolVerSerie) {
         this.idVolVerSerie = idVolVerSerie;
     }
 
@@ -87,14 +134,12 @@ public class SerVolVerSerie implements Serializable {
     public AroUdAppartVerSerie addAroUdAppartVerSery(AroUdAppartVerSerie aroUdAppartVerSery) {
         getAroUdAppartVerSeries().add(aroUdAppartVerSery);
         aroUdAppartVerSery.setSerVolVerSerie(this);
-
         return aroUdAppartVerSery;
     }
 
     public AroUdAppartVerSerie removeAroUdAppartVerSery(AroUdAppartVerSerie aroUdAppartVerSery) {
         getAroUdAppartVerSeries().remove(aroUdAppartVerSery);
         aroUdAppartVerSery.setSerVolVerSerie(null);
-
         return aroUdAppartVerSery;
     }
 
@@ -122,14 +167,12 @@ public class SerVolVerSerie implements Serializable {
     public SerIxVolVerSerie addSerIxVolVerSery(SerIxVolVerSerie serIxVolVerSery) {
         getSerIxVolVerSeries().add(serIxVolVerSery);
         serIxVolVerSery.setSerVolVerSerie(this);
-
         return serIxVolVerSery;
     }
 
     public SerIxVolVerSerie removeSerIxVolVerSery(SerIxVolVerSerie serIxVolVerSery) {
         getSerIxVolVerSeries().remove(serIxVolVerSery);
         serIxVolVerSery.setSerVolVerSerie(null);
-
         return serIxVolVerSery;
     }
 

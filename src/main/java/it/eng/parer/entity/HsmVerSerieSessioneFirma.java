@@ -1,14 +1,49 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 import it.eng.parer.entity.constraint.HsmVerSerieSessioneFirma.TiEsitoFirmaVerSerie;
 
 /**
  * The persistent class for the HSM_VER_SERIE_SESSIONE_FIRMA database table.
- *
  */
 @Entity
 @Table(name = "HSM_VER_SERIE_SESSIONE_FIRMA")
@@ -16,26 +51,41 @@ import it.eng.parer.entity.constraint.HsmVerSerieSessioneFirma.TiEsitoFirmaVerSe
 public class HsmVerSerieSessioneFirma implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idVerSerieSessioneFirma;
+
+    private Long idVerSerieSessioneFirma;
+
     private String cdErr;
+
     private String dsErr;
+
     private TiEsitoFirmaVerSerie tiEsito;
+
     private Date tsEsito;
+
     private HsmSessioneFirma hsmSessioneFirma;
+
     private SerVerSerie serVerSerie;
 
-    public HsmVerSerieSessioneFirma() {
+    public HsmVerSerieSessioneFirma() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "HSM_VER_SERIE_SESSIONE_FIRMA_IDVERSERIESESSIONEFIRMA_GENERATOR", sequenceName = "SHSM_VER_SERIE_SESSIONE_FIRMA", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "HSM_VER_SERIE_SESSIONE_FIRMA_IDVERSERIESESSIONEFIRMA_GENERATOR")
+    // "HSM_VER_SERIE_SESSIONE_FIRMA_IDVERSERIESESSIONEFIRMA_GENERATOR",
+    // sequenceName =
+    // "SHSM_VER_SERIE_SESSIONE_FIRMA",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
+    // "HSM_VER_SERIE_SESSIONE_FIRMA_IDVERSERIESESSIONEFIRMA_GENERATOR")
     @Column(name = "ID_VER_SERIE_SESSIONE_FIRMA")
-    public long getIdVerSerieSessioneFirma() {
+    @GenericGenerator(name = "SHSM_VER_SERIE_SESSIONE_FIRMA_ID_VER_SERIE_SESSIONE_FIRMA_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SHSM_VER_SERIE_SESSIONE_FIRMA"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SHSM_VER_SERIE_SESSIONE_FIRMA_ID_VER_SERIE_SESSIONE_FIRMA_GENERATOR")
+    public Long getIdVerSerieSessioneFirma() {
         return this.idVerSerieSessioneFirma;
     }
 
-    public void setIdVerSerieSessioneFirma(long idVerSerieSessioneFirma) {
+    public void setIdVerSerieSessioneFirma(Long idVerSerieSessioneFirma) {
         this.idVerSerieSessioneFirma = idVerSerieSessioneFirma;
     }
 

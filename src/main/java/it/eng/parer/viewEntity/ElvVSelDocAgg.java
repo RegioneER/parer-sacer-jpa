@@ -1,26 +1,49 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.NamedQuery;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 /**
  * The persistent class for the ELV_V_SEL_DOC_AGG database table.
- * 
  */
-@Entity
-@Table(name = "ELV_V_SEL_DOC_AGG")
+// @Entity
+// @Table(name = "ELV_V_SEL_DOC_AGG")
 @NamedQuery(name = "ElvVSelDocAgg.findAll", query = "SELECT e FROM ElvVSelDocAgg e")
 public class ElvVSelDocAgg implements Serializable {
+
     private static final long serialVersionUID = 1L;
+
     private BigDecimal aaKeyUnitaDoc;
+
     private Date dtCreazione;
-    private BigDecimal idCriterioRaggr;
-    private BigDecimal idDoc;
+
     private BigDecimal idUnitaDoc;
 
-    public ElvVSelDocAgg() {
+    public ElvVSelDocAgg() {/* Hibernate */
     }
 
     @Column(name = "AA_KEY_UNITA_DOC")
@@ -42,26 +65,6 @@ public class ElvVSelDocAgg implements Serializable {
         this.dtCreazione = dtCreazione;
     }
 
-    @Id
-    @Column(name = "ID_CRITERIO_RAGGR")
-    public BigDecimal getIdCriterioRaggr() {
-        return this.idCriterioRaggr;
-    }
-
-    public void setIdCriterioRaggr(BigDecimal idCriterioRaggr) {
-        this.idCriterioRaggr = idCriterioRaggr;
-    }
-
-    @Id
-    @Column(name = "ID_DOC")
-    public BigDecimal getIdDoc() {
-        return this.idDoc;
-    }
-
-    public void setIdDoc(BigDecimal idDoc) {
-        this.idDoc = idDoc;
-    }
-
     @Column(name = "ID_UNITA_DOC")
     public BigDecimal getIdUnitaDoc() {
         return this.idUnitaDoc;
@@ -71,4 +74,14 @@ public class ElvVSelDocAgg implements Serializable {
         this.idUnitaDoc = idUnitaDoc;
     }
 
+    private ElvVSelDocAggId elvVSelDocAggId;
+
+    @EmbeddedId()
+    public ElvVSelDocAggId getElvVSelDocAggId() {
+        return elvVSelDocAggId;
+    }
+
+    public void setElvVSelDocAggId(ElvVSelDocAggId elvVSelDocAggId) {
+        this.elvVSelDocAggId = elvVSelDocAggId;
+    }
 }

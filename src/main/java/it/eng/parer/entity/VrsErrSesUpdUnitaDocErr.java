@@ -1,42 +1,90 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.math.BigDecimal;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 import it.eng.parer.entity.constraint.VrsErrSesUpdUnitaDocErr.TiErrVrsErrSesUpdUnitaDocErr;
 
-import java.math.BigDecimal;
-
 /**
  * The persistent class for the VRS_ERR_SES_UPD_UNITA_DOC_ERR database table.
- * 
  */
 @Entity
 @Table(name = "VRS_ERR_SES_UPD_UNITA_DOC_ERR")
 @NamedQuery(name = "VrsErrSesUpdUnitaDocErr.findAll", query = "SELECT v FROM VrsErrSesUpdUnitaDocErr v")
 public class VrsErrSesUpdUnitaDocErr implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    private long idErrSesUpdUnitaDocErr;
+
+    private Long idErrSesUpdUnitaDocErr;
+
     private String dsErr;
+
     private String flErrPrinc;
+
     private DecControlloWs decControlloWs;
+
     private DecErrSacer decErrSacer;
+
     private VrsSesUpdUnitaDocErr vrsSesUpdUnitaDocErr;
+
     private BigDecimal pgErr;
+
     private TiErrVrsErrSesUpdUnitaDocErr tiErr;
 
-    public VrsErrSesUpdUnitaDocErr() {
+    public VrsErrSesUpdUnitaDocErr() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "VRS_ERR_SES_UPD_UNITA_DOC_ERR_IDERRSESUPDUNITADOCERR_GENERATOR", sequenceName = "SVRS_ERR_SES_UPD_UNITA_DOC_ERR", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VRS_ERR_SES_UPD_UNITA_DOC_ERR_IDERRSESUPDUNITADOCERR_GENERATOR")
+    // "VRS_ERR_SES_UPD_UNITA_DOC_ERR_IDERRSESUPDUNITADOCERR_GENERATOR",
+    // sequenceName =
+    // "SVRS_ERR_SES_UPD_UNITA_DOC_ERR",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
+    // "VRS_ERR_SES_UPD_UNITA_DOC_ERR_IDERRSESUPDUNITADOCERR_GENERATOR")
     @Column(name = "ID_ERR_SES_UPD_UNITA_DOC_ERR")
-    public long getIdErrSesUpdUnitaDocErr() {
+    @GenericGenerator(name = "SVRS_ERR_SES_UPD_UNITA_DOC_ERR_ID_ERR_SES_UPD_UNITA_DOC_ERR_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SVRS_ERR_SES_UPD_UNITA_DOC_ERR"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SVRS_ERR_SES_UPD_UNITA_DOC_ERR_ID_ERR_SES_UPD_UNITA_DOC_ERR_GENERATOR")
+    public Long getIdErrSesUpdUnitaDocErr() {
         return this.idErrSesUpdUnitaDocErr;
     }
 
-    public void setIdErrSesUpdUnitaDocErr(long idErrSesUpdUnitaDocErr) {
+    public void setIdErrSesUpdUnitaDocErr(Long idErrSesUpdUnitaDocErr) {
         this.idErrSesUpdUnitaDocErr = idErrSesUpdUnitaDocErr;
     }
 
@@ -49,7 +97,7 @@ public class VrsErrSesUpdUnitaDocErr implements Serializable {
         this.dsErr = dsErr;
     }
 
-    @Column(name = "FL_ERR_PRINC")
+    @Column(name = "FL_ERR_PRINC", columnDefinition = "char(1)")
     public String getFlErrPrinc() {
         return this.flErrPrinc;
     }

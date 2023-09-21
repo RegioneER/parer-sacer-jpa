@@ -1,7 +1,25 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.grantedEntity;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,43 +28,56 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
+
 /**
  * The persistent class for the SACER_LOG.LOG_LOGIN_USER database table.
- *
  */
 @Entity
-@Table(name = "SACER_LOG.LOG_LOGIN_USER")
+@Table(schema = "SACER_LOG", name = "LOG_LOGIN_USER")
 public class SLLogLoginUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idLoginUser;
+
+    private Long idLoginUser;
+
     private String nmUserid;
+
     private String cdIndIpClient;
+
     private String cdIndServer;
+
     private String tipoEvento;
+
     private Date dtEvento;
+
     private String cdIdEsterno;
+
     private String tipoUtenteAuth;
 
     private SIAplApplic sIAplApplic;
 
-    public SLLogLoginUser() {
+    public SLLogLoginUser() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "LOG_LOGIN_USER_IDLOG_LOGIN_USERJOB_GENERATOR", sequenceName = "SACER_LOG.SLOG_LOGIN_USER", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LOG_LOGIN_USER_IDLOG_LOGIN_USERJOB_GENERATOR")
     @Column(name = "ID_LOGIN_USER")
-    public long getIdLoginUser() {
+    @GenericGenerator(name = "SLOG_LOGIN_USER_ID_LOGIN_USER_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SCHEMA, value = "SACER_LOG"),
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SLOG_LOGIN_USER"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SLOG_LOGIN_USER_ID_LOGIN_USER_GENERATOR")
+    public Long getIdLoginUser() {
         return idLoginUser;
     }
 
-    public void setIdLoginUser(long idLoginUser) {
+    public void setIdLoginUser(Long idLoginUser) {
         this.idLoginUser = idLoginUser;
     }
 
@@ -78,7 +109,6 @@ public class SLLogLoginUser implements Serializable {
     }
 
     @Column(name = "TIPO_EVENTO")
-
     public String getTipoEvento() {
         return tipoEvento;
     }
@@ -118,7 +148,6 @@ public class SLLogLoginUser implements Serializable {
     // bi-directional many-to-one association
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_APPLIC")
-
     public SIAplApplic getsIAplApplic() {
         return sIAplApplic;
     }
@@ -126,5 +155,4 @@ public class SLLogLoginUser implements Serializable {
     public void setsIAplApplic(SIAplApplic sIAplApplic) {
         this.sIAplApplic = sIAplApplic;
     }
-
 }

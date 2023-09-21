@@ -1,85 +1,176 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlTransient;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 import it.eng.parer.entity.constraint.AroUpdUnitaDoc.AroUpdUDTiStatoUpdElencoVers;
 
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-import java.sql.Timestamp;
-
 /**
  * The persistent class for the ARO_UPD_UNITA_DOC database table.
- * 
  */
 @Entity
 @Table(name = "ARO_UPD_UNITA_DOC")
 @NamedQuery(name = "AroUpdUnitaDoc.findAll", query = "SELECT a FROM AroUpdUnitaDoc a")
 public class AroUpdUnitaDoc implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    private long idUpdUnitaDoc;
+
+    private Long idUpdUnitaDoc;
+
     private String cdFascicPrinc;
+
     private String cdIndIpClient;
+
     private String cdIndServer;
+
     private String cdSottofascicPrinc;
+
     private String dlOggettoUnitaDoc;
+
     private String dsClassifPrinc;
+
     private String dsOggettoFascicPrinc;
+
     private String dsOggettoSottofascicPrinc;
+
     private Date dtAnnul;
+
     private Date dtRegUnitaDoc;
+
     private String flForzaUpd;
+
     private ElvElencoVer elvElencoVer;
+
     private AroUnitaDoc aroUnitaDoc;
+
     private IamUser iamUser;
+
     private String ntUpd;
+
     private BigDecimal pgUpdUnitaDoc;
+
     private AroUpdUDTiStatoUpdElencoVers tiStatoUpdElencoVers;
+
     private Date tsFineSes;
+
     private Date tsIniSes;
+
     private Date tsStatoElencoVers;
+
     private Date tsLastResetStato;
-    private List<AroUpdDatiSpecUnitaDoc> aroUpdDatiSpecUnitaDocs;
-    private List<AroUpdDocUnitaDoc> aroUpdDocUnitaDocs;
-    private List<AroUpdLinkUnitaDoc> aroUpdLinkUnitaDocs;
-    private List<AroWarnUpdUnitaDoc> aroWarnUpdUnitaDocs;
-    private List<AroXmlUpdUnitaDoc> aroXmlUpdUnitaDocs;
-    private List<AroUpdArchivSec> aroUpdArchivSecs;
-    private List<ElvUpdUdDaElabElenco> elvUpdUdDaElabElencos;
-    private List<AroUpdUdVerIndiceAipUd> aroUpdUdVerIndiceAipUds;
-    private List<AroUpdUdIndiceAipDaElab> aroUpdUdIndiceAipDaElabs;
+
+    private List<AroUpdDatiSpecUnitaDoc> aroUpdDatiSpecUnitaDocs = new ArrayList<>();
+
+    private List<AroUpdDocUnitaDoc> aroUpdDocUnitaDocs = new ArrayList<>();
+
+    private List<AroUpdLinkUnitaDoc> aroUpdLinkUnitaDocs = new ArrayList<>();
+
+    private List<AroWarnUpdUnitaDoc> aroWarnUpdUnitaDocs = new ArrayList<>();
+
+    private List<AroXmlUpdUnitaDoc> aroXmlUpdUnitaDocs = new ArrayList<>();
+
+    private List<AroUpdArchivSec> aroUpdArchivSecs = new ArrayList<>();
+
+    private List<ElvUpdUdDaElabElenco> elvUpdUdDaElabElencos = new ArrayList<>();
+
+    private List<AroUpdUdVerIndiceAipUd> aroUpdUdVerIndiceAipUds = new ArrayList<>();
+
+    private List<AroUpdUdIndiceAipDaElab> aroUpdUdIndiceAipDaElabs = new ArrayList<>();
+
     private OrgStrut orgStrut;
+
     private BigDecimal aaKeyUnitaDoc;
+
     private DecRegistroUnitaDoc decRegistroUnitaDoc;
+
     private DecTipoUnitaDoc decTipoUnitaDoc;
+
     private DecTipoDoc decTipoDocPrinc;
+
     private String flSesUpdKoRisolti;
+
     private String flUpdProfiloArchiv;
+
     private String flUpdFascicoloPrinc;
+
     private String flUpdFascicoliSec;
+
     private String flUpdProfiloUnitaDoc;
+
     private String flUpdLinkUnitaDoc;
+
     private String flUpdDatiSpec;
+
     private String flUpdDatiSpecMigraz;
+
+    private String flUpdProfiloNormativo;
+
     private String ntAnnul;
+
     private String tipoUpdUnitaDoc;
+
     private BigDecimal niResetStato;
 
-    public AroUpdUnitaDoc() {
+    public AroUpdUnitaDoc() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "ARO_UPD_UNITA_DOC_IDUPDUNITADOC_GENERATOR", sequenceName = "SARO_UPD_UNITA_DOC", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ARO_UPD_UNITA_DOC_IDUPDUNITADOC_GENERATOR")
+    // "ARO_UPD_UNITA_DOC_IDUPDUNITADOC_GENERATOR",
+    // sequenceName = "SARO_UPD_UNITA_DOC",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ARO_UPD_UNITA_DOC_IDUPDUNITADOC_GENERATOR")
     @Column(name = "ID_UPD_UNITA_DOC")
-    public long getIdUpdUnitaDoc() {
+    @GenericGenerator(name = "SARO_UPD_UNITA_DOC_ID_UPD_UNITA_DOC_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SARO_UPD_UNITA_DOC"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SARO_UPD_UNITA_DOC_ID_UPD_UNITA_DOC_GENERATOR")
+    public Long getIdUpdUnitaDoc() {
         return this.idUpdUnitaDoc;
     }
 
-    public void setIdUpdUnitaDoc(long idUpdUnitaDoc) {
+    public void setIdUpdUnitaDoc(Long idUpdUnitaDoc) {
         this.idUpdUnitaDoc = idUpdUnitaDoc;
     }
 
@@ -175,7 +266,7 @@ public class AroUpdUnitaDoc implements Serializable {
         this.dtRegUnitaDoc = dtRegUnitaDoc;
     }
 
-    @Column(name = "FL_FORZA_UPD")
+    @Column(name = "FL_FORZA_UPD", columnDefinition = "char(1)")
     public String getFlForzaUpd() {
         return this.flForzaUpd;
     }
@@ -430,7 +521,7 @@ public class AroUpdUnitaDoc implements Serializable {
         this.decTipoDocPrinc = decTipoDocPrinc;
     }
 
-    @Column(name = "FL_SES_UPD_KO_RISOLTI")
+    @Column(name = "FL_SES_UPD_KO_RISOLTI", columnDefinition = "char(1)")
     public String getFlSesUpdKoRisolti() {
         return this.flSesUpdKoRisolti;
     }
@@ -439,7 +530,7 @@ public class AroUpdUnitaDoc implements Serializable {
         this.flSesUpdKoRisolti = flSesUpdKoRisolti;
     }
 
-    @Column(name = "FL_UPD_PROFILO_ARCHIV")
+    @Column(name = "FL_UPD_PROFILO_ARCHIV", columnDefinition = "char(1)")
     public String getFlUpdProfiloArchiv() {
         return this.flUpdProfiloArchiv;
     }
@@ -448,7 +539,7 @@ public class AroUpdUnitaDoc implements Serializable {
         this.flUpdProfiloArchiv = flUpdProfiloArchiv;
     }
 
-    @Column(name = "FL_UPD_FASCICOLO_PRINC")
+    @Column(name = "FL_UPD_FASCICOLO_PRINC", columnDefinition = "char(1)")
     public String getFlUpdFascicoloPrinc() {
         return this.flUpdFascicoloPrinc;
     }
@@ -457,7 +548,7 @@ public class AroUpdUnitaDoc implements Serializable {
         this.flUpdFascicoloPrinc = flUpdFascicoloPrinc;
     }
 
-    @Column(name = "FL_UPD_FASCICOLI_SEC")
+    @Column(name = "FL_UPD_FASCICOLI_SEC", columnDefinition = "char(1)")
     public String getFlUpdFascicoliSec() {
         return this.flUpdFascicoliSec;
     }
@@ -466,7 +557,7 @@ public class AroUpdUnitaDoc implements Serializable {
         this.flUpdFascicoliSec = flUpdFascicoliSec;
     }
 
-    @Column(name = "FL_UPD_PROFILO_UNITA_DOC")
+    @Column(name = "FL_UPD_PROFILO_UNITA_DOC", columnDefinition = "char(1)")
     public String getFlUpdProfiloUnitaDoc() {
         return this.flUpdProfiloUnitaDoc;
     }
@@ -475,7 +566,7 @@ public class AroUpdUnitaDoc implements Serializable {
         this.flUpdProfiloUnitaDoc = flUpdProfiloUnitaDoc;
     }
 
-    @Column(name = "FL_UPD_LINK_UNITA_DOC")
+    @Column(name = "FL_UPD_LINK_UNITA_DOC", columnDefinition = "char(1)")
     public String getFlUpdLinkUnitaDoc() {
         return this.flUpdLinkUnitaDoc;
     }
@@ -484,7 +575,7 @@ public class AroUpdUnitaDoc implements Serializable {
         this.flUpdLinkUnitaDoc = flUpdLinkUnitaDoc;
     }
 
-    @Column(name = "FL_UPD_DATI_SPEC")
+    @Column(name = "FL_UPD_DATI_SPEC", columnDefinition = "char(1)")
     public String getFlUpdDatiSpec() {
         return this.flUpdDatiSpec;
     }
@@ -493,7 +584,7 @@ public class AroUpdUnitaDoc implements Serializable {
         this.flUpdDatiSpec = flUpdDatiSpec;
     }
 
-    @Column(name = "FL_UPD_DATI_SPEC_MIGRAZ")
+    @Column(name = "FL_UPD_DATI_SPEC_MIGRAZ", columnDefinition = "char(1)")
     public String getFlUpdDatiSpecMigraz() {
         return this.flUpdDatiSpecMigraz;
     }
@@ -527,5 +618,14 @@ public class AroUpdUnitaDoc implements Serializable {
 
     public void setNiResetStato(BigDecimal niResetStato) {
         this.niResetStato = niResetStato;
+    }
+
+    @Column(name = "FL_UPD_PROFILO_NORMATIVO", columnDefinition = "char(1)")
+    public String getFlUpdProfiloNormativo() {
+        return flUpdProfiloNormativo;
+    }
+
+    public void setFlUpdProfiloNormativo(String flUpdProfiloNormativo) {
+        this.flUpdProfiloNormativo = flUpdProfiloNormativo;
     }
 }

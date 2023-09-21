@@ -1,16 +1,48 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 import org.apache.commons.lang3.Validate;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 /**
  * The persistent class for the MON_CONTA_UD_DOC_COMP database table.
- *
  */
 @Entity
 @Table(name = "MON_CONTA_UD_DOC_COMP")
@@ -18,31 +50,67 @@ import org.apache.commons.lang3.Validate;
 public class MonContaUdDocComp implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idContaUdDocComp;
-    private BigDecimal aaKeyUnitaDoc;
-    private Date dtRifConta;
-    private BigDecimal idStrut;
-    private BigDecimal niCompAgg;
-    private BigDecimal niCompAnnulUd;
-    private BigDecimal niCompVers;
-    private BigDecimal niDocAgg;
-    private BigDecimal niDocAnnulUd;
-    private BigDecimal niDocVers;
-    private BigDecimal niSizeAgg;
-    private BigDecimal niSizeAnnulUd;
-    private BigDecimal niSizeVers;
-    private BigDecimal niUnitaDocAnnul;
-    private BigDecimal niUnitaDocVers;
-    private DecRegistroUnitaDoc decRegistroUnitaDoc;
-    private long idDecRegistroUnitaDoc;
-    private DecTipoDoc decTipoDoc;
-    private long idDecTipoDoc;
-    private DecTipoUnitaDoc decTipoUnitaDoc;
-    private long idDecTipoUnitaDoc;
-    private OrgSubStrut orgSubStrut;
-    private long idOrgSubStrut;
 
-    public MonContaUdDocComp() {
+    private Long idContaUdDocComp;
+
+    private BigDecimal aaKeyUnitaDoc;
+
+    private Date dtRifConta;
+
+    private BigDecimal idStrut;
+
+    private BigDecimal niCompAgg;
+
+    private BigDecimal niCompAnnulUd;
+
+    private BigDecimal niCompVers;
+
+    private BigDecimal niDocAgg;
+
+    private BigDecimal niDocAnnulUd;
+
+    private BigDecimal niDocVers;
+
+    private BigDecimal niSizeAgg;
+
+    private BigDecimal niSizeAnnulUd;
+
+    private BigDecimal niSizeVers;
+
+    private BigDecimal niUnitaDocAnnul;
+
+    private BigDecimal niUnitaDocVers;
+
+    private DecRegistroUnitaDoc decRegistroUnitaDoc;
+
+    private Long idDecRegistroUnitaDoc;
+
+    private DecTipoDoc decTipoDoc;
+
+    private Long idDecTipoDoc;
+
+    private DecTipoUnitaDoc decTipoUnitaDoc;
+
+    private Long idDecTipoUnitaDoc;
+
+    private OrgSubStrut orgSubStrut;
+
+    private Long idOrgSubStrut;
+
+    public MonContaUdDocComp() {/* Hibernate */
+    }
+
+    private BigDecimal toBigDecimal(Object number) {
+        if (number instanceof BigDecimal) {
+            return (BigDecimal) number;
+        }
+        if (number instanceof Long) {
+            return BigDecimal.valueOf((Long) number);
+        }
+        if (number instanceof Integer) {
+            return BigDecimal.valueOf((Integer) number);
+        }
+        throw new IllegalArgumentException(number.toString() + " non è un numero valido");
     }
 
     // NON MODIFICARE USATO DA CALCOLO CONTENUTO SACER
@@ -69,22 +137,22 @@ public class MonContaUdDocComp implements Serializable {
         this.niSizeVers = new BigDecimal(0);
         this.niUnitaDocAnnul = new BigDecimal(0);
         this.niUnitaDocVers = new BigDecimal(0);
-
+        BigDecimal niCompBD = toBigDecimal(niComp);
+        BigDecimal niSizeBD = toBigDecimal(niSize);
         switch (TipoConteggio.valueOf(tipoConteggio)) {
         case COMP_VERS:
-            this.niCompVers = (BigDecimal) niComp;
-            this.niSizeVers = (BigDecimal) niSize;
+            this.niCompVers = niCompBD;
+            this.niSizeVers = niSizeBD;
             break;
         case COMP_AGG:
-            this.niCompAgg = (BigDecimal) niComp;
-            this.niSizeAgg = (BigDecimal) niSize;
+            this.niCompAgg = niCompBD;
+            this.niSizeAgg = niSizeBD;
             break;
         case COMP_ANNULL:
-            this.niCompAnnulUd = (BigDecimal) niComp;
-            this.niSizeAnnulUd = (BigDecimal) niSize;
+            this.niCompAnnulUd = niCompBD;
+            this.niSizeAnnulUd = niSizeBD;
             break;
         }
-
     }
 
     // NON MODIFICARE USATO DA CALCOLO CONTENUTO SACER
@@ -110,62 +178,37 @@ public class MonContaUdDocComp implements Serializable {
         this.niSizeVers = new BigDecimal(0);
         this.niUnitaDocAnnul = new BigDecimal(0);
         this.niUnitaDocVers = new BigDecimal(0);
-
+        BigDecimal niElemsBD = toBigDecimal(niElems);
         switch (TipoConteggio.valueOf(tipoConteggio)) {
         case UD_VERS:
-            this.niUnitaDocVers = (BigDecimal) niElems;
+            this.niUnitaDocVers = niElemsBD;
             break;
         case UD_ANNULL:
-            this.niUnitaDocAnnul = (BigDecimal) niElems;
+            this.niUnitaDocAnnul = niElemsBD;
             break;
         case DOC_VERS:
-            this.niDocVers = (BigDecimal) niElems;
+            this.niDocVers = niElemsBD;
             break;
         case DOC_ANNULL:
-            this.niDocAnnulUd = (BigDecimal) niElems;
+            this.niDocAnnulUd = niElemsBD;
             break;
         case DOC_AGG:
-            this.niDocAgg = (BigDecimal) niElems;
+            this.niDocAgg = niElemsBD;
             break;
         }
-
     }
 
-    // // NON MODIFICARE USATO DA CALCOLO CONTENUTO SACER
-    // public MonContaUdDocComp(Date dtRifConta, BigDecimal idStrut, long idOrgSubStrut,
-    // long idDecRegistroUnitaDoc, BigDecimal aaKeyUnitaDoc, long idDecTipoUnitaDoc, long idDecTipoDoc,
-    // BigDecimal niUnitaDocVers, BigDecimal niDocVers, BigDecimal niCompVers, BigDecimal niSizeVers,
-    // BigDecimal niDocAgg, BigDecimal niCompAgg, BigDecimal niSizeAgg,
-    // BigDecimal niUnitaDocAnnul, BigDecimal niDocAnnulUd, BigDecimal niCompAnnulUd, BigDecimal niSizeAnnulUd ) {
-    // this.aaKeyUnitaDoc = aaKeyUnitaDoc;
-    // this.dtRifConta = dtRifConta;
-    // this.idStrut = idStrut;
-    // this.niCompAgg = niCompAgg;
-    // this.niCompAnnulUd = niCompAnnulUd;
-    // this.niCompVers = niCompVers;
-    // this.niDocAgg = niDocAgg;
-    // this.niDocAnnulUd = niDocAnnulUd;
-    // this.niDocVers = niDocVers;
-    // this.niSizeAgg = niSizeAgg;
-    // this.niSizeAnnulUd = niSizeAnnulUd;
-    // this.niSizeVers = niSizeVers;
-    // this.niUnitaDocAnnul = niUnitaDocAnnul;
-    // this.niUnitaDocVers = niUnitaDocVers;
-    // this.idDecRegistroUnitaDoc = idDecRegistroUnitaDoc;
-    // this.idDecTipoDoc = idDecTipoDoc;
-    // this.idDecTipoUnitaDoc = idDecTipoUnitaDoc;
-    // this.idOrgSubStrut = idOrgSubStrut;
-    // }
-
     @Id
-    @SequenceGenerator(name = "MON_CONTA_UD_DOC_COMP_IDCONTAUDDOCCOMP_GENERATOR", sequenceName = "SMON_CONTA_UD_DOC_COMP", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MON_CONTA_UD_DOC_COMP_IDCONTAUDDOCCOMP_GENERATOR")
     @Column(name = "ID_CONTA_UD_DOC_COMP")
-    public long getIdContaUdDocComp() {
+    @GenericGenerator(name = "SMON_CONTA_UD_DOC_COMP_ID_CONTA_UD_DOC_COMP_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SMON_CONTA_UD_DOC_COMP"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SMON_CONTA_UD_DOC_COMP_ID_CONTA_UD_DOC_COMP_GENERATOR")
+    public Long getIdContaUdDocComp() {
         return this.idContaUdDocComp;
     }
 
-    public void setIdContaUdDocComp(long idContaUdDocComp) {
+    public void setIdContaUdDocComp(Long idContaUdDocComp) {
         this.idContaUdDocComp = idContaUdDocComp;
     }
 
@@ -341,38 +384,38 @@ public class MonContaUdDocComp implements Serializable {
     }
 
     @Column(name = "ID_REGISTRO_UNITA_DOC")
-    public long getIdDecRegistroUnitaDoc() {
+    public Long getIdDecRegistroUnitaDoc() {
         return idDecRegistroUnitaDoc;
     }
 
-    public void setIdDecRegistroUnitaDoc(long idDecRegistroUnitaDoc) {
+    public void setIdDecRegistroUnitaDoc(Long idDecRegistroUnitaDoc) {
         this.idDecRegistroUnitaDoc = idDecRegistroUnitaDoc;
     }
 
     @Column(name = "ID_TIPO_DOC_PRINC")
-    public long getIdDecTipoDoc() {
+    public Long getIdDecTipoDoc() {
         return idDecTipoDoc;
     }
 
-    public void setIdDecTipoDoc(long idDecTipoDoc) {
+    public void setIdDecTipoDoc(Long idDecTipoDoc) {
         this.idDecTipoDoc = idDecTipoDoc;
     }
 
     @Column(name = "ID_TIPO_UNITA_DOC")
-    public long getIdDecTipoUnitaDoc() {
+    public Long getIdDecTipoUnitaDoc() {
         return idDecTipoUnitaDoc;
     }
 
-    public void setIdDecTipoUnitaDoc(long idDecTipoUnitaDoc) {
+    public void setIdDecTipoUnitaDoc(Long idDecTipoUnitaDoc) {
         this.idDecTipoUnitaDoc = idDecTipoUnitaDoc;
     }
 
     @Column(name = "ID_SUB_STRUT")
-    public long getIdOrgSubStrut() {
+    public Long getIdOrgSubStrut() {
         return idOrgSubStrut;
     }
 
-    public void setIdOrgSubStrut(long idOrgSubStrut) {
+    public void setIdOrgSubStrut(Long idOrgSubStrut) {
         this.idOrgSubStrut = idOrgSubStrut;
     }
 
@@ -407,24 +450,21 @@ public class MonContaUdDocComp implements Serializable {
         if (!Objects.equals(this.idStrut, other.idStrut)) {
             return false;
         }
-        if (this.idDecRegistroUnitaDoc != other.idDecRegistroUnitaDoc) {
+        if (!Objects.equals(this.idDecRegistroUnitaDoc, other.idDecRegistroUnitaDoc)) {
             return false;
         }
-        if (this.idDecTipoDoc != other.idDecTipoDoc) {
+        if (!Objects.equals(this.idDecTipoDoc, other.idDecTipoDoc)) {
             return false;
         }
-        if (this.idDecTipoUnitaDoc != other.idDecTipoUnitaDoc) {
+        if (!Objects.equals(this.idDecTipoUnitaDoc, other.idDecTipoUnitaDoc)) {
             return false;
         }
-        if (this.idOrgSubStrut != other.idOrgSubStrut) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.idOrgSubStrut, other.idOrgSubStrut);
     }
 
     public enum TipoConteggio {
+
         UD_VERS, DOC_VERS, COMP_VERS, BYTE_VERS, DOC_AGG, COMP_AGG, BYTE_AGG, UD_ANNULL, DOC_ANNULL, COMP_ANNULL,
         BYTE_ANNULL
     }
-
 }

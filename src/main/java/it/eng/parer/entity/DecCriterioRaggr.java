@@ -1,19 +1,58 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.xml.bind.annotation.XmlTransient;
-import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 
-import it.eng.parer.entity.constraint.DecCriterioRaggr.TiValidElencoCriterio;
+import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlTransient;
+
+import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
+
 import it.eng.parer.entity.constraint.DecCriterioRaggr.TiModValidElencoCriterio;
+import it.eng.parer.entity.constraint.DecCriterioRaggr.TiValidElencoCriterio;
 
 /**
  * The persistent class for the DEC_CRITERIO_RAGGR database table.
- *
  */
 @Entity
 @Cacheable(true)
@@ -22,63 +61,113 @@ import it.eng.parer.entity.constraint.DecCriterioRaggr.TiModValidElencoCriterio;
 public class DecCriterioRaggr implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idCriterioRaggr;
-    private BigDecimal aaKeyUnitaDoc;
-    private BigDecimal aaKeyUnitaDocA;
-    private BigDecimal aaKeyUnitaDocDa;
-    private String blFiltriDatiSpecDoc;
-    private String cdKeyUnitaDoc;
-    private String cdKeyUnitaDocA;
-    private String cdKeyUnitaDocDa;
-    private String dlDoc;
-    private String dlOggettoUnitaDoc;
-    private String dsAutoreDoc;
-    private String dsCriterioRaggr;
-    private Date dtCreazioneUnitaDocA;
-    private Date dtCreazioneUnitaDocDa;
-    private Date dtIstituz;
-    private Date dtRegUnitaDocA;
-    private Date dtRegUnitaDocDa;
-    private Date dtSoppres;
-    private String flCriterioRaggrFisc;
-    private String flCriterioRaggrStandard;
-    private String flFiltroRangeRegistroKey;
-    private String flFiltroRegistroKey;
-    private String flFiltroSistemaMigraz;
-    private String flFiltroTiEsitoVerifFirme;
-    private String flFiltroTipoDoc;
-    private String flFiltroTipoUnitaDoc;
-    private String flForzaAccettazione;
-    private String flForzaConservazione;
-    private String flUnitaDocFirmato;
-    private BigDecimal niMaxComp;
-    private BigDecimal niTempoScadChius;
-    private String nmCriterioRaggr;
-    private String ntCriterioRaggr;
-    private String tiConservazione;
-    private String tiGestElencoCriterio;
-    private String tiScadChiusVolume;
-    private String tiTempoScadChius;
-    private TiValidElencoCriterio tiValidElenco;
-    private TiModValidElencoCriterio tiModValidElenco;
-    private BigDecimal niMaxElenchiByGg;
-    private List<DecCriterioFiltroMultiplo> decCriterioFiltroMultiplos;
-    private OrgStrut orgStrut;
-    private List<VolVolumeConserv> volVolumeConservs;
-    private List<ElvElencoVer> elvElencoVers;
 
-    public DecCriterioRaggr() {
+    private Long idCriterioRaggr;
+
+    private BigDecimal aaKeyUnitaDoc;
+
+    private BigDecimal aaKeyUnitaDocA;
+
+    private BigDecimal aaKeyUnitaDocDa;
+
+    private String blFiltriDatiSpecDoc;
+
+    private String cdKeyUnitaDoc;
+
+    private String cdKeyUnitaDocA;
+
+    private String cdKeyUnitaDocDa;
+
+    private String dlDoc;
+
+    private String dlOggettoUnitaDoc;
+
+    private String dsAutoreDoc;
+
+    private String dsCriterioRaggr;
+
+    private Date dtCreazioneUnitaDocA;
+
+    private Date dtCreazioneUnitaDocDa;
+
+    private Date dtIstituz;
+
+    private Date dtRegUnitaDocA;
+
+    private Date dtRegUnitaDocDa;
+
+    private Date dtSoppres;
+
+    private String flCriterioRaggrFisc;
+
+    private String flCriterioRaggrStandard;
+
+    private String flFiltroRangeRegistroKey;
+
+    private String flFiltroRegistroKey;
+
+    private String flFiltroSistemaMigraz;
+
+    private String flFiltroTiEsitoVerifFirme;
+
+    private String flFiltroTipoDoc;
+
+    private String flFiltroTipoUnitaDoc;
+
+    private String flForzaAccettazione;
+
+    private String flForzaConservazione;
+
+    private String flUnitaDocFirmato;
+
+    private BigDecimal niMaxComp;
+
+    private BigDecimal niTempoScadChius;
+
+    private String nmCriterioRaggr;
+
+    private String ntCriterioRaggr;
+
+    private String tiConservazione;
+
+    private String tiGestElencoCriterio;
+
+    private String tiScadChiusVolume;
+
+    private String tiTempoScadChius;
+
+    private TiValidElencoCriterio tiValidElenco;
+
+    private TiModValidElencoCriterio tiModValidElenco;
+
+    private BigDecimal niMaxElenchiByGg;
+
+    private List<DecCriterioFiltroMultiplo> decCriterioFiltroMultiplos = new ArrayList<>();
+
+    private OrgStrut orgStrut;
+
+    private List<VolVolumeConserv> volVolumeConservs = new ArrayList<>();
+
+    private List<ElvElencoVer> elvElencoVers = new ArrayList<>();
+
+    public DecCriterioRaggr() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "DEC_CRITERIO_RAGGR_IDCRITERIORAGGR_GENERATOR", sequenceName = "SDEC_CRITERIO_RAGGR", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DEC_CRITERIO_RAGGR_IDCRITERIORAGGR_GENERATOR")
+    // "DEC_CRITERIO_RAGGR_IDCRITERIORAGGR_GENERATOR",
+    // sequenceName = "SDEC_CRITERIO_RAGGR",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DEC_CRITERIO_RAGGR_IDCRITERIORAGGR_GENERATOR")
     @Column(name = "ID_CRITERIO_RAGGR")
-    public long getIdCriterioRaggr() {
+    @GenericGenerator(name = "SDEC_CRITERIO_RAGGR_ID_CRITERIO_RAGGR_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SDEC_CRITERIO_RAGGR"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SDEC_CRITERIO_RAGGR_ID_CRITERIO_RAGGR_GENERATOR")
+    public Long getIdCriterioRaggr() {
         return this.idCriterioRaggr;
     }
 
-    public void setIdCriterioRaggr(long idCriterioRaggr) {
+    public void setIdCriterioRaggr(Long idCriterioRaggr) {
         this.idCriterioRaggr = idCriterioRaggr;
     }
 
@@ -242,7 +331,7 @@ public class DecCriterioRaggr implements Serializable {
         this.dtSoppres = dtSoppres;
     }
 
-    @Column(name = "FL_CRITERIO_RAGGR_FISC")
+    @Column(name = "FL_CRITERIO_RAGGR_FISC", columnDefinition = "char(1)")
     public String getFlCriterioRaggrFisc() {
         return this.flCriterioRaggrFisc;
     }
@@ -251,7 +340,7 @@ public class DecCriterioRaggr implements Serializable {
         this.flCriterioRaggrFisc = flCriterioRaggrFisc;
     }
 
-    @Column(name = "FL_CRITERIO_RAGGR_STANDARD")
+    @Column(name = "FL_CRITERIO_RAGGR_STANDARD", columnDefinition = "char(1)")
     public String getFlCriterioRaggrStandard() {
         return flCriterioRaggrStandard;
     }
@@ -260,7 +349,7 @@ public class DecCriterioRaggr implements Serializable {
         this.flCriterioRaggrStandard = flCriterioRaggrStandard;
     }
 
-    @Column(name = "FL_FILTRO_RANGE_REGISTRO_KEY")
+    @Column(name = "FL_FILTRO_RANGE_REGISTRO_KEY", columnDefinition = "char(1)")
     public String getFlFiltroRangeRegistroKey() {
         return this.flFiltroRangeRegistroKey;
     }
@@ -269,7 +358,7 @@ public class DecCriterioRaggr implements Serializable {
         this.flFiltroRangeRegistroKey = flFiltroRangeRegistroKey;
     }
 
-    @Column(name = "FL_FILTRO_REGISTRO_KEY")
+    @Column(name = "FL_FILTRO_REGISTRO_KEY", columnDefinition = "char(1)")
     public String getFlFiltroRegistroKey() {
         return this.flFiltroRegistroKey;
     }
@@ -278,7 +367,7 @@ public class DecCriterioRaggr implements Serializable {
         this.flFiltroRegistroKey = flFiltroRegistroKey;
     }
 
-    @Column(name = "FL_FILTRO_SISTEMA_MIGRAZ")
+    @Column(name = "FL_FILTRO_SISTEMA_MIGRAZ", columnDefinition = "char(1)")
     public String getFlFiltroSistemaMigraz() {
         return this.flFiltroSistemaMigraz;
     }
@@ -287,7 +376,7 @@ public class DecCriterioRaggr implements Serializable {
         this.flFiltroSistemaMigraz = flFiltroSistemaMigraz;
     }
 
-    @Column(name = "FL_FILTRO_TI_ESITO_VERIF_FIRME")
+    @Column(name = "FL_FILTRO_TI_ESITO_VERIF_FIRME", columnDefinition = "char(1)")
     public String getFlFiltroTiEsitoVerifFirme() {
         return this.flFiltroTiEsitoVerifFirme;
     }
@@ -296,7 +385,7 @@ public class DecCriterioRaggr implements Serializable {
         this.flFiltroTiEsitoVerifFirme = flFiltroTiEsitoVerifFirme;
     }
 
-    @Column(name = "FL_FILTRO_TIPO_DOC")
+    @Column(name = "FL_FILTRO_TIPO_DOC", columnDefinition = "char(1)")
     public String getFlFiltroTipoDoc() {
         return this.flFiltroTipoDoc;
     }
@@ -305,7 +394,7 @@ public class DecCriterioRaggr implements Serializable {
         this.flFiltroTipoDoc = flFiltroTipoDoc;
     }
 
-    @Column(name = "FL_FILTRO_TIPO_UNITA_DOC")
+    @Column(name = "FL_FILTRO_TIPO_UNITA_DOC", columnDefinition = "char(1)")
     public String getFlFiltroTipoUnitaDoc() {
         return this.flFiltroTipoUnitaDoc;
     }
@@ -314,7 +403,7 @@ public class DecCriterioRaggr implements Serializable {
         this.flFiltroTipoUnitaDoc = flFiltroTipoUnitaDoc;
     }
 
-    @Column(name = "FL_FORZA_ACCETTAZIONE")
+    @Column(name = "FL_FORZA_ACCETTAZIONE", columnDefinition = "char(1)")
     public String getFlForzaAccettazione() {
         return this.flForzaAccettazione;
     }
@@ -323,7 +412,7 @@ public class DecCriterioRaggr implements Serializable {
         this.flForzaAccettazione = flForzaAccettazione;
     }
 
-    @Column(name = "FL_FORZA_CONSERVAZIONE")
+    @Column(name = "FL_FORZA_CONSERVAZIONE", columnDefinition = "char(1)")
     public String getFlForzaConservazione() {
         return this.flForzaConservazione;
     }
@@ -332,7 +421,7 @@ public class DecCriterioRaggr implements Serializable {
         this.flForzaConservazione = flForzaConservazione;
     }
 
-    @Column(name = "FL_UNITA_DOC_FIRMATO")
+    @Column(name = "FL_UNITA_DOC_FIRMATO", columnDefinition = "char(1)")
     public String getFlUnitaDocFirmato() {
         return this.flUnitaDocFirmato;
     }
@@ -485,5 +574,4 @@ public class DecCriterioRaggr implements Serializable {
     public void setElvElencoVers(List<ElvElencoVer> elvElencoVers) {
         this.elvElencoVers = elvElencoVers;
     }
-
 }

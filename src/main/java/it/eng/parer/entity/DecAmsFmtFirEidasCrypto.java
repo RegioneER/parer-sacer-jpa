@@ -1,6 +1,24 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,12 +27,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 /**
  * The persistent class for the DEC_AMS_FMT_FIR_EIDAS_CRYPTO database table.
- *
  */
 @Entity
 @Table(name = "DEC_AMS_FMT_FIR_EIDAS_CRYPTO")
@@ -22,22 +42,33 @@ import javax.persistence.Table;
 public class DecAmsFmtFirEidasCrypto implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idAmsFmtFirEidasCrypto;
+
+    private Long idAmsFmtFirEidasCrypto;
+
     private DecFmtFirCrypto decFmtFirCrypto;
+
     private DecFmtFirEida decFmtFirEida;
 
-    public DecAmsFmtFirEidasCrypto() {
+    public DecAmsFmtFirEidasCrypto() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "DEC_AMS_FMT_FIR_EIDAS_CRYPTO_IDAMSFMTFIREIDASCRYPTO_GENERATOR", sequenceName = "SDEC_AMS_FMT_FIR_EIDAS_CRYPTO", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DEC_AMS_FMT_FIR_EIDAS_CRYPTO_IDAMSFMTFIREIDASCRYPTO_GENERATOR")
+    // "DEC_AMS_FMT_FIR_EIDAS_CRYPTO_IDAMSFMTFIREIDASCRYPTO_GENERATOR",
+    // sequenceName =
+    // "SDEC_AMS_FMT_FIR_EIDAS_CRYPTO",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
+    // "DEC_AMS_FMT_FIR_EIDAS_CRYPTO_IDAMSFMTFIREIDASCRYPTO_GENERATOR")
     @Column(name = "ID_AMS_FMT_FIR_EIDAS_CRYPTO")
-    public long getIdAmsFmtFirEidasCrypto() {
+    @GenericGenerator(name = "SDEC_AMS_FMT_FIR_EIDAS_CRYPTO_ID_AMS_FMT_FIR_EIDAS_CRYPTO_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SDEC_AMS_FMT_FIR_EIDAS_CRYPTO"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SDEC_AMS_FMT_FIR_EIDAS_CRYPTO_ID_AMS_FMT_FIR_EIDAS_CRYPTO_GENERATOR")
+    public Long getIdAmsFmtFirEidasCrypto() {
         return this.idAmsFmtFirEidasCrypto;
     }
 
-    public void setIdAmsFmtFirEidasCrypto(long idAmsFmtFirEidasCrypto) {
+    public void setIdAmsFmtFirEidasCrypto(Long idAmsFmtFirEidasCrypto) {
         this.idAmsFmtFirEidasCrypto = idAmsFmtFirEidasCrypto;
     }
 
@@ -62,5 +93,4 @@ public class DecAmsFmtFirEidasCrypto implements Serializable {
     public void setDecFmtFirEida(DecFmtFirEida decFmtFirEida) {
         this.decFmtFirEida = decFmtFirEida;
     }
-
 }

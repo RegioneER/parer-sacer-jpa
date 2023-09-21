@@ -1,9 +1,35 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the IAM_USER database table.
@@ -14,7 +40,7 @@ import java.util.List;
 public class IamUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idUserIam;
+    private Long idUserIam;
     private String cdFisc;
     private String cdPsw;
     private String cdSalt;
@@ -29,39 +55,39 @@ public class IamUser implements Serializable {
     private String nmUserid;
     private String tipoUser;
     private String tipoAuth;
-    private List<AroUnitaDoc> aroUnitaDocs;
-    private List<AroNotaUnitaDoc> aroNotaUnitaDocs;
-    private List<DecNotaTipoSerie> decNotaTipoSeries;
-    private List<ElvElencoVer> elvElencoVers1;
-    private List<ElvElencoVer> elvElencoVers2;
-    private List<ElvLogElencoVer> elvLogElencoVers;
-    private List<IamAbilOrganiz> iamAbilOrganizs;
-    private List<IamIndIpUser> iamIndIpUsers;
-    private List<LogOper> logOpers;
-    private List<RecSessioneRecup> recSessioneRecups;
-    private List<SerConsistVerSerie> serConsistVerSeries;
-    private List<SerFileInputVerSerie> serFileInputVerSeries;
-    private List<SerNotaVerSerie> serNotaVerSeries;
-    private List<SerStatoSerie> serStatoSeries;
-    private List<SerStatoVerSerie> serStatoVerSeries;
-    private List<VolVolumeConserv> volVolumeConservUserCreaziones;
-    private List<VolVolumeConserv> volVolumeConservUserFirmaMarcas;
-    private List<VrsSessioneVers> vrsSessioneVers;
-    private List<AroStatoRichAnnulVers> aroStatoRichAnnulVers;
-    private List<MonTipoUnitaDocUserVers> monTipoUnitaDocUserVers;
-    private List<HsmSessioneFirma> hsmSessioneFirmas;
-    private List<ElvStatoElencoVersFasc> elvStatoElencoVersFascs;
+    private List<AroUnitaDoc> aroUnitaDocs = new ArrayList<>();
+    private List<AroNotaUnitaDoc> aroNotaUnitaDocs = new ArrayList<>();
+    private List<DecNotaTipoSerie> decNotaTipoSeries = new ArrayList<>();
+    private List<ElvElencoVer> elvElencoVers1 = new ArrayList<>();
+    private List<ElvElencoVer> elvElencoVers2 = new ArrayList<>();
+    private List<ElvLogElencoVer> elvLogElencoVers = new ArrayList<>();
+    private List<IamAbilOrganiz> iamAbilOrganizs = new ArrayList<>();
+    private List<IamIndIpUser> iamIndIpUsers = new ArrayList<>();
+    private List<LogOper> logOpers = new ArrayList<>();
+    private List<RecSessioneRecup> recSessioneRecups = new ArrayList<>();
+    private List<SerConsistVerSerie> serConsistVerSeries = new ArrayList<>();
+    private List<SerFileInputVerSerie> serFileInputVerSeries = new ArrayList<>();
+    private List<SerNotaVerSerie> serNotaVerSeries = new ArrayList<>();
+    private List<SerStatoSerie> serStatoSeries = new ArrayList<>();
+    private List<SerStatoVerSerie> serStatoVerSeries = new ArrayList<>();
+    private List<VolVolumeConserv> volVolumeConservUserCreaziones = new ArrayList<>();
+    private List<VolVolumeConserv> volVolumeConservUserFirmaMarcas = new ArrayList<>();
+    private List<VrsSessioneVers> vrsSessioneVers = new ArrayList<>();
+    private List<AroStatoRichAnnulVers> aroStatoRichAnnulVers = new ArrayList<>();
+    private List<MonTipoUnitaDocUserVers> monTipoUnitaDocUserVers = new ArrayList<>();
+    private List<HsmSessioneFirma> hsmSessioneFirmas = new ArrayList<>();
+    private List<ElvStatoElencoVersFasc> elvStatoElencoVersFascs = new ArrayList<>();
 
-    public IamUser() {
+    public IamUser() {/* Hibernate */
     }
 
     @Id
     @Column(name = "ID_USER_IAM")
-    public long getIdUserIam() {
+    public Long getIdUserIam() {
         return this.idUserIam;
     }
 
-    public void setIdUserIam(long idUserIam) {
+    public void setIdUserIam(Long idUserIam) {
         this.idUserIam = idUserIam;
     }
 
@@ -121,7 +147,7 @@ public class IamUser implements Serializable {
         this.dtScadPsw = dtScadPsw;
     }
 
-    @Column(name = "FL_ATTIVO")
+    @Column(name = "FL_ATTIVO", columnDefinition = "char(1)")
     public String getFlAttivo() {
         return this.flAttivo;
     }
@@ -130,7 +156,7 @@ public class IamUser implements Serializable {
         this.flAttivo = flAttivo;
     }
 
-    @Column(name = "FL_CONTR_IP")
+    @Column(name = "FL_CONTR_IP", columnDefinition = "char(1)")
     public String getFlContrIp() {
         return this.flContrIp;
     }
@@ -139,7 +165,7 @@ public class IamUser implements Serializable {
         this.flContrIp = flContrIp;
     }
 
-    @Column(name = "FL_USER_ADMIN")
+    @Column(name = "FL_USER_ADMIN", columnDefinition = "char(1)")
     public String getFlUserAdmin() {
         return this.flUserAdmin;
     }

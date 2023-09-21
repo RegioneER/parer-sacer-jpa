@@ -1,8 +1,29 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.math.BigDecimal;
+
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the MON_V_CHK_FASC_KO_BY_STRUT database table.
@@ -10,7 +31,7 @@ import java.math.BigDecimal;
  */
 @Entity
 @Table(name = "MON_V_CHK_FASC_KO_BY_STRUT")
-@NamedQuery(name = "MonVChkFascKoByStrut.findByStrutUser", query = "SELECT m FROM MonVChkFascKoByStrut m WHERE m.idStrut = :idStrut AND m.idUserIam=:idUserIam")
+@NamedQuery(name = "MonVChkFascKoByStrut.findByStrutUser", query = "SELECT m FROM MonVChkFascKoByStrut m WHERE m.monVChkFascKoByStrutId.idStrut = :idStrut AND m.monVChkFascKoByStrutId.idUserIam=:idUserIam")
 public class MonVChkFascKoByStrut implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -23,13 +44,21 @@ public class MonVChkFascKoByStrut implements Serializable {
     private String flFascKoVerif30gg;
     private String flFascKoVerifB30gg;
     private String flFascKoVerifCorr;
-    private BigDecimal idStrut;
-    private BigDecimal idUserIam;
+    private MonVChkFascKoByStrutId monVChkFascKoByStrutId;
 
-    public MonVChkFascKoByStrut() {
+    @EmbeddedId
+    public MonVChkFascKoByStrutId getMonVChkFascKoByStrutId() {
+        return monVChkFascKoByStrutId;
     }
 
-    @Column(name = "FL_FASC_KO_NON_RISOLUB_30GG")
+    public void setMonVChkFascKoByStrutId(MonVChkFascKoByStrutId monVChkFascKoByStrutId) {
+        this.monVChkFascKoByStrutId = monVChkFascKoByStrutId;
+    }
+
+    public MonVChkFascKoByStrut() {/* Hibernate */
+    }
+
+    @Column(name = "FL_FASC_KO_NON_RISOLUB_30GG", columnDefinition = "char")
     public String getFlFascKoNonRisolub30gg() {
         return this.flFascKoNonRisolub30gg;
     }
@@ -38,7 +67,7 @@ public class MonVChkFascKoByStrut implements Serializable {
         this.flFascKoNonRisolub30gg = flFascKoNonRisolub30gg;
     }
 
-    @Column(name = "FL_FASC_KO_NON_RISOLUB_B30GG")
+    @Column(name = "FL_FASC_KO_NON_RISOLUB_B30GG", columnDefinition = "char")
     public String getFlFascKoNonRisolubB30gg() {
         return this.flFascKoNonRisolubB30gg;
     }
@@ -47,7 +76,7 @@ public class MonVChkFascKoByStrut implements Serializable {
         this.flFascKoNonRisolubB30gg = flFascKoNonRisolubB30gg;
     }
 
-    @Column(name = "FL_FASC_KO_NON_RISOLUB_CORR")
+    @Column(name = "FL_FASC_KO_NON_RISOLUB_CORR", columnDefinition = "char(1)")
     public String getFlFascKoNonRisolubCorr() {
         return this.flFascKoNonRisolubCorr;
     }
@@ -56,7 +85,7 @@ public class MonVChkFascKoByStrut implements Serializable {
         this.flFascKoNonRisolubCorr = flFascKoNonRisolubCorr;
     }
 
-    @Column(name = "FL_FASC_KO_NON_VERIF_30GG")
+    @Column(name = "FL_FASC_KO_NON_VERIF_30GG", columnDefinition = "char")
     public String getFlFascKoNonVerif30gg() {
         return this.flFascKoNonVerif30gg;
     }
@@ -65,7 +94,7 @@ public class MonVChkFascKoByStrut implements Serializable {
         this.flFascKoNonVerif30gg = flFascKoNonVerif30gg;
     }
 
-    @Column(name = "FL_FASC_KO_NON_VERIF_B30GG")
+    @Column(name = "FL_FASC_KO_NON_VERIF_B30GG", columnDefinition = "char")
     public String getFlFascKoNonVerifB30gg() {
         return this.flFascKoNonVerifB30gg;
     }
@@ -74,7 +103,7 @@ public class MonVChkFascKoByStrut implements Serializable {
         this.flFascKoNonVerifB30gg = flFascKoNonVerifB30gg;
     }
 
-    @Column(name = "FL_FASC_KO_NON_VERIF_CORR")
+    @Column(name = "FL_FASC_KO_NON_VERIF_CORR", columnDefinition = "char(1)")
     public String getFlFascKoNonVerifCorr() {
         return this.flFascKoNonVerifCorr;
     }
@@ -83,7 +112,7 @@ public class MonVChkFascKoByStrut implements Serializable {
         this.flFascKoNonVerifCorr = flFascKoNonVerifCorr;
     }
 
-    @Column(name = "FL_FASC_KO_VERIF_30GG")
+    @Column(name = "FL_FASC_KO_VERIF_30GG", columnDefinition = "char")
     public String getFlFascKoVerif30gg() {
         return this.flFascKoVerif30gg;
     }
@@ -92,7 +121,7 @@ public class MonVChkFascKoByStrut implements Serializable {
         this.flFascKoVerif30gg = flFascKoVerif30gg;
     }
 
-    @Column(name = "FL_FASC_KO_VERIF_B30GG")
+    @Column(name = "FL_FASC_KO_VERIF_B30GG", columnDefinition = "char")
     public String getFlFascKoVerifB30gg() {
         return this.flFascKoVerifB30gg;
     }
@@ -101,33 +130,13 @@ public class MonVChkFascKoByStrut implements Serializable {
         this.flFascKoVerifB30gg = flFascKoVerifB30gg;
     }
 
-    @Column(name = "FL_FASC_KO_VERIF_CORR")
+    @Column(name = "FL_FASC_KO_VERIF_CORR", columnDefinition = "char(1)")
     public String getFlFascKoVerifCorr() {
         return this.flFascKoVerifCorr;
     }
 
     public void setFlFascKoVerifCorr(String flFascKoVerifCorr) {
         this.flFascKoVerifCorr = flFascKoVerifCorr;
-    }
-
-    @Id
-    @Column(name = "ID_STRUT")
-    public BigDecimal getIdStrut() {
-        return this.idStrut;
-    }
-
-    public void setIdStrut(BigDecimal idStrut) {
-        this.idStrut = idStrut;
-    }
-
-    @Id
-    @Column(name = "ID_USER_IAM")
-    public BigDecimal getIdUserIam() {
-        return this.idUserIam;
-    }
-
-    public void setIdUserIam(BigDecimal idUserIam) {
-        this.idUserIam = idUserIam;
     }
 
 }

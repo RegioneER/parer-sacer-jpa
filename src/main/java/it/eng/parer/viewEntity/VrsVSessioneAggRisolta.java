@@ -1,109 +1,48 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.math.BigDecimal;
-import java.util.Date;
+
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the VRS_V_SESSIONE_AGG_RISOLTA database table.
- * 
  */
 @Entity
 @Table(name = "VRS_V_SESSIONE_AGG_RISOLTA")
 public class VrsVSessioneAggRisolta implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    private Date dtChiusura;
-    private String flSesNonRisolub;
-    private String flSesRisolta;
-    private String flVerif;
-    private BigDecimal idStrut;
-    private String tiDtCreazione;
-    private String tiSessioneVers;
-    private String tiStatoSessioneVers;
 
-    public VrsVSessioneAggRisolta() {
+    public VrsVSessioneAggRisolta() {/* Hibernate */
     }
 
-    @Id
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "DT_CHIUSURA")
-    public Date getDtChiusura() {
-        return this.dtChiusura;
+    private VrsVSessioneAggRisoltaId vrsVSessioneAggRisoltaId;
+
+    @EmbeddedId()
+    public VrsVSessioneAggRisoltaId getVrsVSessioneAggRisoltaId() {
+        return vrsVSessioneAggRisoltaId;
     }
 
-    public void setDtChiusura(Date dtChiusura) {
-        this.dtChiusura = dtChiusura;
+    public void setVrsVSessioneAggRisoltaId(VrsVSessioneAggRisoltaId vrsVSessioneAggRisoltaId) {
+        this.vrsVSessioneAggRisoltaId = vrsVSessioneAggRisoltaId;
     }
-
-    @Id
-    @Column(name = "FL_SES_NON_RISOLUB")
-    public String getFlSesNonRisolub() {
-        return this.flSesNonRisolub;
-    }
-
-    public void setFlSesNonRisolub(String flSesNonRisolub) {
-        this.flSesNonRisolub = flSesNonRisolub;
-    }
-
-    @Id
-    @Column(name = "FL_SES_RISOLTA")
-    public String getFlSesRisolta() {
-        return this.flSesRisolta;
-    }
-
-    public void setFlSesRisolta(String flSesRisolta) {
-        this.flSesRisolta = flSesRisolta;
-    }
-
-    @Id
-    @Column(name = "FL_VERIF")
-    public String getFlVerif() {
-        return this.flVerif;
-    }
-
-    public void setFlVerif(String flVerif) {
-        this.flVerif = flVerif;
-    }
-
-    @Id
-    @Column(name = "ID_STRUT")
-    public BigDecimal getIdStrut() {
-        return this.idStrut;
-    }
-
-    public void setIdStrut(BigDecimal idStrut) {
-        this.idStrut = idStrut;
-    }
-
-    @Id
-    @Column(name = "TI_DT_CREAZIONE")
-    public String getTiDtCreazione() {
-        return this.tiDtCreazione;
-    }
-
-    public void setTiDtCreazione(String tiDtCreazione) {
-        this.tiDtCreazione = tiDtCreazione;
-    }
-
-    @Id
-    @Column(name = "TI_SESSIONE_VERS")
-    public String getTiSessioneVers() {
-        return this.tiSessioneVers;
-    }
-
-    public void setTiSessioneVers(String tiSessioneVers) {
-        this.tiSessioneVers = tiSessioneVers;
-    }
-
-    @Id
-    @Column(name = "TI_STATO_SESSIONE_VERS")
-    public String getTiStatoSessioneVers() {
-        return this.tiStatoSessioneVers;
-    }
-
-    public void setTiStatoSessioneVers(String tiStatoSessioneVers) {
-        this.tiStatoSessioneVers = tiStatoSessioneVers;
-    }
-
 }

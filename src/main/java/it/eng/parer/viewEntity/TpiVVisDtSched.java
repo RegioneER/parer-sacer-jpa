@@ -1,9 +1,32 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the TPI_V_VIS_DT_SCHED database table.
@@ -39,7 +62,7 @@ public class TpiVVisDtSched implements Serializable {
     private BigDecimal idDtSched;
     private String tiStatoDtSched;
 
-    public TpiVVisDtSched() {
+    public TpiVVisDtSched() {/* Hibernate */
     }
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -52,7 +75,7 @@ public class TpiVVisDtSched implements Serializable {
         this.dtSched = dtSched;
     }
 
-    @Column(name = "FL_ANOM_ARK_MIGRAZ_PRIM")
+    @Column(name = "FL_ANOM_ARK_MIGRAZ_PRIM", columnDefinition = "char(1)")
     public String getFlAnomArkMigrazPrim() {
         return this.flAnomArkMigrazPrim;
     }
@@ -61,7 +84,7 @@ public class TpiVVisDtSched implements Serializable {
         this.flAnomArkMigrazPrim = flAnomArkMigrazPrim;
     }
 
-    @Column(name = "FL_ANOM_ARK_MIGRAZ_SECOND")
+    @Column(name = "FL_ANOM_ARK_MIGRAZ_SECOND", columnDefinition = "char(1)")
     public String getFlAnomArkMigrazSecond() {
         return this.flAnomArkMigrazSecond;
     }
@@ -70,7 +93,7 @@ public class TpiVVisDtSched implements Serializable {
         this.flAnomArkMigrazSecond = flAnomArkMigrazSecond;
     }
 
-    @Column(name = "FL_ANOM_ARK_VERS_PRIM")
+    @Column(name = "FL_ANOM_ARK_VERS_PRIM", columnDefinition = "char(1)")
     public String getFlAnomArkVersPrim() {
         return this.flAnomArkVersPrim;
     }
@@ -79,7 +102,7 @@ public class TpiVVisDtSched implements Serializable {
         this.flAnomArkVersPrim = flAnomArkVersPrim;
     }
 
-    @Column(name = "FL_ANOM_ARK_VERS_SECOND")
+    @Column(name = "FL_ANOM_ARK_VERS_SECOND", columnDefinition = "char(1)")
     public String getFlAnomArkVersSecond() {
         return this.flAnomArkVersSecond;
     }
@@ -88,7 +111,7 @@ public class TpiVVisDtSched implements Serializable {
         this.flAnomArkVersSecond = flAnomArkVersSecond;
     }
 
-    @Column(name = "FL_ANOM_BACKUP_MIGRAZ_PRIM")
+    @Column(name = "FL_ANOM_BACKUP_MIGRAZ_PRIM", columnDefinition = "char(1)")
     public String getFlAnomBackupMigrazPrim() {
         return this.flAnomBackupMigrazPrim;
     }
@@ -97,7 +120,7 @@ public class TpiVVisDtSched implements Serializable {
         this.flAnomBackupMigrazPrim = flAnomBackupMigrazPrim;
     }
 
-    @Column(name = "FL_ANOM_BACKUP_MIGRAZ_SECOND")
+    @Column(name = "FL_ANOM_BACKUP_MIGRAZ_SECOND", columnDefinition = "char(1)")
     public String getFlAnomBackupMigrazSecond() {
         return this.flAnomBackupMigrazSecond;
     }
@@ -106,7 +129,7 @@ public class TpiVVisDtSched implements Serializable {
         this.flAnomBackupMigrazSecond = flAnomBackupMigrazSecond;
     }
 
-    @Column(name = "FL_ANOM_BACKUP_VERS_PRIM")
+    @Column(name = "FL_ANOM_BACKUP_VERS_PRIM", columnDefinition = "char(1)")
     public String getFlAnomBackupVersPrim() {
         return this.flAnomBackupVersPrim;
     }
@@ -115,7 +138,7 @@ public class TpiVVisDtSched implements Serializable {
         this.flAnomBackupVersPrim = flAnomBackupVersPrim;
     }
 
-    @Column(name = "FL_ANOM_BACKUP_VERS_SECOND")
+    @Column(name = "FL_ANOM_BACKUP_VERS_SECOND", columnDefinition = "char(1)")
     public String getFlAnomBackupVersSecond() {
         return this.flAnomBackupVersSecond;
     }
@@ -124,7 +147,7 @@ public class TpiVVisDtSched implements Serializable {
         this.flAnomBackupVersSecond = flAnomBackupVersSecond;
     }
 
-    @Column(name = "FL_ANOM_COPIA_MIGRAZ_PRIM")
+    @Column(name = "FL_ANOM_COPIA_MIGRAZ_PRIM", columnDefinition = "char(1)")
     public String getFlAnomCopiaMigrazPrim() {
         return this.flAnomCopiaMigrazPrim;
     }
@@ -133,7 +156,7 @@ public class TpiVVisDtSched implements Serializable {
         this.flAnomCopiaMigrazPrim = flAnomCopiaMigrazPrim;
     }
 
-    @Column(name = "FL_ANOM_COPIA_MIGRAZ_SECOND")
+    @Column(name = "FL_ANOM_COPIA_MIGRAZ_SECOND", columnDefinition = "char(1)")
     public String getFlAnomCopiaMigrazSecond() {
         return this.flAnomCopiaMigrazSecond;
     }
@@ -142,7 +165,7 @@ public class TpiVVisDtSched implements Serializable {
         this.flAnomCopiaMigrazSecond = flAnomCopiaMigrazSecond;
     }
 
-    @Column(name = "FL_ANOM_COPIA_VERS_PRIM")
+    @Column(name = "FL_ANOM_COPIA_VERS_PRIM", columnDefinition = "char(1)")
     public String getFlAnomCopiaVersPrim() {
         return this.flAnomCopiaVersPrim;
     }
@@ -151,7 +174,7 @@ public class TpiVVisDtSched implements Serializable {
         this.flAnomCopiaVersPrim = flAnomCopiaVersPrim;
     }
 
-    @Column(name = "FL_ANOM_COPIA_VERS_SECOND")
+    @Column(name = "FL_ANOM_COPIA_VERS_SECOND", columnDefinition = "char(1)")
     public String getFlAnomCopiaVersSecond() {
         return this.flAnomCopiaVersSecond;
     }
@@ -160,7 +183,7 @@ public class TpiVVisDtSched implements Serializable {
         this.flAnomCopiaVersSecond = flAnomCopiaVersSecond;
     }
 
-    @Column(name = "FL_ANOM_MIGRATE_MIGRAZ_PRIM")
+    @Column(name = "FL_ANOM_MIGRATE_MIGRAZ_PRIM", columnDefinition = "char(1)")
     public String getFlAnomMigrateMigrazPrim() {
         return this.flAnomMigrateMigrazPrim;
     }
@@ -169,7 +192,7 @@ public class TpiVVisDtSched implements Serializable {
         this.flAnomMigrateMigrazPrim = flAnomMigrateMigrazPrim;
     }
 
-    @Column(name = "FL_ANOM_MIGRATE_MIGRAZ_SECOND")
+    @Column(name = "FL_ANOM_MIGRATE_MIGRAZ_SECOND", columnDefinition = "char(1)")
     public String getFlAnomMigrateMigrazSecond() {
         return this.flAnomMigrateMigrazSecond;
     }
@@ -178,7 +201,7 @@ public class TpiVVisDtSched implements Serializable {
         this.flAnomMigrateMigrazSecond = flAnomMigrateMigrazSecond;
     }
 
-    @Column(name = "FL_ANOM_MIGRATE_VERS_PRIM")
+    @Column(name = "FL_ANOM_MIGRATE_VERS_PRIM", columnDefinition = "char(1)")
     public String getFlAnomMigrateVersPrim() {
         return this.flAnomMigrateVersPrim;
     }
@@ -187,7 +210,7 @@ public class TpiVVisDtSched implements Serializable {
         this.flAnomMigrateVersPrim = flAnomMigrateVersPrim;
     }
 
-    @Column(name = "FL_ANOM_MIGRATE_VERS_SECOND")
+    @Column(name = "FL_ANOM_MIGRATE_VERS_SECOND", columnDefinition = "char(1)")
     public String getFlAnomMigrateVersSecond() {
         return this.flAnomMigrateVersSecond;
     }
@@ -196,7 +219,7 @@ public class TpiVVisDtSched implements Serializable {
         this.flAnomMigrateVersSecond = flAnomMigrateVersSecond;
     }
 
-    @Column(name = "FL_ANOM_RI_ARK_MIGRAZ_PRIM")
+    @Column(name = "FL_ANOM_RI_ARK_MIGRAZ_PRIM", columnDefinition = "char(1)")
     public String getFlAnomRiArkMigrazPrim() {
         return this.flAnomRiArkMigrazPrim;
     }
@@ -205,7 +228,7 @@ public class TpiVVisDtSched implements Serializable {
         this.flAnomRiArkMigrazPrim = flAnomRiArkMigrazPrim;
     }
 
-    @Column(name = "FL_ANOM_RI_ARK_MIGRAZ_SECOND")
+    @Column(name = "FL_ANOM_RI_ARK_MIGRAZ_SECOND", columnDefinition = "char(1)")
     public String getFlAnomRiArkMigrazSecond() {
         return this.flAnomRiArkMigrazSecond;
     }
@@ -214,7 +237,7 @@ public class TpiVVisDtSched implements Serializable {
         this.flAnomRiArkMigrazSecond = flAnomRiArkMigrazSecond;
     }
 
-    @Column(name = "FL_ANOM_RI_ARK_VERS_PRIM")
+    @Column(name = "FL_ANOM_RI_ARK_VERS_PRIM", columnDefinition = "char(1)")
     public String getFlAnomRiArkVersPrim() {
         return this.flAnomRiArkVersPrim;
     }
@@ -223,7 +246,7 @@ public class TpiVVisDtSched implements Serializable {
         this.flAnomRiArkVersPrim = flAnomRiArkVersPrim;
     }
 
-    @Column(name = "FL_ANOM_RI_ARK_VERS_SECOND")
+    @Column(name = "FL_ANOM_RI_ARK_VERS_SECOND", columnDefinition = "char(1)")
     public String getFlAnomRiArkVersSecond() {
         return this.flAnomRiArkVersSecond;
     }
@@ -232,7 +255,7 @@ public class TpiVVisDtSched implements Serializable {
         this.flAnomRiArkVersSecond = flAnomRiArkVersSecond;
     }
 
-    @Column(name = "FL_MIGRAZ_IN_CORSO")
+    @Column(name = "FL_MIGRAZ_IN_CORSO", columnDefinition = "char(1)")
     public String getFlMigrazInCorso() {
         return this.flMigrazInCorso;
     }
@@ -241,7 +264,7 @@ public class TpiVVisDtSched implements Serializable {
         this.flMigrazInCorso = flMigrazInCorso;
     }
 
-    @Column(name = "FL_PRESENZA_SECONDARIO")
+    @Column(name = "FL_PRESENZA_SECONDARIO", columnDefinition = "char(1)")
     public String getFlPresenzaSecondario() {
         return this.flPresenzaSecondario;
     }

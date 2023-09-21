@@ -1,106 +1,220 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 import it.eng.parer.entity.constraint.FasFascicolo.TiConservazione;
 import it.eng.parer.entity.constraint.FasFascicolo.TiStatoConservazione;
 import it.eng.parer.entity.constraint.FasFascicolo.TiStatoFascElencoVers;
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-import javax.persistence.*;
 
 /**
  * The persistent class for the FAS_FASCICOLO database table.
- *
  */
 @Entity
 @Table(name = "FAS_FASCICOLO")
 @NamedQueries({ @NamedQuery(name = "FasFascicolo.findAll", query = "SELECT f FROM FasFascicolo f"),
         @NamedQuery(name = "FasFascicolo.findByStrutAnnoNum", query = "SELECT f FROM FasFascicolo f WHERE f.orgStrut = :orgStrut AND f.aaFascicolo=:aaFascicolo AND f.cdKeyFascicolo=:cdKeyFascicolo AND f.dtAnnull=:dtAnnull"),
-        @NamedQuery(name = "FasFascicolo.findCountFascicoliVersatiNelGiorno", query = "SELECT f.orgStrut.idStrut, f.decTipoFascicolo.idTipoFascicolo, f.aaFascicolo, f.iamUser.idUserIam, COUNT(f.idFascicolo) FROM FasFascicolo f JOIN f.orgStrut strut WHERE FUNC('trunc', f.tsIniSes, 'DD')=FUNC('to_date',FUNC('to_char',:data,'DD/MM/YYYY'),'DD/MM/YYYY') GROUP BY f.orgStrut.idStrut, f.decTipoFascicolo.idTipoFascicolo, f.aaFascicolo, f.iamUser.idUserIam") })
+        @NamedQuery(name = "FasFascicolo.findCountFascicoliVersatiNelGiorno", query = "SELECT f.orgStrut.idStrut, f.decTipoFascicolo.idTipoFascicolo, f.aaFascicolo, f.iamUser.idUserIam, COUNT(f.idFascicolo) FROM FasFascicolo f JOIN f.orgStrut strut WHERE TRUNC(f.tsIniSes, 'DD')=TO_DATE(TO_CHAR(:data,'DD/MM/YYYY'),'DD/MM/YYYY') GROUP BY f.orgStrut.idStrut, f.decTipoFascicolo.idTipoFascicolo, f.aaFascicolo, f.iamUser.idUserIam") })
 public class FasFascicolo implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idFascicolo;
-    private BigDecimal aaFascicolo;
-    private BigDecimal aaFascicoloPadre;
-    private String cdIndIpClient;
-    private String cdIndServer;
-    private String cdIndiceClassif;
-    private String cdAmminTitol;
-    private String cdKeyFascicolo;
-    private String cdKeyFascicoloPadre;
-    private String cdKeyOrd;
-    private String cdLivelloRiserv;
-    private String cdProcAmmin;
-    private String dsAmminTitol;
-    private String dsIndiceClassif;
-    private String dsNota;
-    private String dsOggettoFascicolo;
-    private String dsOggettoFascicoloPadre;
-    private String dsProcAmmin;
-    private Date dtAnnull;
-    private Date dtApeFascicolo;
-    private Date dtChiuFascicolo;
-    private String flForzaContrClassif;
-    private String flForzaContrColleg;
-    private String flForzaContrNumero;
-    private String flSesFascicoloKo;
-    private String flUpdAnnulUnitaDoc;
-    private String flUpdModifUnitaDoc;
-    private BigDecimal niAaConservazione;
-    private BigDecimal niSottoFascicoli;
-    private BigDecimal niUnitaDoc;
-    private String ntAnnul;
-    private TiConservazione tiConservazione;
-    private TiStatoConservazione tiStatoConservazione;
-    private TiStatoFascElencoVers tiStatoFascElencoVers;
-    private String tiCodiceAmminTitol;
-    private Date tsFineSes;
-    private Date tsIniSes;
-    private List<ElvFascDaElabElenco> elvFascDaElabElencos;
-    private List<FasAmminPartec> fasAmminPartecs;
-    private AplSistemaMigraz aplSistemaMigraz;
-    private AroUnitaDoc aroUnitaDocLast;
-    private AroUnitaDoc aroUnitaDocFirst;
-    private DecTipoFascicolo decTipoFascicolo;
-    private DecVoceTitol decVoceTitol;
-    private ElvElencoVersFasc elvElencoVersFasc;
-    private FasFascicolo fasFascicoloPadre;
-    private List<FasFascicolo> fasFascicolos;
-    private List<FasStatoConservFascicolo> fasStatoConservFascicoloElencos;
-    private List<FasStatoFascicoloElenco> fasStatoFascicoloElencos;
-    private IamUser iamUser;
-    private OrgStrut orgStrut;
-    private List<FasLinkFascicolo> fasLinkFascicolos1;
-    // private List<FasLinkFascicolo> fasLinkFascicolos2;
-    private List<FasRespFascicolo> fasRespFascicolos;
-    private List<FasUniOrgRespFascicolo> fasUniOrgRespFascicolos;
-    private List<FasSogFascicolo> fasSogFascicolos;
-    private List<FasUnitaDocFascicolo> fasUnitaDocFascicolos;
-    // private List<FasVoceClassif> fasVoceClassifs;
-    private List<FasWarnFascicolo> fasWarnFascicolos;
-    private List<FasXmlFascicolo> fasXmlFascicolos;
-    private List<FasXmlVersFascicolo> fasXmlVersFascicolos;
-    // private List<VrsSesFascicoloKo> vrsSesFascicoloKos;
-    private List<AroItemRichAnnulVers> aroItemRichAnnulVers;
-    private List<FasVerAipFascicolo> fasVerAipFascicolos;
-    private List<FasAipFascicoloDaElab> fasAipFascicoloDaElab;
-    private List<ElvElencoVersFascAnnul> elvElencoVersFascAnnuls;
-    private List<FasValoreAttribFascicolo> fasValoreAttribFascicolos;
 
-    public FasFascicolo() {
+    private Long idFascicolo;
+
+    private BigDecimal aaFascicolo;
+
+    private BigDecimal aaFascicoloPadre;
+
+    private String cdIndIpClient;
+
+    private String cdIndServer;
+
+    private String cdIndiceClassif;
+
+    private String cdAmminTitol;
+
+    private String cdKeyFascicolo;
+
+    private String cdKeyFascicoloPadre;
+
+    private String cdKeyOrd;
+
+    private String cdLivelloRiserv;
+
+    private String cdProcAmmin;
+
+    private String dsAmminTitol;
+
+    private String dsIndiceClassif;
+
+    private String dsNota;
+
+    private String dsOggettoFascicolo;
+
+    private String dsOggettoFascicoloPadre;
+
+    private String dsProcAmmin;
+
+    private String dsProcAmminMateriaArgStrut;
+
+    private Date dtAnnull;
+
+    private Date dtApeFascicolo;
+
+    private Date dtChiuFascicolo;
+
+    private String flForzaContrClassif;
+
+    private String flForzaContrColleg;
+
+    private String flForzaContrNumero;
+
+    private String flSesFascicoloKo;
+
+    private String flUpdAnnulUnitaDoc;
+
+    private String flUpdModifUnitaDoc;
+
+    private String cdKeyNormalizFascicolo;
+
+    private BigDecimal niAaConservazione;
+
+    private BigDecimal niSottoFascicoli;
+
+    private BigDecimal niUnitaDoc;
+
+    private String ntAnnul;
+
+    private TiConservazione tiConservazione;
+
+    private TiStatoConservazione tiStatoConservazione;
+
+    private TiStatoFascElencoVers tiStatoFascElencoVers;
+
+    private String tiCodiceAmminTitol;
+
+    private Date tsFineSes;
+
+    private Date tsIniSes;
+
+    private List<ElvFascDaElabElenco> elvFascDaElabElencos = new ArrayList<>();
+
+    private List<FasAmminPartec> fasAmminPartecs = new ArrayList<>();
+
+    private AplSistemaMigraz aplSistemaMigraz;
+
+    private AroUnitaDoc aroUnitaDocLast;
+
+    private AroUnitaDoc aroUnitaDocFirst;
+
+    private DecTipoFascicolo decTipoFascicolo;
+
+    private DecVoceTitol decVoceTitol;
+
+    private ElvElencoVersFasc elvElencoVersFasc;
+
+    private FasFascicolo fasFascicoloPadre;
+
+    private List<FasFascicolo> fasFascicolos = new ArrayList<>();
+
+    private List<FasStatoConservFascicolo> fasStatoConservFascicoloElencos = new ArrayList<>();
+
+    private List<FasStatoFascicoloElenco> fasStatoFascicoloElencos = new ArrayList<>();
+
+    private IamUser iamUser;
+
+    private OrgStrut orgStrut;
+
+    private List<FasLinkFascicolo> fasLinkFascicolos1 = new ArrayList<>();
+
+    // private List<FasLinkFascicolo> fasLinkFascicolos2 = new ArrayList<>();
+    private List<FasRespFascicolo> fasRespFascicolos = new ArrayList<>();
+
+    private List<FasUniOrgRespFascicolo> fasUniOrgRespFascicolos = new ArrayList<>();
+
+    private List<FasSogFascicolo> fasSogFascicolos = new ArrayList<>();
+
+    private List<FasUnitaDocFascicolo> fasUnitaDocFascicolos = new ArrayList<>();
+
+    // private List<FasVoceClassif> fasVoceClassifs = new ArrayList<>();
+    private List<FasWarnFascicolo> fasWarnFascicolos = new ArrayList<>();
+
+    private List<FasXmlFascicolo> fasXmlFascicolos = new ArrayList<>();
+
+    private List<FasXmlVersFascicolo> fasXmlVersFascicolos = new ArrayList<>();
+
+    // private List<VrsSesFascicoloKo> vrsSesFascicoloKos = new ArrayList<>();
+    private List<AroItemRichAnnulVers> aroItemRichAnnulVers = new ArrayList<>();
+
+    private List<FasVerAipFascicolo> fasVerAipFascicolos = new ArrayList<>();
+
+    private List<FasAipFascicoloDaElab> fasAipFascicoloDaElab = new ArrayList<>();
+
+    private List<ElvElencoVersFascAnnul> elvElencoVersFascAnnuls = new ArrayList<>();
+
+    private List<FasValoreAttribFascicolo> fasValoreAttribFascicolos = new ArrayList<>();
+
+    public FasFascicolo() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "FAS_FASCICOLO_IDFASCICOLO_GENERATOR", sequenceName = "SFAS_FASCICOLO", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "FAS_FASCICOLO_IDFASCICOLO_GENERATOR")
+    // "FAS_FASCICOLO_IDFASCICOLO_GENERATOR",
+    // sequenceName = "SFAS_FASCICOLO", allocationSize =
+    // 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "FAS_FASCICOLO_IDFASCICOLO_GENERATOR")
     @Column(name = "ID_FASCICOLO")
-    public long getIdFascicolo() {
+    @GenericGenerator(name = "SFAS_FASCICOLO_ID_FASCICOLO_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SFAS_FASCICOLO"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SFAS_FASCICOLO_ID_FASCICOLO_GENERATOR")
+    public Long getIdFascicolo() {
         return this.idFascicolo;
     }
 
-    public void setIdFascicolo(long idFascicolo) {
+    public void setIdFascicolo(Long idFascicolo) {
         this.idFascicolo = idFascicolo;
     }
 
@@ -257,6 +371,15 @@ public class FasFascicolo implements Serializable {
         this.dsProcAmmin = dsProcAmmin;
     }
 
+    @Column(name = "DS_PROC_AMMIN_MATERIA_ARG_STRUT")
+    public String getDsProcAmminMateriaArgStrut() {
+        return this.dsProcAmminMateriaArgStrut;
+    }
+
+    public void setDsProcAmminMateriaArgStrut(String dsProcAmminMateriaArgStrut) {
+        this.dsProcAmminMateriaArgStrut = dsProcAmminMateriaArgStrut;
+    }
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "DT_ANNULL")
     public Date getDtAnnull() {
@@ -287,7 +410,7 @@ public class FasFascicolo implements Serializable {
         this.dtChiuFascicolo = dtChiuFascicolo;
     }
 
-    @Column(name = "FL_FORZA_CONTR_CLASSIF")
+    @Column(name = "FL_FORZA_CONTR_CLASSIF", columnDefinition = "char(1)")
     public String getFlForzaContrClassif() {
         return this.flForzaContrClassif;
     }
@@ -296,7 +419,7 @@ public class FasFascicolo implements Serializable {
         this.flForzaContrClassif = flForzaContrClassif;
     }
 
-    @Column(name = "FL_FORZA_CONTR_COLLEG")
+    @Column(name = "FL_FORZA_CONTR_COLLEG", columnDefinition = "char(1)")
     public String getFlForzaContrColleg() {
         return this.flForzaContrColleg;
     }
@@ -305,7 +428,7 @@ public class FasFascicolo implements Serializable {
         this.flForzaContrColleg = flForzaContrColleg;
     }
 
-    @Column(name = "FL_FORZA_CONTR_NUMERO")
+    @Column(name = "FL_FORZA_CONTR_NUMERO", columnDefinition = "char(1)")
     public String getFlForzaContrNumero() {
         return this.flForzaContrNumero;
     }
@@ -314,7 +437,7 @@ public class FasFascicolo implements Serializable {
         this.flForzaContrNumero = flForzaContrNumero;
     }
 
-    @Column(name = "FL_SES_FASCICOLO_KO")
+    @Column(name = "FL_SES_FASCICOLO_KO", columnDefinition = "char(1)")
     public String getFlSesFascicoloKo() {
         return this.flSesFascicoloKo;
     }
@@ -323,7 +446,7 @@ public class FasFascicolo implements Serializable {
         this.flSesFascicoloKo = flSesFascicoloKo;
     }
 
-    @Column(name = "FL_UPD_ANNUL_UNITA_DOC")
+    @Column(name = "FL_UPD_ANNUL_UNITA_DOC", columnDefinition = "char(1)")
     public String getFlUpdAnnulUnitaDoc() {
         return this.flUpdAnnulUnitaDoc;
     }
@@ -332,7 +455,7 @@ public class FasFascicolo implements Serializable {
         this.flUpdAnnulUnitaDoc = flUpdAnnulUnitaDoc;
     }
 
-    @Column(name = "FL_UPD_MODIF_UNITA_DOC")
+    @Column(name = "FL_UPD_MODIF_UNITA_DOC", columnDefinition = "char(1)")
     public String getFlUpdModifUnitaDoc() {
         return this.flUpdModifUnitaDoc;
     }
@@ -585,6 +708,15 @@ public class FasFascicolo implements Serializable {
         this.orgStrut = orgStrut;
     }
 
+    @Column(name = "CD_KEY_NORMALIZ_FASCICOLO")
+    public String getCdKeyNormalizFascicolo() {
+        return this.cdKeyNormalizFascicolo;
+    }
+
+    public void setCdKeyNormalizFascicolo(String cdKeyNormalizFascicolo) {
+        this.cdKeyNormalizFascicolo = cdKeyNormalizFascicolo;
+    }
+
     // bi-directional many-to-one association to FasUnitaDocFascicolo
     @OneToMany(mappedBy = "fasFascicolo")
     public List<FasLinkFascicolo> getFasLinkFascicolos1() {
@@ -708,14 +840,12 @@ public class FasFascicolo implements Serializable {
     public ElvElencoVersFascAnnul addElvElencoVersFascAnnul(ElvElencoVersFascAnnul elvElencoVersFascAnnul) {
         getElvElencoVersFascAnnuls().add(elvElencoVersFascAnnul);
         elvElencoVersFascAnnul.setFasFascicolo(this);
-
         return elvElencoVersFascAnnul;
     }
 
     public ElvElencoVersFascAnnul removeElvElencoVersFascAnnul(ElvElencoVersFascAnnul elvElencoVersFascAnnul) {
         getElvElencoVersFascAnnuls().remove(elvElencoVersFascAnnul);
         elvElencoVersFascAnnul.setFasFascicolo(null);
-
         return elvElencoVersFascAnnul;
     }
 
@@ -746,7 +876,7 @@ public class FasFascicolo implements Serializable {
     /**
      * Gestione dei default. Risulta la migliore pratica in quanto è indipendente dal db utilizzato e sfrutta diretta
      * JPA quindi calabile sotto ogni contesto in termini di ORM
-     * 
+     *
      * ref. https://stackoverflow.com/a/13432234
      */
     @PrePersist
@@ -758,5 +888,4 @@ public class FasFascicolo implements Serializable {
             this.flUpdAnnulUnitaDoc = "0";
         }
     }
-
 }

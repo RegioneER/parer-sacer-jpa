@@ -1,55 +1,95 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.grantedEntity;
 
-import it.eng.parer.entity.AplSistemaVersante;
-import it.eng.parer.grantedEntity.SIOrgEnteSiam;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import it.eng.parer.entity.AplSistemaVersante;
 
 /**
  * The persistent class for the USR_USER database table.
- *
  */
 @Entity
-// @Table(name = "SACER_IAM.USR_USER")
+// @Table (schema="SACER_IAM" ,name="USR_USER")
 @Table(name = "USR_USER", schema = "SACER_IAM")
 @NamedQuery(name = "UsrUser.findAll", query = "SELECT u FROM UsrUser u")
 public class UsrUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idUserIam;
-    private String cdFisc;
-    private String cdPsw;
-    private String cdSalt;
-    private String dsEmail;
-    private Date dtRegPsw;
-    private Date dtScadPsw;
-    private String flAttivo;
-    private String flContrIp;
-    private String flUserAdmin;
-    private String nmCognomeUser;
-    private String nmNomeUser;
-    private String nmUserid;
-    private String tipoUser;
-    private SIOrgEnteSiam siOrgEnteSiam;
-    private AplSistemaVersante aplSistemaVersante;
-    private BigDecimal idStatoUserCor;
-    private List<UsrStatoUser> usrStatoUsers;
 
-    public UsrUser() {
+    private Long idUserIam;
+
+    private String cdFisc;
+
+    private String cdPsw;
+
+    private String cdSalt;
+
+    private String dsEmail;
+
+    private Date dtRegPsw;
+
+    private Date dtScadPsw;
+
+    private String flAttivo;
+
+    private String flContrIp;
+
+    private String flUserAdmin;
+
+    private String nmCognomeUser;
+
+    private String nmNomeUser;
+
+    private String nmUserid;
+
+    private String tipoUser;
+
+    private SIOrgEnteSiam siOrgEnteSiam;
+
+    private AplSistemaVersante aplSistemaVersante;
+
+    private BigDecimal idStatoUserCor;
+    // private List<UsrStatoUser> usrStatoUsers = new ArrayList<>();
+
+    public UsrUser() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "USR_USER_IDUSERIAM_GENERATOR", sequenceName = "SUSR_USER", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USR_USER_IDUSERIAM_GENERATOR")
     @Column(name = "ID_USER_IAM")
-    public long getIdUserIam() {
+    public Long getIdUserIam() {
         return this.idUserIam;
     }
 
-    public void setIdUserIam(long idUserIam) {
+    public void setIdUserIam(Long idUserIam) {
         this.idUserIam = idUserIam;
     }
 
@@ -109,7 +149,7 @@ public class UsrUser implements Serializable {
         this.dtScadPsw = dtScadPsw;
     }
 
-    @Column(name = "FL_ATTIVO")
+    @Column(name = "FL_ATTIVO", columnDefinition = "char(1)")
     public String getFlAttivo() {
         return this.flAttivo;
     }
@@ -118,7 +158,7 @@ public class UsrUser implements Serializable {
         this.flAttivo = flAttivo;
     }
 
-    @Column(name = "FL_CONTR_IP")
+    @Column(name = "FL_CONTR_IP", columnDefinition = "char(1)")
     public String getFlContrIp() {
         return this.flContrIp;
     }
@@ -127,7 +167,7 @@ public class UsrUser implements Serializable {
         this.flContrIp = flContrIp;
     }
 
-    @Column(name = "FL_USER_ADMIN")
+    @Column(name = "FL_USER_ADMIN", columnDefinition = "char(1)")
     public String getFlUserAdmin() {
         return this.flUserAdmin;
     }
@@ -204,12 +244,12 @@ public class UsrUser implements Serializable {
     }
 
     // bi-directional many-to-one association to UsrStatoUser
-    @OneToMany(mappedBy = "usrUser", cascade = { CascadeType.PERSIST })
-    public List<UsrStatoUser> getUsrStatoUsers() {
-        return this.usrStatoUsers;
-    }
-
-    public void setUsrStatoUsers(List<UsrStatoUser> usrStatoUsers) {
-        this.usrStatoUsers = usrStatoUsers;
-    }
+    // @OneToMany(mappedBy = "usrUser", cascade = { CascadeType.PERSIST })
+    // public List<UsrStatoUser> getUsrStatoUsers() {
+    // return this.usrStatoUsers;
+    // }
+    //
+    // public void setUsrStatoUsers(List<UsrStatoUser> usrStatoUsers) {
+    // this.usrStatoUsers = usrStatoUsers;
+    // }
 }

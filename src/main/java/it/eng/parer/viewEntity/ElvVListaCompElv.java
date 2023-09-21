@@ -1,14 +1,37 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 // TODO: fdilorenzo, RIPRISTINARE
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 /**
  * The persistent class for the ELV_V_LISTA_COMP_ELV database table.
- *
  */
 @Entity
 @Table(name = "ELV_V_LISTA_COMP_ELV")
@@ -16,54 +39,96 @@ import java.util.Date;
 public class ElvVListaCompElv implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     private BigDecimal aaKeyUnitaDoc;
+
     private String cdEncodingHashFileCalc;
+
     private String cdKeyUnitaDoc;
+
     private String cdRegistroKeyUnitaDoc;
+
     private String dlUrnCompVers;
+
     private String dsAlgoHashFileCalc;
+
     private String dsFormatoRapprCalc;
+
     private String dsFormatoRapprEstesoCalc;
+
     private String dsHashFileCalc;
+
     private String dsHashFileVers;
+
     private String dsNomeCompVers;
+
     private String dsOrdComp;
+
     private String dsUrnCompCalc;
+
     private String dsUrnCompCalcShort;
+
     private Date dtCreazioneDoc;
+
     private Date dtScadCertifFirmatario;
+
     private String flCompFirmato;
+
     private String flForzaAccettazione;
+
     private String flForzaConservazione;
-    private BigDecimal idCompDoc;
+
     private BigDecimal idDoc;
+
     private BigDecimal idElencoVers;
-    private BigDecimal idFirmaComp;
+
     private BigDecimal idFormatoFileDocVers;
+
     private BigDecimal idRegistroUnitaDoc;
+
     private BigDecimal idStrutDoc;
+
     private BigDecimal idStrutFormatoFileVers;
+
     private BigDecimal idStrutTipoStrut;
+
     private BigDecimal idStrutUnitaDoc;
+
     private BigDecimal idSubStrut;
+
     private BigDecimal idTipoCompDoc;
+
     private BigDecimal idTipoDoc;
+
     private BigDecimal idTipoStrutDoc;
+
     private BigDecimal idTipoUnitaDoc;
+
     private BigDecimal idUnitaDoc;
+
     private BigDecimal niSizeFileCalc;
+
     private String nmFormatoFileDocVers;
+
     private String nmMimetypeFile;
+
     private String nmTipoCompDoc;
+
     private String nmTipoStrutDoc;
+
     private String tiEsitoContrConforme;
+
     private String tiEsitoContrFormatoFile;
+
     private String tiEsitoVerifFirmeVers;
+
     private String tiStatoConservazione;
+
     private String tiStatoElencoVers;
+
     private String tiSupportoComp;
 
-    public ElvVListaCompElv() {
+    public ElvVListaCompElv() {/* Hibernate */
     }
 
     public ElvVListaCompElv(BigDecimal idElencoVers, BigDecimal idCompDoc, String dsUrnCompCalc,
@@ -73,7 +138,8 @@ public class ElvVListaCompElv implements Serializable {
             BigDecimal idDoc, String cdRegistroKeyUnitaDoc, BigDecimal idTipoUnitaDoc, BigDecimal idTipoDoc,
             BigDecimal idSubStrut, String tiStatoElencoVers, String tiStatoConservazione) {
         this.idElencoVers = idElencoVers;
-        this.idCompDoc = idCompDoc;
+        this.elvVListaCompElvId = new ElvVListaCompElvId();
+        this.elvVListaCompElvId.setIdCompDoc(idCompDoc);
         this.dsUrnCompCalc = dsUrnCompCalc;
         this.dsUrnCompCalcShort = dsUrnCompCalcShort;
         this.dsNomeCompVers = dsNomeCompVers;
@@ -94,7 +160,6 @@ public class ElvVListaCompElv implements Serializable {
         this.idSubStrut = idSubStrut;
         this.tiStatoElencoVers = tiStatoElencoVers;
         this.tiStatoConservazione = tiStatoConservazione;
-
     }
 
     @Column(name = "AA_KEY_UNITA_DOC")
@@ -243,7 +308,7 @@ public class ElvVListaCompElv implements Serializable {
         this.dtScadCertifFirmatario = dtScadCertifFirmatario;
     }
 
-    @Column(name = "FL_COMP_FIRMATO")
+    @Column(name = "FL_COMP_FIRMATO", columnDefinition = "char(1)")
     public String getFlCompFirmato() {
         return this.flCompFirmato;
     }
@@ -252,7 +317,7 @@ public class ElvVListaCompElv implements Serializable {
         this.flCompFirmato = flCompFirmato;
     }
 
-    @Column(name = "FL_FORZA_ACCETTAZIONE")
+    @Column(name = "FL_FORZA_ACCETTAZIONE", columnDefinition = "char(1)")
     public String getFlForzaAccettazione() {
         return this.flForzaAccettazione;
     }
@@ -261,23 +326,13 @@ public class ElvVListaCompElv implements Serializable {
         this.flForzaAccettazione = flForzaAccettazione;
     }
 
-    @Column(name = "FL_FORZA_CONSERVAZIONE")
+    @Column(name = "FL_FORZA_CONSERVAZIONE", columnDefinition = "char(1)")
     public String getFlForzaConservazione() {
         return this.flForzaConservazione;
     }
 
     public void setFlForzaConservazione(String flForzaConservazione) {
         this.flForzaConservazione = flForzaConservazione;
-    }
-
-    @Id
-    @Column(name = "ID_COMP_DOC")
-    public BigDecimal getIdCompDoc() {
-        return this.idCompDoc;
-    }
-
-    public void setIdCompDoc(BigDecimal idCompDoc) {
-        this.idCompDoc = idCompDoc;
     }
 
     @Column(name = "ID_DOC")
@@ -296,16 +351,6 @@ public class ElvVListaCompElv implements Serializable {
 
     public void setIdElencoVers(BigDecimal idElencoVers) {
         this.idElencoVers = idElencoVers;
-    }
-
-    @Id
-    @Column(name = "ID_FIRMA_COMP")
-    public BigDecimal getIdFirmaComp() {
-        return this.idFirmaComp;
-    }
-
-    public void setIdFirmaComp(BigDecimal idFirmaComp) {
-        this.idFirmaComp = idFirmaComp;
     }
 
     @Column(name = "ID_FORMATO_FILE_DOC_VERS")
@@ -515,4 +560,14 @@ public class ElvVListaCompElv implements Serializable {
         this.tiSupportoComp = tiSupportoComp;
     }
 
+    private ElvVListaCompElvId elvVListaCompElvId;
+
+    @EmbeddedId()
+    public ElvVListaCompElvId getElvVListaCompElvId() {
+        return elvVListaCompElvId;
+    }
+
+    public void setElvVListaCompElvId(ElvVListaCompElvId elvVListaCompElvId) {
+        this.elvVListaCompElvId = elvVListaCompElvId;
+    }
 }

@@ -1,49 +1,103 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
+
 /**
  * The persistent class for the VRS_FASCICOLO_KO database table.
- *
  */
 @Entity
 @Table(name = "VRS_FASCICOLO_KO")
 @NamedQueries({ @NamedQuery(name = "VrsFascicoloKo.findByFascKo", query = "SELECT v FROM VrsFascicoloKo v"),
         @NamedQuery(name = "VrsFascicoloKo.findByStrutAnnoNum", query = "SELECT f FROM VrsFascicoloKo f WHERE f.orgStrut = :orgStrut AND f.aaFascicolo=:aaFascicolo AND f.cdKeyFascicolo=:cdKeyFascicolo"),
-        @NamedQuery(name = "VrsFascicoloKo.findCountFascicoliNonVersatiNelGiorno", query = "SELECT f.orgStrut.idStrut, f.decTipoFascicolo.idTipoFascicolo, f.aaFascicolo, COUNT(f.idFascicoloKo), f.tiStatoFascicoloKo FROM VrsFascicoloKo f JOIN f.orgStrut strut WHERE FUNC('trunc', f.tsIniLastSes, 'DD')=FUNC('to_date',FUNC('to_char',:data,'DD/MM/YYYY'),'DD/MM/YYYY') GROUP BY f.orgStrut.idStrut, f.decTipoFascicolo.idTipoFascicolo, f.aaFascicolo, f.tiStatoFascicoloKo") })
+        @NamedQuery(name = "VrsFascicoloKo.findCountFascicoliNonVersatiNelGiorno", query = "SELECT f.orgStrut.idStrut, f.decTipoFascicolo.idTipoFascicolo, f.aaFascicolo, COUNT(f.idFascicoloKo), f.tiStatoFascicoloKo FROM VrsFascicoloKo f JOIN f.orgStrut strut WHERE TRUNC(f.tsIniLastSes, 'DD')=TO_DATE(TO_CHAR(:data,'DD/MM/YYYY'),'DD/MM/YYYY') GROUP BY f.orgStrut.idStrut, f.decTipoFascicolo.idTipoFascicolo, f.aaFascicolo, f.tiStatoFascicoloKo") })
 public class VrsFascicoloKo implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idFascicoloKo;
-    private BigDecimal aaFascicolo;
-    private String cdKeyFascicolo;
-    private String dsErrPrinc;
-    private BigDecimal idSesFascicoloKoFirst;
-    private BigDecimal idSesFascicoloKoLast;
-    private String tiStatoFascicoloKo;
-    private Date tsIniFirstSes;
-    private Date tsIniLastSes;
-    private DecErrSacer decErrSacer;
-    private DecTipoFascicolo decTipoFascicolo;
-    private OrgStrut orgStrut;
-    private List<VrsSesFascicoloKo> vrsSesFascicoloKos;
 
-    public VrsFascicoloKo() {
+    private Long idFascicoloKo;
+
+    private BigDecimal aaFascicolo;
+
+    private String cdKeyFascicolo;
+
+    private String dsErrPrinc;
+
+    private BigDecimal idSesFascicoloKoFirst;
+
+    private BigDecimal idSesFascicoloKoLast;
+
+    private String tiStatoFascicoloKo;
+
+    private Date tsIniFirstSes;
+
+    private Date tsIniLastSes;
+
+    private DecErrSacer decErrSacer;
+
+    private DecTipoFascicolo decTipoFascicolo;
+
+    private OrgStrut orgStrut;
+
+    private List<VrsSesFascicoloKo> vrsSesFascicoloKos = new ArrayList<>();
+
+    public VrsFascicoloKo() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "VRS_FASCICOLO_KO_IDFASCICOLOKO_GENERATOR", sequenceName = "SVRS_FASCICOLO_KO", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VRS_FASCICOLO_KO_IDFASCICOLOKO_GENERATOR")
+    // "VRS_FASCICOLO_KO_IDFASCICOLOKO_GENERATOR",
+    // sequenceName = "SVRS_FASCICOLO_KO",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VRS_FASCICOLO_KO_IDFASCICOLOKO_GENERATOR")
     @Column(name = "ID_FASCICOLO_KO")
-    public long getIdFascicoloKo() {
+    @GenericGenerator(name = "SVRS_FASCICOLO_KO_ID_FASCICOLO_KO_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SVRS_FASCICOLO_KO"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SVRS_FASCICOLO_KO_ID_FASCICOLO_KO_GENERATOR")
+    public Long getIdFascicoloKo() {
         return this.idFascicoloKo;
     }
 
-    public void setIdFascicoloKo(long idFascicoloKo) {
+    public void setIdFascicoloKo(Long idFascicoloKo) {
         this.idFascicoloKo = idFascicoloKo;
     }
 
@@ -167,15 +221,12 @@ public class VrsFascicoloKo implements Serializable {
     public VrsSesFascicoloKo addVrsSesFascicoloKo(VrsSesFascicoloKo vrsSesFascicoloKo) {
         getVrsSesFascicoloKos().add(vrsSesFascicoloKo);
         vrsSesFascicoloKo.setVrsFascicoloKo(this);
-
         return vrsSesFascicoloKo;
     }
 
     public VrsSesFascicoloKo removeVrsSesFascicoloKo(VrsSesFascicoloKo vrsSesFascicoloKo) {
         getVrsSesFascicoloKos().remove(vrsSesFascicoloKo);
         vrsSesFascicoloKo.setVrsFascicoloKo(null);
-
         return vrsSesFascicoloKo;
     }
-
 }

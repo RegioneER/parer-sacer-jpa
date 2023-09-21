@@ -1,9 +1,34 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the ARO_V_VIS_UNITA_DOC_IAM database table.
@@ -13,6 +38,7 @@ import java.util.Date;
 @Table(name = "ARO_V_VIS_UNITA_DOC_IAM")
 @NamedQuery(name = "AroVVisUnitaDocIam.findAll", query = "SELECT a FROM AroVVisUnitaDocIam a")
 public class AroVVisUnitaDocIam implements Serializable {
+
     private static final long serialVersionUID = 1L;
     private BigDecimal aaKeyUnitaDoc;
     private String blXmlIndexUd;
@@ -90,8 +116,9 @@ public class AroVVisUnitaDocIam implements Serializable {
     private String utente;
     private String cdIndIpClient;
     private String nmSistemaVersante;
+    private BigDecimal idSessioneVers;
 
-    public AroVVisUnitaDocIam() {
+    public AroVVisUnitaDocIam() {/* Hibernate */
     }
 
     @Column(name = "AA_KEY_UNITA_DOC")
@@ -524,7 +551,7 @@ public class AroVVisUnitaDocIam implements Serializable {
         this.dtRegUnitaDoc = dtRegUnitaDoc;
     }
 
-    @Column(name = "FL_CARTACEO")
+    @Column(name = "FL_CARTACEO", columnDefinition = "char(1)")
     public String getFlCartaceo() {
         return this.flCartaceo;
     }
@@ -533,7 +560,7 @@ public class AroVVisUnitaDocIam implements Serializable {
         this.flCartaceo = flCartaceo;
     }
 
-    @Column(name = "FL_DOC_FIRMATO")
+    @Column(name = "FL_DOC_FIRMATO", columnDefinition = "char(1)")
     public String getFlDocFirmato() {
         return this.flDocFirmato;
     }
@@ -542,7 +569,7 @@ public class AroVVisUnitaDocIam implements Serializable {
         this.flDocFirmato = flDocFirmato;
     }
 
-    @Column(name = "FL_FORZA_ACCETTAZIONE")
+    @Column(name = "FL_FORZA_ACCETTAZIONE", columnDefinition = "char(1)")
     public String getFlForzaAccettazione() {
         return this.flForzaAccettazione;
     }
@@ -551,7 +578,7 @@ public class AroVVisUnitaDocIam implements Serializable {
         this.flForzaAccettazione = flForzaAccettazione;
     }
 
-    @Column(name = "FL_FORZA_COLLEGAMENTO")
+    @Column(name = "FL_FORZA_COLLEGAMENTO", columnDefinition = "char(1)")
     public String getFlForzaCollegamento() {
         return this.flForzaCollegamento;
     }
@@ -560,7 +587,7 @@ public class AroVVisUnitaDocIam implements Serializable {
         this.flForzaCollegamento = flForzaCollegamento;
     }
 
-    @Column(name = "FL_FORZA_CONSERVAZIONE")
+    @Column(name = "FL_FORZA_CONSERVAZIONE", columnDefinition = "char(1)")
     public String getFlForzaConservazione() {
         return this.flForzaConservazione;
     }
@@ -569,7 +596,7 @@ public class AroVVisUnitaDocIam implements Serializable {
         this.flForzaConservazione = flForzaConservazione;
     }
 
-    @Column(name = "FL_UNITA_DOC_FIRMATO")
+    @Column(name = "FL_UNITA_DOC_FIRMATO", columnDefinition = "char(1)")
     public String getFlUnitaDocFirmato() {
         return this.flUnitaDocFirmato;
     }
@@ -785,4 +812,14 @@ public class AroVVisUnitaDocIam implements Serializable {
     public void setNmSistemaVersante(String nmSistemaVersante) {
         this.nmSistemaVersante = nmSistemaVersante;
     }
+
+    @Column(name = "ID_SESSIONE_VERS")
+    public BigDecimal getIdSessioneVers() {
+        return idSessioneVers;
+    }
+
+    public void setIdSessioneVers(BigDecimal idSessioneVers) {
+        this.idSessioneVers = idSessioneVers;
+    }
+
 }

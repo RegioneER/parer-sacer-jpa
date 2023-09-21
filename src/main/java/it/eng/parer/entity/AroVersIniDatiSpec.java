@@ -1,8 +1,25 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,46 +33,65 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 import it.eng.parer.entity.constraint.AroVersIniDatiSpec.TiEntitaSacerAroVersIniDatiSpec;
 import it.eng.parer.entity.constraint.AroVersIniDatiSpec.TiUsoXsdAroVersIniDatiSpec;
 
 /**
  * The persistent class for the ARO_VERS_INI_DATI_SPEC database table.
- * 
  */
 @Entity
 @Table(name = "ARO_VERS_INI_DATI_SPEC")
 @NamedQuery(name = "AroVersIniDatiSpec.findAll", query = "SELECT a FROM AroVersIniDatiSpec a")
 public class AroVersIniDatiSpec implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    private long idVersIniDatiSpec;
+
+    private Long idVersIniDatiSpec;
+
     private String blXmlDatiSpec;
-    private Date dtReg;
+
+    private LocalDate dtReg;
+
     private BigDecimal idStrut;
+
     private AroVersIniComp aroVersIniComp;
+
     private AroVersIniDoc aroVersIniDoc;
+
     private AroVersIniUnitaDoc aroVersIniUnitaDoc;
+
     private DecXsdDatiSpec decXsdDatiSpec;
+
     private TiEntitaSacerAroVersIniDatiSpec tiEntitaSacer;
+
     private TiUsoXsdAroVersIniDatiSpec tiUsoXsd;
 
-    public AroVersIniDatiSpec() {
+    public AroVersIniDatiSpec() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "ARO_VERS_INI_DATI_SPEC_IDVERSINIDATISPEC_GENERATOR", sequenceName = "SARO_VERS_INI_DATI_SPEC", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ARO_VERS_INI_DATI_SPEC_IDVERSINIDATISPEC_GENERATOR")
+    // "ARO_VERS_INI_DATI_SPEC_IDVERSINIDATISPEC_GENERATOR",
+    // sequenceName =
+    // "SARO_VERS_INI_DATI_SPEC",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
+    // "ARO_VERS_INI_DATI_SPEC_IDVERSINIDATISPEC_GENERATOR")
     @Column(name = "ID_VERS_INI_DATI_SPEC")
-    public long getIdVersIniDatiSpec() {
+    @GenericGenerator(name = "SARO_VERS_INI_DATI_SPEC_ID_VERS_INI_DATI_SPEC_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SARO_VERS_INI_DATI_SPEC"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SARO_VERS_INI_DATI_SPEC_ID_VERS_INI_DATI_SPEC_GENERATOR")
+    public Long getIdVersIniDatiSpec() {
         return this.idVersIniDatiSpec;
     }
 
-    public void setIdVersIniDatiSpec(long idVersIniDatiSpec) {
+    public void setIdVersIniDatiSpec(Long idVersIniDatiSpec) {
         this.idVersIniDatiSpec = idVersIniDatiSpec;
     }
 
@@ -69,13 +105,12 @@ public class AroVersIniDatiSpec implements Serializable {
         this.blXmlDatiSpec = blXmlDatiSpec;
     }
 
-    @Temporal(TemporalType.DATE)
     @Column(name = "DT_REG")
-    public Date getDtReg() {
+    public LocalDate getDtReg() {
         return this.dtReg;
     }
 
-    public void setDtReg(Date dtReg) {
+    public void setDtReg(LocalDate dtReg) {
         this.dtReg = dtReg;
     }
 

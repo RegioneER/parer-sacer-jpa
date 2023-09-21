@@ -1,3 +1,20 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
@@ -5,6 +22,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,43 +33,61 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
+
 /**
  * The persistent class for the ORG_OPER_TITOL database table.
- *
  */
 @Entity
 @Table(name = "ORG_OPER_TITOL")
 public class OrgOperTitol implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idOperTitol;
-    private BigDecimal aaDocInvio;
-    private String cdDocInvio;
-    private String cdRegistroDocInvio;
-    private Date dtDocInvio;
-    private Date dtValOperTitol;
-    private String tiOperTitol;
-    private DecTitol decTitol;
-    private OrgStrut orgStrut;
-    private List<OrgOperVoceTitol> orgOperVoceTitols = new ArrayList<OrgOperVoceTitol>();
 
-    public OrgOperTitol() {
+    private Long idOperTitol;
+
+    private BigDecimal aaDocInvio;
+
+    private String cdDocInvio;
+
+    private String cdRegistroDocInvio;
+
+    private Date dtDocInvio;
+
+    private Date dtValOperTitol;
+
+    private String tiOperTitol;
+
+    private DecTitol decTitol;
+
+    private OrgStrut orgStrut;
+
+    private List<OrgOperVoceTitol> orgOperVoceTitols = new ArrayList<>();
+
+    public OrgOperTitol() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "ORG_OPER_TITOL_IDOPERTITOL_GENERATOR", sequenceName = "SORG_OPER_TITOL", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ORG_OPER_TITOL_IDOPERTITOL_GENERATOR")
+    // "ORG_OPER_TITOL_IDOPERTITOL_GENERATOR",
+    // sequenceName = "SORG_OPER_TITOL", allocationSize
+    // = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ORG_OPER_TITOL_IDOPERTITOL_GENERATOR")
     @Column(name = "ID_OPER_TITOL")
-    public long getIdOperTitol() {
+    @GenericGenerator(name = "SORG_OPER_TITOL_ID_OPER_TITOL_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SORG_OPER_TITOL"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SORG_OPER_TITOL_ID_OPER_TITOL_GENERATOR")
+    public Long getIdOperTitol() {
         return this.idOperTitol;
     }
 
-    public void setIdOperTitol(long idOperTitol) {
+    public void setIdOperTitol(Long idOperTitol) {
         this.idOperTitol = idOperTitol;
     }
 
@@ -146,15 +182,12 @@ public class OrgOperTitol implements Serializable {
     public OrgOperVoceTitol addOrgOperVoceTitol(OrgOperVoceTitol orgOperVoceTitol) {
         getOrgOperVoceTitols().add(orgOperVoceTitol);
         orgOperVoceTitol.setOrgOperTitol(this);
-
         return orgOperVoceTitol;
     }
 
     public OrgOperVoceTitol removeOrgOperVoceTitol(OrgOperVoceTitol orgOperVoceTitol) {
         getOrgOperVoceTitols().remove(orgOperVoceTitol);
         orgOperVoceTitol.setOrgOperTitol(null);
-
         return orgOperVoceTitol;
     }
-
 }

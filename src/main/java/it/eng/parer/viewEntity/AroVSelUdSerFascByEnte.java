@@ -1,56 +1,46 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the ARO_V_SEL_UD_SER_FASC_BY_ENTE database table.
- * 
  */
 @Entity
 @Table(name = "ARO_V_SEL_UD_SER_FASC_BY_ENTE")
 @NamedQuery(name = "AroVSelUdSerFascByEnte.findAll", query = "SELECT e FROM AroVSelUdSerFascByEnte e")
 public class AroVSelUdSerFascByEnte implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    private BigDecimal idUnitaDoc;
-    private BigDecimal idSerie;
-    private BigDecimal idFascicolo;
+
     private String tiEle;
+
     private BigDecimal idStrut;
-    private BigDecimal idRootstrut;
 
-    public AroVSelUdSerFascByEnte() {
-    }
-
-    @Id
-    @Column(name = "ID_UNITA_DOC")
-    public BigDecimal getIdUnitaDoc() {
-        return this.idUnitaDoc;
-    }
-
-    public void setIdUnitaDoc(BigDecimal idUnitaDoc) {
-        this.idUnitaDoc = idUnitaDoc;
-    }
-
-    @Id
-    @Column(name = "ID_SERIE")
-    public BigDecimal getIdSerie() {
-        return this.idSerie;
-    }
-
-    public void setIdSerie(BigDecimal idSerie) {
-        this.idSerie = idSerie;
-    }
-
-    @Id
-    @Column(name = "ID_FASCICOLO")
-    public BigDecimal getIdFascicolo() {
-        return this.idFascicolo;
-    }
-
-    public void setIdFascicolo(BigDecimal idFascicolo) {
-        this.idFascicolo = idFascicolo;
+    public AroVSelUdSerFascByEnte() {/* Hibernate */
     }
 
     @Column(name = "TI_ELE")
@@ -71,13 +61,14 @@ public class AroVSelUdSerFascByEnte implements Serializable {
         this.idStrut = idStrut;
     }
 
-    @Id
-    @Column(name = "ID_ROOTSTRUT")
-    public BigDecimal getIdRootstrut() {
-        return this.idRootstrut;
+    private AroVSelUdSerFascByEnteId aroVSelUdSerFascByEnteId;
+
+    @EmbeddedId()
+    public AroVSelUdSerFascByEnteId getAroVSelUdSerFascByEnteId() {
+        return aroVSelUdSerFascByEnteId;
     }
 
-    public void setIdRootstrut(BigDecimal idRootstrut) {
-        this.idRootstrut = idRootstrut;
+    public void setAroVSelUdSerFascByEnteId(AroVSelUdSerFascByEnteId aroVSelUdSerFascByEnteId) {
+        this.aroVSelUdSerFascByEnteId = aroVSelUdSerFascByEnteId;
     }
 }

@@ -1,13 +1,44 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlTransient;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 /**
  * The persistent class for the APL_PARAM_APPLIC database table.
- *
  */
 @Entity
 @Cacheable(true)
@@ -16,35 +47,55 @@ import javax.xml.bind.annotation.XmlTransient;
 public class AplParamApplic implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idParamApplic;
+
+    private Long idParamApplic;
+
     private String dmParamApplic;
+
     private String dsParamApplic;
+
     private String dsListaValoriAmmessi;
+
     private String flAppartAaTipoFascicolo;
+
     private String flAppartAmbiente;
+
     private String flAppartApplic;
+
     private String flAppartStrut;
+
     private String flAppartTipoUnitaDoc;
+
     private String flMulti;
+
     private String nmParamApplic;
+
     private String tiGestioneParam;
+
     private String tiParamApplic;
     private String tiValoreParamApplic;
-    private List<AplValoreParamApplic> aplValoreParamApplics;
-    private List<AplValParamApplicMulti> aplValParamApplicMultis;
+    private List<AplValoreParamApplic> aplValoreParamApplics = new ArrayList<>();
 
-    public AplParamApplic() {
+    private List<AplValParamApplicMulti> aplValParamApplicMultis = new ArrayList<>();
+
+    public AplParamApplic() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "APL_PARAM_APPLIC_IDPARAMAPPLIC_GENERATOR", sequenceName = "SAPL_PARAM_APPLIC", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "APL_PARAM_APPLIC_IDPARAMAPPLIC_GENERATOR")
+    // "APL_PARAM_APPLIC_IDPARAMAPPLIC_GENERATOR",
+    // sequenceName = "SAPL_PARAM_APPLIC",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "APL_PARAM_APPLIC_IDPARAMAPPLIC_GENERATOR")
     @Column(name = "ID_PARAM_APPLIC")
-    public long getIdParamApplic() {
+    @GenericGenerator(name = "SAPL_PARAM_APPLIC_ID_PARAM_APPLIC_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SAPL_PARAM_APPLIC"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SAPL_PARAM_APPLIC_ID_PARAM_APPLIC_GENERATOR")
+    public Long getIdParamApplic() {
         return this.idParamApplic;
     }
 
-    public void setIdParamApplic(long idParamApplic) {
+    public void setIdParamApplic(Long idParamApplic) {
         this.idParamApplic = idParamApplic;
     }
 
@@ -75,7 +126,7 @@ public class AplParamApplic implements Serializable {
         this.dsListaValoriAmmessi = dsListaValoriAmmessi;
     }
 
-    @Column(name = "FL_APPART_AA_TIPO_FASCICOLO")
+    @Column(name = "FL_APPART_AA_TIPO_FASCICOLO", columnDefinition = "char(1)")
     public String getFlAppartAaTipoFascicolo() {
         return this.flAppartAaTipoFascicolo;
     }
@@ -84,7 +135,7 @@ public class AplParamApplic implements Serializable {
         this.flAppartAaTipoFascicolo = flAppartAaTipoFascicolo;
     }
 
-    @Column(name = "FL_APPART_AMBIENTE")
+    @Column(name = "FL_APPART_AMBIENTE", columnDefinition = "char(1)")
     public String getFlAppartAmbiente() {
         return this.flAppartAmbiente;
     }
@@ -93,7 +144,7 @@ public class AplParamApplic implements Serializable {
         this.flAppartAmbiente = flAppartAmbiente;
     }
 
-    @Column(name = "FL_APPART_APPLIC")
+    @Column(name = "FL_APPART_APPLIC", columnDefinition = "char(1)")
     public String getFlAppartApplic() {
         return this.flAppartApplic;
     }
@@ -102,7 +153,7 @@ public class AplParamApplic implements Serializable {
         this.flAppartApplic = flAppartApplic;
     }
 
-    @Column(name = "FL_APPART_STRUT")
+    @Column(name = "FL_APPART_STRUT", columnDefinition = "char(1)")
     public String getFlAppartStrut() {
         return this.flAppartStrut;
     }
@@ -111,7 +162,7 @@ public class AplParamApplic implements Serializable {
         this.flAppartStrut = flAppartStrut;
     }
 
-    @Column(name = "FL_APPART_TIPO_UNITA_DOC")
+    @Column(name = "FL_APPART_TIPO_UNITA_DOC", columnDefinition = "char(1)")
     public String getFlAppartTipoUnitaDoc() {
         return this.flAppartTipoUnitaDoc;
     }
@@ -120,7 +171,7 @@ public class AplParamApplic implements Serializable {
         this.flAppartTipoUnitaDoc = flAppartTipoUnitaDoc;
     }
 
-    @Column(name = "FL_MULTI")
+    @Column(name = "FL_MULTI", columnDefinition = "char(1)")
     public String getFlMulti() {
         return this.flMulti;
     }
@@ -180,14 +231,12 @@ public class AplParamApplic implements Serializable {
     public AplValoreParamApplic addAplValoreParamApplic(AplValoreParamApplic aplValoreParamApplic) {
         getAplValoreParamApplics().add(aplValoreParamApplic);
         aplValoreParamApplic.setAplParamApplic(this);
-
         return aplValoreParamApplic;
     }
 
     public AplValoreParamApplic removeAplValoreParamApplic(AplValoreParamApplic aplValoreParamApplic) {
         getAplValoreParamApplics().remove(aplValoreParamApplic);
         aplValoreParamApplic.setAplParamApplic(null);
-
         return aplValoreParamApplic;
     }
 
@@ -205,15 +254,12 @@ public class AplParamApplic implements Serializable {
     public AplValParamApplicMulti addAplValParamApplicMulti(AplValParamApplicMulti aplValParamApplicMulti) {
         getAplValParamApplicMultis().add(aplValParamApplicMulti);
         aplValParamApplicMulti.setAplParamApplic(this);
-
         return aplValParamApplicMulti;
     }
 
     public AplValParamApplicMulti removeAplValParamApplicMulti(AplValParamApplicMulti aplValParamApplicMulti) {
         getAplValParamApplicMultis().remove(aplValParamApplicMulti);
         aplValParamApplicMulti.setAplParamApplic(null);
-
         return aplValParamApplicMulti;
     }
-
 }

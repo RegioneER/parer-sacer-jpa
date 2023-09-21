@@ -1,3 +1,20 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
@@ -30,24 +47,24 @@ public class DecReportServizioVerificaCompDoc implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private long idReportServizioVerificaCompDoc;
+    private Long idReportServizioVerificaCompDoc;
     private DecServizioVerificaCompDoc decServizioVerificaCompDoc;
     private String blXslt;
     private TiReportServizioVerificaCompDoc tiReport;
     private TiFormatoServizioVerificaCompDoc tiFormato;
 
-    public DecReportServizioVerificaCompDoc() {
+    public DecReportServizioVerificaCompDoc() {/* Hibernate */
     }
 
     @Id
     @SequenceGenerator(name = "DEC_REPORT_SERVIZIO_VERIFICA_COMP_DOC_ID_REPORT_SERVIZIO_VERIFICA_COMP_DOC_GENERATOR", sequenceName = "SDEC_REPORT_SERVIZIO_VERIFICA_COMP_DOC", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DEC_REPORT_SERVIZIO_VERIFICA_COMP_DOC_ID_REPORT_SERVIZIO_VERIFICA_COMP_DOC_GENERATOR")
     @Column(name = "ID_REPORT_SERVIZIO_VERIFICA_COMP_DOC")
-    public long getIdReportServizioVerificaCompDoc() {
+    public Long getIdReportServizioVerificaCompDoc() {
         return this.idReportServizioVerificaCompDoc;
     }
 
-    public void setIdReportServizioVerificaCompDoc(long idReportServizioVerificaCompDoc) {
+    public void setIdReportServizioVerificaCompDoc(Long idReportServizioVerificaCompDoc) {
         this.idReportServizioVerificaCompDoc = idReportServizioVerificaCompDoc;
     }
 

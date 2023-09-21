@@ -1,13 +1,45 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 /**
  * The persistent class for the OST_MIGRAZ_SUB_PART database table.
- *
  */
 @Entity
 @Table(name = "OST_MIGRAZ_SUB_PART")
@@ -15,39 +47,65 @@ import java.util.List;
 public class OstMigrazSubPart implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idMigrazSubPart;
-    private BigDecimal idStatoMigrazSubPartCor;
-    private BigDecimal mmMax;
-    private BigDecimal niByteSize;
-    private BigDecimal niFileDaMigrare;
-    private BigDecimal niFileErroreNormaliz;
-    private BigDecimal niFileMigrati;
-    private BigDecimal niFileMigrazInCorso;
-    private BigDecimal niFileMigrazInErrore;
-    private String nmColonnaBlobFile;
-    private String nmColonnaIdFile;
-    private String nmTabellaFile;
-    private String nmTablespace;
-    private BigDecimal niIstanzaJobPrepara;
-    private BigDecimal niIstanzaJobProducer;
-    private BigDecimal niFileSubPart;
-    private List<OstMigrazFile> ostMigrazFiles;
-    private List<OstMigrazStrutMese> ostMigrazStrutMeses;
-    private OrgSubPartition orgSubPartition;
-    private List<OstStatoMigrazSubPart> ostStatoMigrazSubParts;
 
-    public OstMigrazSubPart() {
+    private Long idMigrazSubPart;
+
+    private BigDecimal idStatoMigrazSubPartCor;
+
+    private BigDecimal mmMax;
+
+    private BigDecimal niByteSize;
+
+    private BigDecimal niFileDaMigrare;
+
+    private BigDecimal niFileErroreNormaliz;
+
+    private BigDecimal niFileMigrati;
+
+    private BigDecimal niFileMigrazInCorso;
+
+    private BigDecimal niFileMigrazInErrore;
+
+    private String nmColonnaBlobFile;
+
+    private String nmColonnaIdFile;
+
+    private String nmTabellaFile;
+
+    private String nmTablespace;
+
+    private BigDecimal niIstanzaJobPrepara;
+
+    private BigDecimal niIstanzaJobProducer;
+
+    private BigDecimal niFileSubPart;
+
+    private List<OstMigrazFile> ostMigrazFiles = new ArrayList<>();
+
+    private List<OstMigrazStrutMese> ostMigrazStrutMeses = new ArrayList<>();
+
+    private OrgSubPartition orgSubPartition;
+
+    private List<OstStatoMigrazSubPart> ostStatoMigrazSubParts = new ArrayList<>();
+
+    public OstMigrazSubPart() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "OST_MIGRAZ_SUB_PART_IDMIGRAZSUBPART_GENERATOR", sequenceName = "SOST_MIGRAZ_SUB_PART", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "OST_MIGRAZ_SUB_PART_IDMIGRAZSUBPART_GENERATOR")
+    // "OST_MIGRAZ_SUB_PART_IDMIGRAZSUBPART_GENERATOR",
+    // sequenceName = "SOST_MIGRAZ_SUB_PART",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "OST_MIGRAZ_SUB_PART_IDMIGRAZSUBPART_GENERATOR")
     @Column(name = "ID_MIGRAZ_SUB_PART")
-    public long getIdMigrazSubPart() {
+    @GenericGenerator(name = "SOST_MIGRAZ_SUB_PART_ID_MIGRAZ_SUB_PART_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SOST_MIGRAZ_SUB_PART"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SOST_MIGRAZ_SUB_PART_ID_MIGRAZ_SUB_PART_GENERATOR")
+    public Long getIdMigrazSubPart() {
         return this.idMigrazSubPart;
     }
 
-    public void setIdMigrazSubPart(long idMigrazSubPart) {
+    public void setIdMigrazSubPart(Long idMigrazSubPart) {
         this.idMigrazSubPart = idMigrazSubPart;
     }
 
@@ -199,14 +257,12 @@ public class OstMigrazSubPart implements Serializable {
     public OstMigrazFile addOstMigrazFile(OstMigrazFile ostMigrazFile) {
         getOstMigrazFiles().add(ostMigrazFile);
         ostMigrazFile.setOstMigrazSubPart(this);
-
         return ostMigrazFile;
     }
 
     public OstMigrazFile removeOstMigrazFile(OstMigrazFile ostMigrazFile) {
         getOstMigrazFiles().remove(ostMigrazFile);
         ostMigrazFile.setOstMigrazSubPart(null);
-
         return ostMigrazFile;
     }
 
@@ -223,14 +279,12 @@ public class OstMigrazSubPart implements Serializable {
     public OstMigrazStrutMese addOstMigrazStrutMes(OstMigrazStrutMese ostMigrazStrutMes) {
         getOstMigrazStrutMeses().add(ostMigrazStrutMes);
         ostMigrazStrutMes.setOstMigrazSubPart(this);
-
         return ostMigrazStrutMes;
     }
 
     public OstMigrazStrutMese removeOstMigrazStrutMes(OstMigrazStrutMese ostMigrazStrutMes) {
         getOstMigrazStrutMeses().remove(ostMigrazStrutMes);
         ostMigrazStrutMes.setOstMigrazSubPart(null);
-
         return ostMigrazStrutMes;
     }
 
@@ -258,15 +312,12 @@ public class OstMigrazSubPart implements Serializable {
     public OstStatoMigrazSubPart addOstStatoMigrazSubPart(OstStatoMigrazSubPart ostStatoMigrazSubPart) {
         getOstStatoMigrazSubParts().add(ostStatoMigrazSubPart);
         ostStatoMigrazSubPart.setOstMigrazSubPart(this);
-
         return ostStatoMigrazSubPart;
     }
 
     public OstStatoMigrazSubPart removeOstStatoMigrazSubPart(OstStatoMigrazSubPart ostStatoMigrazSubPart) {
         getOstStatoMigrazSubParts().remove(ostStatoMigrazSubPart);
         ostStatoMigrazSubPart.setOstMigrazSubPart(null);
-
         return ostStatoMigrazSubPart;
     }
-
 }

@@ -1,14 +1,49 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
+
 /**
  * The persistent class for the ARO_COMP_DOC database table.
- *
  */
 @Entity
 @Table(name = "ARO_COMP_DOC")
@@ -16,74 +51,133 @@ import java.util.List;
 public class AroCompDoc implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idCompDoc;
+
+    private Long idCompDoc;
+
     private String cdEncodingHashFileCalc;
+
     private String cdEncodingHashFileVers;
+
     private String dlUrnCompVers;
+
     private String dsAlgoHashFileCalc;
+
     private String dsAlgoHashFileVers;
+
     private String dsEsitoVerifFirmeDtVers;
+
     private String dsFormatoRapprCalc;
+
     private String dsFormatoRapprEstesoCalc;
+
     private String dsHashFileCalc;
+
     private String dsHashFileContr;
+
     private String dsHashFileVers;
+
     private String dsIdCompVers;
+
     private String dsMsgEsitoContrFormato;
+
     private String dsMsgEsitoVerifFirme;
+
     private String dsNomeCompVers;
+
     private String dsNomeFileArk;
+
     private String dsRifTempVers;
+
     private String dsUrnCompCalc;
+
     private String flCompFirmato;
+
     private String flNoCalcFmtVerifFirme;
+
     private String flNoCalcHashFile;
+
     private String flRifTempDataFirmaVers;
+
     private BigDecimal idStrut;
+
     private BigDecimal niOrdCompDoc;
+
     private BigDecimal niSizeFileCalc;
+
     private String tiEsitoContrFormatoFile;
+
     private String tiEsitoContrHashVers;
+
     private String tiEsitoVerifFirme;
+
     private String tiEsitoVerifFirmeDtVers;
+
     private String tiSupportoComp;
+
     private Date tmRifTempVers;
-    private List<AroBustaCrittog> aroBustaCrittogs;
+
+    private List<AroBustaCrittog> aroBustaCrittogs = new ArrayList<>();
+
     private AroCompDoc aroCompDoc;
-    private List<AroCompDoc> aroCompDocs;
+
+    private List<AroCompDoc> aroCompDocs = new ArrayList<>();
+
     private AroStrutDoc aroStrutDoc;
+
     private AroUnitaDoc aroUnitaDoc;
+
     private DecFormatoFileDoc decFormatoFileDoc;
+
     private DecFormatoFileStandard decFormatoFileStandard;
+
     private DecTipoCompDoc decTipoCompDoc;
+
     private DecTipoRapprComp decTipoRapprComp;
-    private List<AroContenutoComp> aroContenutoComps;
-    private List<AroFileComp> aroFileComps;
-    private List<AroFirmaComp> aroFirmaComps;
-    private List<AroMarcaComp> aroMarcaComps;
-    private List<AroUsoXsdDatiSpec> aroUsoXsdDatiSpecs;
-    private List<VolAppartCompVolume> volAppartCompVolumes;
-    private List<RecSessioneRecup> recSessioneRecups;
-    private List<AroCompIndiceAipDaElab> aroCompIndiceAipDaElabs;
-    private List<AroCompVerIndiceAipUd> aroCompVerIndiceAipUds;
-    private List<FirReport> firReport;
-    private List<AroVersIniComp> aroVersIniComps;
-    private List<AroUpdCompUnitaDoc> aroUpdCompUnitaDocs;
-    private List<AroCompUrnCalc> aroAroCompUrnCalcs;
+
+    private List<AroContenutoComp> aroContenutoComps = new ArrayList<>();
+
+    private List<AroFirmaComp> aroFirmaComps = new ArrayList<>();
+
+    private List<AroMarcaComp> aroMarcaComps = new ArrayList<>();
+
+    private List<AroUsoXsdDatiSpec> aroUsoXsdDatiSpecs = new ArrayList<>();
+
+    private List<VolAppartCompVolume> volAppartCompVolumes = new ArrayList<>();
+
+    private List<RecSessioneRecup> recSessioneRecups = new ArrayList<>();
+
+    private List<AroCompIndiceAipDaElab> aroCompIndiceAipDaElabs = new ArrayList<>();
+
+    private List<AroCompVerIndiceAipUd> aroCompVerIndiceAipUds = new ArrayList<>();
+
+    private List<FirReport> firReport = new ArrayList<>();
+
+    private List<AroVersIniComp> aroVersIniComps = new ArrayList<>();
+
+    private List<AroUpdCompUnitaDoc> aroUpdCompUnitaDocs = new ArrayList<>();
+
+    private List<AroCompUrnCalc> aroAroCompUrnCalcs = new ArrayList<>();
+
     private DecServizioVerificaCompDoc decServizioVerificaCompDoc;
 
     public AroCompDoc() {
+        // hibernate
     }
 
     @Id
-    @SequenceGenerator(name = "ARO_COMP_DOC_IDCOMPDOC_GENERATOR", sequenceName = "SARO_COMP_DOC", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ARO_COMP_DOC_IDCOMPDOC_GENERATOR")
+    // "ARO_COMP_DOC_IDCOMPDOC_GENERATOR", sequenceName =
+    // "SARO_COMP_DOC", allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ARO_COMP_DOC_IDCOMPDOC_GENERATOR")
     @Column(name = "ID_COMP_DOC")
-    public long getIdCompDoc() {
+    @GenericGenerator(name = "SARO_COMP_DOC_ID_COMP_DOC_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SARO_COMP_DOC"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SARO_COMP_DOC_ID_COMP_DOC_GENERATOR")
+    public Long getIdCompDoc() {
         return this.idCompDoc;
     }
 
-    public void setIdCompDoc(long idCompDoc) {
+    public void setIdCompDoc(Long idCompDoc) {
         this.idCompDoc = idCompDoc;
     }
 
@@ -249,7 +343,7 @@ public class AroCompDoc implements Serializable {
         this.dsUrnCompCalc = dsUrnCompCalc;
     }
 
-    @Column(name = "FL_COMP_FIRMATO")
+    @Column(name = "FL_COMP_FIRMATO", columnDefinition = "char(1)")
     public String getFlCompFirmato() {
         return this.flCompFirmato;
     }
@@ -258,7 +352,7 @@ public class AroCompDoc implements Serializable {
         this.flCompFirmato = flCompFirmato;
     }
 
-    @Column(name = "FL_NO_CALC_FMT_VERIF_FIRME")
+    @Column(name = "FL_NO_CALC_FMT_VERIF_FIRME", columnDefinition = "char(1)")
     public String getFlNoCalcFmtVerifFirme() {
         return this.flNoCalcFmtVerifFirme;
     }
@@ -267,7 +361,7 @@ public class AroCompDoc implements Serializable {
         this.flNoCalcFmtVerifFirme = flNoCalcFmtVerifFirme;
     }
 
-    @Column(name = "FL_NO_CALC_HASH_FILE")
+    @Column(name = "FL_NO_CALC_HASH_FILE", columnDefinition = "char(1)")
     public String getFlNoCalcHashFile() {
         return this.flNoCalcHashFile;
     }
@@ -276,7 +370,7 @@ public class AroCompDoc implements Serializable {
         this.flNoCalcHashFile = flNoCalcHashFile;
     }
 
-    @Column(name = "FL_RIF_TEMP_DATA_FIRMA_VERS")
+    @Column(name = "FL_RIF_TEMP_DATA_FIRMA_VERS", columnDefinition = "char(1)")
     public String getFlRifTempDataFirmaVers() {
         return this.flRifTempDataFirmaVers;
     }
@@ -484,16 +578,6 @@ public class AroCompDoc implements Serializable {
 
     public void setAroContenutoComps(List<AroContenutoComp> aroContenutoComps) {
         this.aroContenutoComps = aroContenutoComps;
-    }
-
-    // bi-directional many-to-one association to AroFileComp
-    @OneToMany(mappedBy = "aroCompDoc", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
-    public List<AroFileComp> getAroFileComps() {
-        return this.aroFileComps;
-    }
-
-    public void setAroFileComps(List<AroFileComp> aroFileComps) {
-        this.aroFileComps = aroFileComps;
     }
 
     // bi-directional many-to-one association to AroFirmaComp

@@ -1,7 +1,24 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,46 +33,65 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 import it.eng.parer.entity.constraint.AroUpdDatiSpecUnitaDoc.TiEntitaAroUpdDatiSpecUnitaDoc;
 import it.eng.parer.entity.constraint.AroUpdDatiSpecUnitaDoc.TiUsoXsdAroUpdDatiSpecUnitaDoc;
 
 /**
  * The persistent class for the ARO_UPD_DATI_SPEC_UNITA_DOC database table.
- * 
  */
 @Entity
 @Table(name = "ARO_UPD_DATI_SPEC_UNITA_DOC")
 @NamedQuery(name = "AroUpdDatiSpecUnitaDoc.findAll", query = "SELECT a FROM AroUpdDatiSpecUnitaDoc a")
 public class AroUpdDatiSpecUnitaDoc implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    private long idUpdDatiSpecUnitaDoc;
+
+    private Long idUpdDatiSpecUnitaDoc;
+
     private String blXmlDatiSpec;
-    private Date dtIniSes;
+
+    private LocalDate dtIniSes;
+
     private OrgStrut orgStrut;
+
     private AroUpdCompUnitaDoc aroUpdCompUnitaDoc;
+
     private AroUpdDocUnitaDoc aroUpdDocUnitaDoc;
+
     private AroUpdUnitaDoc aroUpdUnitaDoc;
+
     private DecXsdDatiSpec decXsdDatiSpec;
+
     private TiEntitaAroUpdDatiSpecUnitaDoc tiEntitaSacer;
+
     private TiUsoXsdAroUpdDatiSpecUnitaDoc tiUsoXsd;
 
-    public AroUpdDatiSpecUnitaDoc() {
+    public AroUpdDatiSpecUnitaDoc() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "ARO_UPD_DATI_SPEC_UNITA_DOC_IDUPDDATISPECUNITADOC_GENERATOR", sequenceName = "SARO_UPD_DATI_SPEC_UNITA_DOC", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ARO_UPD_DATI_SPEC_UNITA_DOC_IDUPDDATISPECUNITADOC_GENERATOR")
+    // "ARO_UPD_DATI_SPEC_UNITA_DOC_IDUPDDATISPECUNITADOC_GENERATOR",
+    // sequenceName =
+    // "SARO_UPD_DATI_SPEC_UNITA_DOC",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
+    // "ARO_UPD_DATI_SPEC_UNITA_DOC_IDUPDDATISPECUNITADOC_GENERATOR")
     @Column(name = "ID_UPD_DATI_SPEC_UNITA_DOC")
-    public long getIdUpdDatiSpecUnitaDoc() {
+    @GenericGenerator(name = "SARO_UPD_DATI_SPEC_UNITA_DOC_ID_UPD_DATI_SPEC_UNITA_DOC_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SARO_UPD_DATI_SPEC_UNITA_DOC"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SARO_UPD_DATI_SPEC_UNITA_DOC_ID_UPD_DATI_SPEC_UNITA_DOC_GENERATOR")
+    public Long getIdUpdDatiSpecUnitaDoc() {
         return this.idUpdDatiSpecUnitaDoc;
     }
 
-    public void setIdUpdDatiSpecUnitaDoc(long idUpdDatiSpecUnitaDoc) {
+    public void setIdUpdDatiSpecUnitaDoc(Long idUpdDatiSpecUnitaDoc) {
         this.idUpdDatiSpecUnitaDoc = idUpdDatiSpecUnitaDoc;
     }
 
@@ -69,13 +105,12 @@ public class AroUpdDatiSpecUnitaDoc implements Serializable {
         this.blXmlDatiSpec = blXmlDatiSpec;
     }
 
-    @Temporal(TemporalType.DATE)
     @Column(name = "DT_INI_SES")
-    public Date getDtIniSes() {
+    public LocalDate getDtIniSes() {
         return this.dtIniSes;
     }
 
-    public void setDtIniSes(Date dtIniSes) {
+    public void setDtIniSes(LocalDate dtIniSes) {
         this.dtIniSes = dtIniSes;
     }
 

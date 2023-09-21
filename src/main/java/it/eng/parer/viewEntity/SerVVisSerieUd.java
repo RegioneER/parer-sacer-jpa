@@ -1,9 +1,34 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the SER_V_VIS_SERIE_UD database table.
@@ -106,7 +131,7 @@ public class SerVVisSerieUd implements Serializable {
     private String tiStatoSerie;
     private String tiStatoVerSerie;
 
-    public SerVVisSerieUd() {
+    public SerVVisSerieUd() {/* Hibernate */
     }
 
     @Column(name = "AA_SERIE")
@@ -299,7 +324,7 @@ public class SerVVisSerieUd implements Serializable {
         this.dsDocFileInputVerSerie = dsDocFileInputVerSerie;
     }
 
-    @Column(name = "DS_FMT_IX_AIP")
+    @Column(name = "DS_FMT_IX_AIP", columnDefinition = "char")
     public String getDsFmtIxAip() {
         return this.dsFmtIxAip;
     }
@@ -542,7 +567,7 @@ public class SerVVisSerieUd implements Serializable {
         this.dtStatoContenutoEff = dtStatoContenutoEff;
     }
 
-    @Column(name = "FL_ERR_CONTENUTO_ACQ")
+    @Column(name = "FL_ERR_CONTENUTO_ACQ", columnDefinition = "char(1)")
     public String getFlErrContenutoAcq() {
         return this.flErrContenutoAcq;
     }
@@ -551,7 +576,7 @@ public class SerVVisSerieUd implements Serializable {
         this.flErrContenutoAcq = flErrContenutoAcq;
     }
 
-    @Column(name = "FL_ERR_CONTENUTO_CALC")
+    @Column(name = "FL_ERR_CONTENUTO_CALC", columnDefinition = "char(1)")
     public String getFlErrContenutoCalc() {
         return this.flErrContenutoCalc;
     }
@@ -560,7 +585,7 @@ public class SerVVisSerieUd implements Serializable {
         this.flErrContenutoCalc = flErrContenutoCalc;
     }
 
-    @Column(name = "FL_ERR_CONTENUTO_EFF")
+    @Column(name = "FL_ERR_CONTENUTO_EFF", columnDefinition = "char(1)")
     public String getFlErrContenutoEff() {
         return this.flErrContenutoEff;
     }
@@ -569,7 +594,7 @@ public class SerVVisSerieUd implements Serializable {
         this.flErrContenutoEff = flErrContenutoEff;
     }
 
-    @Column(name = "FL_ERR_CONTENUTO_FILE")
+    @Column(name = "FL_ERR_CONTENUTO_FILE", columnDefinition = "char(1)")
     public String getFlErrContenutoFile() {
         return this.flErrContenutoFile;
     }
@@ -578,7 +603,7 @@ public class SerVVisSerieUd implements Serializable {
         this.flErrContenutoFile = flErrContenutoFile;
     }
 
-    @Column(name = "FL_FORNITO_ENTE")
+    @Column(name = "FL_FORNITO_ENTE", columnDefinition = "char(1)")
     public String getFlFornitoEnte() {
         return this.flFornitoEnte;
     }
@@ -587,7 +612,7 @@ public class SerVVisSerieUd implements Serializable {
         this.flFornitoEnte = flFornitoEnte;
     }
 
-    @Column(name = "FL_PRESENZA_LACUNE")
+    @Column(name = "FL_PRESENZA_LACUNE", columnDefinition = "char(1)")
     public String getFlPresenzaLacune() {
         return this.flPresenzaLacune;
     }
@@ -596,7 +621,7 @@ public class SerVVisSerieUd implements Serializable {
         this.flPresenzaLacune = flPresenzaLacune;
     }
 
-    @Column(name = "FL_UPD_ANNUL_UNITA_DOC")
+    @Column(name = "FL_UPD_ANNUL_UNITA_DOC", columnDefinition = "char(1)")
     public String getFlUpdAnnulUnitaDoc() {
         return this.flUpdAnnulUnitaDoc;
     }
@@ -605,7 +630,7 @@ public class SerVVisSerieUd implements Serializable {
         this.flUpdAnnulUnitaDoc = flUpdAnnulUnitaDoc;
     }
 
-    @Column(name = "FL_UPD_MODIF_UNITA_DOC")
+    @Column(name = "FL_UPD_MODIF_UNITA_DOC", columnDefinition = "char(1)")
     public String getFlUpdModifUnitaDoc() {
         return this.flUpdModifUnitaDoc;
     }

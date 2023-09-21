@@ -1,29 +1,53 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 /**
  * The persistent class for the ELV_V_SEL_UD_DOC_UPD_BY_CRIT database table.
- * 
  */
 @Entity
 @Table(name = "ELV_V_SEL_UD_DOC_UPD_BY_CRIT")
 @NamedQuery(name = "ElvVSelUdDocUpdByCrit.findAll", query = "SELECT e FROM ElvVSelUdDocUpdByCrit e")
 public class ElvVSelUdDocUpdByCrit implements Serializable {
+
     private static final long serialVersionUID = 1L;
+
     private BigDecimal aaKeyUnitaDoc;
+
     private Date dtCreazione;
-    private BigDecimal idCriterioRaggr;
-    private BigDecimal idUnitaDoc;
-    private BigDecimal idDoc;
-    private BigDecimal idUpdUnitaDoc;
+
     private String tiEle;
+
     private BigDecimal idStrut;
 
-    public ElvVSelUdDocUpdByCrit() {
+    public ElvVSelUdDocUpdByCrit() {/* Hibernate */
     }
 
     @Column(name = "AA_KEY_UNITA_DOC")
@@ -45,46 +69,6 @@ public class ElvVSelUdDocUpdByCrit implements Serializable {
         this.dtCreazione = dtCreazione;
     }
 
-    @Id
-    @Column(name = "ID_CRITERIO_RAGGR")
-    public BigDecimal getIdCriterioRaggr() {
-        return this.idCriterioRaggr;
-    }
-
-    public void setIdCriterioRaggr(BigDecimal idCriterioRaggr) {
-        this.idCriterioRaggr = idCriterioRaggr;
-    }
-
-    @Id
-    @Column(name = "ID_UNITA_DOC")
-    public BigDecimal getIdUnitaDoc() {
-        return this.idUnitaDoc;
-    }
-
-    public void setIdUnitaDoc(BigDecimal idUnitaDoc) {
-        this.idUnitaDoc = idUnitaDoc;
-    }
-
-    @Id
-    @Column(name = "ID_DOC")
-    public BigDecimal getIdDoc() {
-        return this.idDoc;
-    }
-
-    public void setIdDoc(BigDecimal idDoc) {
-        this.idDoc = idDoc;
-    }
-
-    @Id
-    @Column(name = "ID_UPD_UNITA_DOC")
-    public BigDecimal getIdUpdUnitaDoc() {
-        return this.idUpdUnitaDoc;
-    }
-
-    public void setIdUpdUnitaDoc(BigDecimal idUpdUnitaDoc) {
-        this.idUpdUnitaDoc = idUpdUnitaDoc;
-    }
-
     @Column(name = "TI_ELE")
     public String getTiEle() {
         return this.tiEle;
@@ -101,5 +85,16 @@ public class ElvVSelUdDocUpdByCrit implements Serializable {
 
     public void setIdStrut(BigDecimal idStrut) {
         this.idStrut = idStrut;
+    }
+
+    private ElvVSelUdDocUpdByCritId elvVSelUdDocUpdByCritId;
+
+    @EmbeddedId()
+    public ElvVSelUdDocUpdByCritId getElvVSelUdDocUpdByCritId() {
+        return elvVSelUdDocUpdByCritId;
+    }
+
+    public void setElvVSelUdDocUpdByCritId(ElvVSelUdDocUpdByCritId elvVSelUdDocUpdByCritId) {
+        this.elvVSelUdDocUpdByCritId = elvVSelUdDocUpdByCritId;
     }
 }

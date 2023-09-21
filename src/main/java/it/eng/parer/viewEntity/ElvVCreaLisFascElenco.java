@@ -1,10 +1,34 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Date;
 import java.sql.Timestamp;
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the ELV_V_CREA_LIS_FASC_ELENCO database table.
@@ -26,13 +50,11 @@ public class ElvVCreaLisFascElenco implements Serializable {
     private String dsUrnRappVers;
     private Date dtApeFascicolo;
     private Date dtChiuFascicolo;
-    private BigDecimal idElencoVersFasc;
-    private BigDecimal idFascicolo;
     private BigDecimal niUnitaDoc;
     private String nmTipoFascicolo;
     private Timestamp tsIniSes;
 
-    public ElvVCreaLisFascElenco() {
+    public ElvVCreaLisFascElenco() {/* Hibernate */
     }
 
     @Column(name = "AA_FASCICOLO")
@@ -136,26 +158,6 @@ public class ElvVCreaLisFascElenco implements Serializable {
         this.dtChiuFascicolo = dtChiuFascicolo;
     }
 
-    @Id
-    @Column(name = "ID_ELENCO_VERS_FASC")
-    public BigDecimal getIdElencoVersFasc() {
-        return this.idElencoVersFasc;
-    }
-
-    public void setIdElencoVersFasc(BigDecimal idElencoVersFasc) {
-        this.idElencoVersFasc = idElencoVersFasc;
-    }
-
-    @Id
-    @Column(name = "ID_FASCICOLO")
-    public BigDecimal getIdFascicolo() {
-        return this.idFascicolo;
-    }
-
-    public void setIdFascicolo(BigDecimal idFascicolo) {
-        this.idFascicolo = idFascicolo;
-    }
-
     @Column(name = "NI_UNITA_DOC")
     public BigDecimal getNiUnitaDoc() {
         return this.niUnitaDoc;
@@ -183,4 +185,14 @@ public class ElvVCreaLisFascElenco implements Serializable {
         this.tsIniSes = tsIniSes;
     }
 
+    private ElvVCreaLisFascElencoId elvVCreaLisFascElencoId;
+
+    @EmbeddedId()
+    public ElvVCreaLisFascElencoId getElvVCreaLisFascElencoId() {
+        return elvVCreaLisFascElencoId;
+    }
+
+    public void setElvVCreaLisFascElencoId(ElvVCreaLisFascElencoId elvVCreaLisFascElencoId) {
+        this.elvVCreaLisFascElencoId = elvVCreaLisFascElencoId;
+    }
 }

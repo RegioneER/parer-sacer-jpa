@@ -1,14 +1,49 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
+
 /**
  * The persistent class for the ARO_RICH_ANNUL_VERS database table.
- *
  */
 @Entity
 @Table(name = "ARO_RICH_ANNUL_VERS")
@@ -16,35 +51,57 @@ import java.util.List;
 public class AroRichAnnulVers implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idRichAnnulVers;
-    private String cdRichAnnulVers;
-    private String dsRichAnnulVers;
-    private Date dtCreazioneRichAnnulVers;
-    private String flForzaAnnul;
-    private String flImmediata;
-    private String flRichPing;
-    private BigDecimal idStatoRichAnnulVersCor;
-    private String ntRichAnnulVers;
-    private String tiCreazioneRichAnnulVers;
-    private String tiRichAnnulVers;
-    private List<AroFileRichAnnulVers> aroFileRichAnnulVers;
-    private List<AroItemRichAnnulVers> aroItemRichAnnulVers;
-    private OrgStrut orgStrut;
-    private List<AroStatoRichAnnulVers> aroStatoRichAnnulVers;
-    private List<AroXmlRichAnnulVers> aroXmlRichAnnulVers;
 
-    public AroRichAnnulVers() {
+    private Long idRichAnnulVers;
+
+    private String cdRichAnnulVers;
+
+    private String dsRichAnnulVers;
+
+    private Date dtCreazioneRichAnnulVers;
+
+    private String flForzaAnnul;
+
+    private String flImmediata;
+
+    private String flRichPing;
+
+    private BigDecimal idStatoRichAnnulVersCor;
+
+    private String ntRichAnnulVers;
+
+    private String tiCreazioneRichAnnulVers;
+
+    private String tiRichAnnulVers;
+
+    private List<AroFileRichAnnulVers> aroFileRichAnnulVers = new ArrayList<>();
+
+    private List<AroItemRichAnnulVers> aroItemRichAnnulVers = new ArrayList<>();
+
+    private OrgStrut orgStrut;
+
+    private List<AroStatoRichAnnulVers> aroStatoRichAnnulVers = new ArrayList<>();
+
+    private List<AroXmlRichAnnulVers> aroXmlRichAnnulVers = new ArrayList<>();
+
+    public AroRichAnnulVers() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "ARO_RICH_ANNUL_VERS_IDRICHANNULVERS_GENERATOR", sequenceName = "SARO_RICH_ANNUL_VERS", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ARO_RICH_ANNUL_VERS_IDRICHANNULVERS_GENERATOR")
+    // "ARO_RICH_ANNUL_VERS_IDRICHANNULVERS_GENERATOR",
+    // sequenceName = "SARO_RICH_ANNUL_VERS",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ARO_RICH_ANNUL_VERS_IDRICHANNULVERS_GENERATOR")
     @Column(name = "ID_RICH_ANNUL_VERS")
-    public long getIdRichAnnulVers() {
+    @GenericGenerator(name = "SARO_RICH_ANNUL_VERS_ID_RICH_ANNUL_VERS_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SARO_RICH_ANNUL_VERS"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SARO_RICH_ANNUL_VERS_ID_RICH_ANNUL_VERS_GENERATOR")
+    public Long getIdRichAnnulVers() {
         return this.idRichAnnulVers;
     }
 
-    public void setIdRichAnnulVers(long idRichAnnulVers) {
+    public void setIdRichAnnulVers(Long idRichAnnulVers) {
         this.idRichAnnulVers = idRichAnnulVers;
     }
 
@@ -76,7 +133,7 @@ public class AroRichAnnulVers implements Serializable {
         this.dtCreazioneRichAnnulVers = dtCreazioneRichAnnulVers;
     }
 
-    @Column(name = "FL_FORZA_ANNUL")
+    @Column(name = "FL_FORZA_ANNUL", columnDefinition = "char(1)")
     public String getFlForzaAnnul() {
         return this.flForzaAnnul;
     }
@@ -85,7 +142,7 @@ public class AroRichAnnulVers implements Serializable {
         this.flForzaAnnul = flForzaAnnul;
     }
 
-    @Column(name = "FL_IMMEDIATA")
+    @Column(name = "FL_IMMEDIATA", columnDefinition = "char(1)")
     public String getFlImmediata() {
         return this.flImmediata;
     }
@@ -94,7 +151,7 @@ public class AroRichAnnulVers implements Serializable {
         this.flImmediata = flImmediata;
     }
 
-    @Column(name = "FL_RICH_PING")
+    @Column(name = "FL_RICH_PING", columnDefinition = "char(1)")
     public String getFlRichPing() {
         return this.flRichPing;
     }
@@ -152,14 +209,12 @@ public class AroRichAnnulVers implements Serializable {
     public AroFileRichAnnulVers addAroFileRichAnnulVer(AroFileRichAnnulVers aroFileRichAnnulVers) {
         getAroFileRichAnnulVers().add(aroFileRichAnnulVers);
         aroFileRichAnnulVers.setAroRichAnnulVers(this);
-
         return aroFileRichAnnulVers;
     }
 
     public AroFileRichAnnulVers removeAroFileRichAnnulVer(AroFileRichAnnulVers aroFileRichAnnulVers) {
         getAroFileRichAnnulVers().remove(aroFileRichAnnulVers);
         aroFileRichAnnulVers.setAroRichAnnulVers(null);
-
         return aroFileRichAnnulVers;
     }
 
@@ -176,14 +231,12 @@ public class AroRichAnnulVers implements Serializable {
     public AroItemRichAnnulVers addAroItemRichAnnulVers(AroItemRichAnnulVers aroItemRichAnnulVers) {
         getAroItemRichAnnulVers().add(aroItemRichAnnulVers);
         aroItemRichAnnulVers.setAroRichAnnulVers(this);
-
         return aroItemRichAnnulVers;
     }
 
     public AroItemRichAnnulVers removeAroItemRichAnnulVer(AroItemRichAnnulVers aroItemRichAnnulVers) {
         getAroItemRichAnnulVers().remove(aroItemRichAnnulVers);
         aroItemRichAnnulVers.setAroRichAnnulVers(null);
-
         return aroItemRichAnnulVers;
     }
 
@@ -211,14 +264,12 @@ public class AroRichAnnulVers implements Serializable {
     public AroStatoRichAnnulVers addAroStatoRichAnnulVers(AroStatoRichAnnulVers aroStatoRichAnnulVer) {
         getAroStatoRichAnnulVers().add(aroStatoRichAnnulVer);
         aroStatoRichAnnulVer.setAroRichAnnulVers(this);
-
         return aroStatoRichAnnulVer;
     }
 
     public AroStatoRichAnnulVers removeAroStatoRichAnnulVers(AroStatoRichAnnulVers aroStatoRichAnnulVer) {
         getAroStatoRichAnnulVers().remove(aroStatoRichAnnulVer);
         aroStatoRichAnnulVer.setAroRichAnnulVers(null);
-
         return aroStatoRichAnnulVer;
     }
 
@@ -241,8 +292,6 @@ public class AroRichAnnulVers implements Serializable {
     public AroXmlRichAnnulVers removeAroXmlRichAnnulVers(AroXmlRichAnnulVers aroXmlRichAnnulVers) {
         getAroXmlRichAnnulVers().remove(aroXmlRichAnnulVers);
         aroXmlRichAnnulVers.setAroRichAnnulVers(null);
-
         return aroXmlRichAnnulVers;
     }
-
 }

@@ -1,45 +1,99 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
+
 /**
  * The persistent class for the TPI_SCHED_JOB database table.
- * 
  */
 @Entity
 @Table(name = "TPI_SCHED_JOB")
 public class TpiSchedJob implements Serializable {
-    private static final long serialVersionUID = 1L;
-    private long idSchedJob;
-    private String dlErrJob;
-    private String dsDurataJob;
-    private Date dtSchedJob;
-    private String flFineSched;
-    private String flJobOk;
-    private String flMigraz;
-    private BigDecimal niOrdSchedJob;
-    private String nmJob;
-    private String tiTpiSchedJob;
-    private List<TpiErrArk> tpiErrArks;
-    private TpiDtSched tpiDtSched;
-    private List<TpiPathElab> tpiPathElabs;
 
-    public TpiSchedJob() {
+    private static final long serialVersionUID = 1L;
+
+    private Long idSchedJob;
+
+    private String dlErrJob;
+
+    private String dsDurataJob;
+
+    private Date dtSchedJob;
+
+    private String flFineSched;
+
+    private String flJobOk;
+
+    private String flMigraz;
+
+    private BigDecimal niOrdSchedJob;
+
+    private String nmJob;
+
+    private String tiTpiSchedJob;
+
+    private List<TpiErrArk> tpiErrArks = new ArrayList<>();
+
+    private TpiDtSched tpiDtSched;
+
+    private List<TpiPathElab> tpiPathElabs = new ArrayList<>();
+
+    public TpiSchedJob() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "TPI_SCHED_JOB_IDSCHEDJOB_GENERATOR", sequenceName = "STPI_SCHED_JOB", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TPI_SCHED_JOB_IDSCHEDJOB_GENERATOR")
+    // "TPI_SCHED_JOB_IDSCHEDJOB_GENERATOR",
+    // sequenceName = "STPI_SCHED_JOB", allocationSize =
+    // 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TPI_SCHED_JOB_IDSCHEDJOB_GENERATOR")
     @Column(name = "ID_SCHED_JOB")
-    public long getIdSchedJob() {
+    @GenericGenerator(name = "STPI_SCHED_JOB_ID_SCHED_JOB_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "STPI_SCHED_JOB"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "STPI_SCHED_JOB_ID_SCHED_JOB_GENERATOR")
+    public Long getIdSchedJob() {
         return this.idSchedJob;
     }
 
-    public void setIdSchedJob(long idSchedJob) {
+    public void setIdSchedJob(Long idSchedJob) {
         this.idSchedJob = idSchedJob;
     }
 
@@ -71,7 +125,7 @@ public class TpiSchedJob implements Serializable {
         this.dtSchedJob = dtSchedJob;
     }
 
-    @Column(name = "FL_FINE_SCHED")
+    @Column(name = "FL_FINE_SCHED", columnDefinition = "char(1)")
     public String getFlFineSched() {
         return this.flFineSched;
     }
@@ -80,7 +134,7 @@ public class TpiSchedJob implements Serializable {
         this.flFineSched = flFineSched;
     }
 
-    @Column(name = "FL_JOB_OK")
+    @Column(name = "FL_JOB_OK", columnDefinition = "char(1)")
     public String getFlJobOk() {
         return this.flJobOk;
     }
@@ -89,7 +143,7 @@ public class TpiSchedJob implements Serializable {
         this.flJobOk = flJobOk;
     }
 
-    @Column(name = "FL_MIGRAZ")
+    @Column(name = "FL_MIGRAZ", columnDefinition = "char(1)")
     public String getFlMigraz() {
         return this.flMigraz;
     }

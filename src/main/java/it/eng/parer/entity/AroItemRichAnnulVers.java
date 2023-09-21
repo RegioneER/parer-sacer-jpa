@@ -1,46 +1,102 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 /**
  * The persistent class for the ARO_ITEM_RICH_ANNUL_VERS database table.
- * 
  */
 @Entity
 @Table(name = "ARO_ITEM_RICH_ANNUL_VERS")
 @NamedQuery(name = "AroItemRichAnnulVers.findAll", query = "SELECT a FROM AroItemRichAnnulVers a")
 public class AroItemRichAnnulVers implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    private long idItemRichAnnulVers;
+
+    private Long idItemRichAnnulVers;
+
     private BigDecimal aaFascicolo;
+
     private BigDecimal aaKeyUnitaDoc;
+
     private String cdKeyFascicolo;
+
     private String cdKeyUnitaDoc;
+
     private String cdRegistroKeyUnitaDoc;
+
     private BigDecimal idStrut;
+
     private BigDecimal pgItemRichAnnulVers;
+
     private String tiItemRichAnnulVers;
+
     private String tiStatoItem;
-    private List<AroErrRichAnnulVers> aroErrRichAnnulVers;
+
+    private List<AroErrRichAnnulVers> aroErrRichAnnulVers = new ArrayList<>();
+
     private AroRichAnnulVers aroRichAnnulVers;
+
     private AroUnitaDoc aroUnitaDoc;
+
     private FasFascicolo fasFascicolo;
 
-    public AroItemRichAnnulVers() {
+    public AroItemRichAnnulVers() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "ARO_ITEM_RICH_ANNUL_VERS_IDITEMRICHANNULVERS_GENERATOR", sequenceName = "SARO_ITEM_RICH_ANNUL_VERS", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ARO_ITEM_RICH_ANNUL_VERS_IDITEMRICHANNULVERS_GENERATOR")
+    // "ARO_ITEM_RICH_ANNUL_VERS_IDITEMRICHANNULVERS_GENERATOR",
+    // sequenceName =
+    // "SARO_ITEM_RICH_ANNUL_VERS",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
+    // "ARO_ITEM_RICH_ANNUL_VERS_IDITEMRICHANNULVERS_GENERATOR")
     @Column(name = "ID_ITEM_RICH_ANNUL_VERS")
-    public long getIdItemRichAnnulVers() {
+    @GenericGenerator(name = "SARO_ITEM_RICH_ANNUL_VERS_ID_ITEM_RICH_ANNUL_VERS_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SARO_ITEM_RICH_ANNUL_VERS"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SARO_ITEM_RICH_ANNUL_VERS_ID_ITEM_RICH_ANNUL_VERS_GENERATOR")
+    public Long getIdItemRichAnnulVers() {
         return this.idItemRichAnnulVers;
     }
 
-    public void setIdItemRichAnnulVers(long idItemRichAnnulVers) {
+    public void setIdItemRichAnnulVers(Long idItemRichAnnulVers) {
         this.idItemRichAnnulVers = idItemRichAnnulVers;
     }
 
@@ -138,14 +194,12 @@ public class AroItemRichAnnulVers implements Serializable {
     public AroErrRichAnnulVers addAroErrRichAnnulVers(AroErrRichAnnulVers aroErrRichAnnulVers) {
         getAroErrRichAnnulVers().add(aroErrRichAnnulVers);
         aroErrRichAnnulVers.setAroItemRichAnnulVers(this);
-
         return aroErrRichAnnulVers;
     }
 
     public AroErrRichAnnulVers removeAroErrRichAnnulVers(AroErrRichAnnulVers aroErrRichAnnulVers) {
         getAroErrRichAnnulVers().remove(aroErrRichAnnulVers);
         aroErrRichAnnulVers.setAroItemRichAnnulVers(null);
-
         return aroErrRichAnnulVers;
     }
 

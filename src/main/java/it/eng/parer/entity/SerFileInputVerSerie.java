@@ -1,40 +1,92 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 /**
  * The persistent class for the SER_FILE_INPUT_VER_SERIE database table.
- * 
  */
 @Entity
 @Table(name = "SER_FILE_INPUT_VER_SERIE")
 @NamedQuery(name = "SerFileInputVerSerie.findAll", query = "SELECT s FROM SerFileInputVerSerie s")
 public class SerFileInputVerSerie implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    private long idFileInputVerSerie;
+
+    private Long idFileInputVerSerie;
+
     private String blFileInputVerSerie;
+
     private String cdDocFileInputVerSerie;
+
     private String dsDocFileInputVerSerie;
+
     private String flFornitoEnte;
+
     private String tiScopoFileInputVerSerie;
-    private List<SerErrFileInput> serErrFileInputs;
+
+    private List<SerErrFileInput> serErrFileInputs = new ArrayList<>();
+
     private IamUser iamUser;
+
     private SerVerSerie serVerSerie;
 
-    public SerFileInputVerSerie() {
+    public SerFileInputVerSerie() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "SER_FILE_INPUT_VER_SERIE_IDFILEINPUTVERSERIE_GENERATOR", sequenceName = "SSER_FILE_INPUT_VER_SERIE", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SER_FILE_INPUT_VER_SERIE_IDFILEINPUTVERSERIE_GENERATOR")
+    // "SER_FILE_INPUT_VER_SERIE_IDFILEINPUTVERSERIE_GENERATOR",
+    // sequenceName =
+    // "SSER_FILE_INPUT_VER_SERIE",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
+    // "SER_FILE_INPUT_VER_SERIE_IDFILEINPUTVERSERIE_GENERATOR")
     @Column(name = "ID_FILE_INPUT_VER_SERIE")
-    public long getIdFileInputVerSerie() {
+    @GenericGenerator(name = "SSER_FILE_INPUT_VER_SERIE_ID_FILE_INPUT_VER_SERIE_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SSER_FILE_INPUT_VER_SERIE"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SSER_FILE_INPUT_VER_SERIE_ID_FILE_INPUT_VER_SERIE_GENERATOR")
+    public Long getIdFileInputVerSerie() {
         return this.idFileInputVerSerie;
     }
 
-    public void setIdFileInputVerSerie(long idFileInputVerSerie) {
+    public void setIdFileInputVerSerie(Long idFileInputVerSerie) {
         this.idFileInputVerSerie = idFileInputVerSerie;
     }
 
@@ -66,7 +118,7 @@ public class SerFileInputVerSerie implements Serializable {
         this.dsDocFileInputVerSerie = dsDocFileInputVerSerie;
     }
 
-    @Column(name = "FL_FORNITO_ENTE")
+    @Column(name = "FL_FORNITO_ENTE", columnDefinition = "char(1)")
     public String getFlFornitoEnte() {
         return this.flFornitoEnte;
     }
@@ -97,14 +149,12 @@ public class SerFileInputVerSerie implements Serializable {
     public SerErrFileInput addSerErrFileInput(SerErrFileInput serErrFileInput) {
         getSerErrFileInputs().add(serErrFileInput);
         serErrFileInput.setSerFileInputVerSerie(this);
-
         return serErrFileInput;
     }
 
     public SerErrFileInput removeSerErrFileInput(SerErrFileInput serErrFileInput) {
         getSerErrFileInputs().remove(serErrFileInput);
         serErrFileInput.setSerFileInputVerSerie(null);
-
         return serErrFileInput;
     }
 

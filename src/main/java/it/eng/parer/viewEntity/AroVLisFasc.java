@@ -1,13 +1,36 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 /**
  * The persistent class for the ARO_V_LIS_FASC database table.
- *
  */
 @Entity
 @Table(name = "ARO_V_LIS_FASC")
@@ -15,29 +38,44 @@ import java.util.Date;
 public class AroVLisFasc implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     private String cdKeyFascicolo;
+
     private String cdCompositoVoceTitol;
+
     private String tiEsito;
+
     private Date dtApeFascicolo;
+
     private Date dtChiuFascicolo;
+
     private String dsOggettoFascicolo;
+
     private BigDecimal idStrut;
-    private BigDecimal idFascicolo;
+
     private BigDecimal idTipoFascicolo;
+
     private BigDecimal idVoceTitol;
-    private BigDecimal idUnitaDoc;
+
     private String nmTipoFascicolo;
+
     private BigDecimal aaFascicolo;
+
     private BigDecimal niUnitaDoc;
+
     private BigDecimal idUserIamCorrente;
+
     private String tiStatoConservazione;
+
     private String tiStatoFascElencoVers;
+
     private Date tsIniSes;
 
     public AroVLisFasc(BigDecimal idFascicolo, BigDecimal aaFascicolo, String cdKeyFascicolo, String nmTipoFascicolo,
             Date dtApeFascicolo, Date dtChiuFascicolo, String cdCompositoVoceTitol, BigDecimal niUnitaDoc,
             Date tsIniSes, String tiEsito, String tiStatoFascElencoVers, String tiStatoConservazione) {
-        this.idFascicolo = idFascicolo;
+        this.aroVLisFascId = new AroVLisFascId();
+        aroVLisFascId.setIdFascicolo(idFascicolo);
         this.aaFascicolo = aaFascicolo;
         this.cdKeyFascicolo = cdKeyFascicolo;
         this.nmTipoFascicolo = nmTipoFascicolo;
@@ -51,7 +89,7 @@ public class AroVLisFasc implements Serializable {
         this.tiStatoConservazione = tiStatoConservazione;
     }
 
-    public AroVLisFasc() {
+    public AroVLisFasc() {/* Hibernate */
     }
 
     @Column(name = "CD_KEY_FASCICOLO")
@@ -129,16 +167,6 @@ public class AroVLisFasc implements Serializable {
         this.idStrut = idStrut;
     }
 
-    @Id
-    @Column(name = "ID_UNITA_DOC")
-    public BigDecimal getIdUnitaDoc() {
-        return this.idUnitaDoc;
-    }
-
-    public void setIdUnitaDoc(BigDecimal idUnitaDoc) {
-        this.idUnitaDoc = idUnitaDoc;
-    }
-
     @Column(name = "NM_TIPO_FASCICOLO")
     public String getNmTipoFascicolo() {
         return this.nmTipoFascicolo;
@@ -146,16 +174,6 @@ public class AroVLisFasc implements Serializable {
 
     public void setNmTipoFascicolo(String nmTipoFascicolo) {
         this.nmTipoFascicolo = nmTipoFascicolo;
-    }
-
-    @Id
-    @Column(name = "ID_FASCICOLO")
-    public BigDecimal getIdFascicolo() {
-        return this.idFascicolo;
-    }
-
-    public void setIdFascicolo(BigDecimal idFascicolo) {
-        this.idFascicolo = idFascicolo;
     }
 
     @Column(name = "TI_STATO_CONSERVAZIONE")
@@ -219,5 +237,16 @@ public class AroVLisFasc implements Serializable {
 
     public void setNiUnitaDoc(BigDecimal niUnitaDoc) {
         this.niUnitaDoc = niUnitaDoc;
+    }
+
+    private AroVLisFascId aroVLisFascId;
+
+    @EmbeddedId()
+    public AroVLisFascId getAroVLisFascId() {
+        return aroVLisFascId;
+    }
+
+    public void setAroVLisFascId(AroVLisFascId aroVLisFascId) {
+        this.aroVLisFascId = aroVLisFascId;
     }
 }

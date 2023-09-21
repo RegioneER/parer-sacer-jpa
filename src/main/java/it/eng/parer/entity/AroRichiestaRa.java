@@ -1,16 +1,53 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 import it.eng.parer.entity.constraint.AroRichiestaRa.AroRichiestaTiStato;
 
 /**
  * The persistent class for the ARO_RICHIESTA_RA database table.
- *
  */
 @Entity
 @Table(name = "ARO_RICHIESTA_RA")
@@ -18,29 +55,47 @@ import it.eng.parer.entity.constraint.AroRichiestaRa.AroRichiestaTiStato;
 public class AroRichiestaRa implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idRichiestaRa;
-    private Date tsInizio;
-    private Date tsFine;
-    private BigDecimal priorita;
-    private OrgStrut orgStrut;
-    private IamUser iamUser;
-    private AroRichiestaTiStato tiStato;
-    private String cdErrore;
-    private String note;
-    private List<AroAipRestituzioneArchivio> aroAipRestituzioneArchivios;
 
-    public AroRichiestaRa() {
+    private Long idRichiestaRa;
+
+    private Date tsInizio;
+
+    private Date tsFine;
+
+    private BigDecimal priorita;
+
+    private OrgStrut orgStrut;
+
+    private IamUser iamUser;
+
+    private AroRichiestaTiStato tiStato;
+
+    private String cdErrore;
+
+    private String note;
+
+    private String flSvuotaFtp;
+
+    private List<AroAipRestituzioneArchivio> aroAipRestituzioneArchivios = new ArrayList<>();
+
+    public AroRichiestaRa() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "ARO_RICHIESTA_RA_IDRICHIESTARA_GENERATOR", sequenceName = "SARO_RICHIESTA_RA", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ARO_RICHIESTA_RA_IDRICHIESTARA_GENERATOR")
+    // "ARO_RICHIESTA_RA_IDRICHIESTARA_GENERATOR",
+    // sequenceName = "SARO_RICHIESTA_RA",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ARO_RICHIESTA_RA_IDRICHIESTARA_GENERATOR")
     @Column(name = "ID_RICHIESTA_RA")
-    public long getIdRichiestaRa() {
+    @GenericGenerator(name = "SARO_RICHIESTA_RA_ID_RICHIESTA_RA_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SARO_RICHIESTA_RA"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SARO_RICHIESTA_RA_ID_RICHIESTA_RA_GENERATOR")
+    public Long getIdRichiestaRa() {
         return this.idRichiestaRa;
     }
 
-    public void setIdRichiestaRa(long idRichiestaRa) {
+    public void setIdRichiestaRa(Long idRichiestaRa) {
         this.idRichiestaRa = idRichiestaRa;
     }
 
@@ -97,6 +152,15 @@ public class AroRichiestaRa implements Serializable {
         return this.note;
     }
 
+    @Column(name = "FL_SVUOTA_FTP", columnDefinition = "char(1)")
+    public String getFlSvuotaFtp() {
+        return this.flSvuotaFtp;
+    }
+
+    public void setFlSvuotaFtp(String flSvuotaFtp) {
+        this.flSvuotaFtp = flSvuotaFtp;
+    }
+
     public void setNote(String note) {
         this.note = note;
     }
@@ -144,7 +208,6 @@ public class AroRichiestaRa implements Serializable {
             AroAipRestituzioneArchivio aroAipRestituzioneArchivio) {
         getAroAipRestituzioneArchivios().remove(aroAipRestituzioneArchivio);
         aroAipRestituzioneArchivio.setAroRichiestaRa(null);
-
         return aroAipRestituzioneArchivio;
     }
 }

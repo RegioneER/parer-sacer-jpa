@@ -1,16 +1,39 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.grantedEntity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the IAM_PARAM_APPLIC database table.
  *
  */
 @Entity
-@Table(name = "SACER_IAM.IAM_PARAM_APPLIC")
+@Table(name = "IAM_PARAM_APPLIC", schema = "SACER_IAM")
 @NamedQuery(name = "IamParamApplic.findAll", query = "SELECT i FROM IamParamApplic i")
 public class IamParamApplic implements Serializable {
 
@@ -26,12 +49,10 @@ public class IamParamApplic implements Serializable {
     private String tiParamApplic;
     private List<IamValoreParamApplic> iamValoreParamApplics = new ArrayList<>();
 
-    public IamParamApplic() {
+    public IamParamApplic() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "IAM_PARAM_APPLIC_IDPARAMAPPLIC_GENERATOR", sequenceName = "SIAM_PARAM_APPLIC", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IAM_PARAM_APPLIC_IDPARAMAPPLIC_GENERATOR")
     @Column(name = "ID_PARAM_APPLIC")
     public Long getIdParamApplic() {
         return this.idParamApplic;

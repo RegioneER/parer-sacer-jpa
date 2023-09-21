@@ -1,14 +1,49 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
+
 /**
  * The persistent class for the DEC_TIPO_SERIE database table.
- *
  */
 @Entity
 @Table(name = "DEC_TIPO_SERIE")
@@ -16,53 +51,93 @@ import java.util.List;
 public class DecTipoSerie implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idTipoSerie;
+
+    private Long idTipoSerie;
+
     private BigDecimal aaFinCreaAutom;
+
     private BigDecimal aaIniCreaAutom;
+
     private String cdSerieDefault;
+
     private String dsSerieDefault;
+
     private String dsTipoSerie;
+
     private Date dtIstituz;
+
     private Date dtSoppres;
+
     private String flControlloConsistObblig;
+
     private String flCreaAutom;
+
     private String flTipoSeriePadre;
+
     private String ggCreaAutom;
+
     private BigDecimal niAaSelUd;
+
     private BigDecimal niAaSelUdSuc;
+
     private BigDecimal niAnniConserv;
+
     private BigDecimal niMmCreaAutom;
+
     private BigDecimal niUnitaDocVolume;
+
     private String nmTipoSerie;
+
     private String tiConservazioneSerie;
+
     private String tiCreaStandard;
+
     private String tiSelUd;
+
     private String tiStatoVerSerieAutom;
+
     private String tipoContenSerie;
-    private List<DecCampoInpUd> decCampoInpUds;
-    private List<DecLinkTipoSerie> decLinkTipoSeriePartenzas;
-    private List<DecLinkTipoSerie> decLinkTipoSerieArrivos;
-    private List<DecNotaTipoSerie> decNotaTipoSeries;
+
+    private List<DecCampoInpUd> decCampoInpUds = new ArrayList<>();
+
+    private List<DecLinkTipoSerie> decLinkTipoSeriePartenzas = new ArrayList<>();
+
+    private List<DecLinkTipoSerie> decLinkTipoSerieArrivos = new ArrayList<>();
+
+    private List<DecNotaTipoSerie> decNotaTipoSeries = new ArrayList<>();
+
     private DecTipoSerie decTipoSeriePadre;
-    private List<DecTipoSerie> decTipoSeriePadres;
+
+    private List<DecTipoSerie> decTipoSeriePadres = new ArrayList<>();
+
     private OrgStrut orgStrut;
-    private List<DecTipoSerieCreataAutom> decTipoSerieCreataAutoms;
-    private List<DecTipoSerieUd> decTipoSerieUds;
-    private List<SerSerie> serSeries;
+
+    private List<DecTipoSerieCreataAutom> decTipoSerieCreataAutoms = new ArrayList<>();
+
+    private List<DecTipoSerieUd> decTipoSerieUds = new ArrayList<>();
+
+    private List<SerSerie> serSeries = new ArrayList<>();
+
     private DecModelloTipoSerie decModelloTipoSerie;
 
-    public DecTipoSerie() {
+    public DecTipoSerie() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "DEC_TIPO_SERIE_IDTIPOSERIE_GENERATOR", sequenceName = "SDEC_TIPO_SERIE", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DEC_TIPO_SERIE_IDTIPOSERIE_GENERATOR")
+    // "DEC_TIPO_SERIE_IDTIPOSERIE_GENERATOR",
+    // sequenceName = "SDEC_TIPO_SERIE", allocationSize
+    // = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DEC_TIPO_SERIE_IDTIPOSERIE_GENERATOR")
     @Column(name = "ID_TIPO_SERIE")
-    public long getIdTipoSerie() {
+    @GenericGenerator(name = "SDEC_TIPO_SERIE_ID_TIPO_SERIE_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SDEC_TIPO_SERIE"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SDEC_TIPO_SERIE_ID_TIPO_SERIE_GENERATOR")
+    public Long getIdTipoSerie() {
         return this.idTipoSerie;
     }
 
-    public void setIdTipoSerie(long idTipoSerie) {
+    public void setIdTipoSerie(Long idTipoSerie) {
         this.idTipoSerie = idTipoSerie;
     }
 
@@ -131,7 +206,7 @@ public class DecTipoSerie implements Serializable {
         this.dtSoppres = dtSoppres;
     }
 
-    @Column(name = "FL_CONTROLLO_CONSIST_OBBLIG")
+    @Column(name = "FL_CONTROLLO_CONSIST_OBBLIG", columnDefinition = "char(1)")
     public String getFlControlloConsistObblig() {
         return this.flControlloConsistObblig;
     }
@@ -140,7 +215,7 @@ public class DecTipoSerie implements Serializable {
         this.flControlloConsistObblig = flControlloConsistObblig;
     }
 
-    @Column(name = "FL_CREA_AUTOM")
+    @Column(name = "FL_CREA_AUTOM", columnDefinition = "char(1)")
     public String getFlCreaAutom() {
         return this.flCreaAutom;
     }
@@ -149,7 +224,7 @@ public class DecTipoSerie implements Serializable {
         this.flCreaAutom = flCreaAutom;
     }
 
-    @Column(name = "FL_TIPO_SERIE_PADRE")
+    @Column(name = "FL_TIPO_SERIE_PADRE", columnDefinition = "char(1)")
     public String getFlTipoSeriePadre() {
         return this.flTipoSeriePadre;
     }
@@ -158,7 +233,7 @@ public class DecTipoSerie implements Serializable {
         this.flTipoSeriePadre = flTipoSeriePadre;
     }
 
-    @Column(name = "GG_CREA_AUTOM")
+    @Column(name = "GG_CREA_AUTOM", columnDefinition = "char")
     public String getGgCreaAutom() {
         return this.ggCreaAutom;
     }
@@ -279,14 +354,12 @@ public class DecTipoSerie implements Serializable {
     public DecCampoInpUd addDecCampoInpUd(DecCampoInpUd decCampoInpUd) {
         getDecCampoInpUds().add(decCampoInpUd);
         decCampoInpUd.setDecTipoSerie(this);
-
         return decCampoInpUd;
     }
 
     public DecCampoInpUd removeDecCampoInpUd(DecCampoInpUd decCampoInpUd) {
         getDecCampoInpUds().remove(decCampoInpUd);
         decCampoInpUd.setDecTipoSerie(null);
-
         return decCampoInpUd;
     }
 
@@ -303,14 +376,12 @@ public class DecTipoSerie implements Serializable {
     public DecLinkTipoSerie addDecLinkTipoSeriePartenza(DecLinkTipoSerie decLinkTipoSeriePartenza) {
         getDecLinkTipoSeriePartenzas().add(decLinkTipoSeriePartenza);
         decLinkTipoSeriePartenza.setDecTipoSeriePartenza(this);
-
         return decLinkTipoSeriePartenza;
     }
 
     public DecLinkTipoSerie removeDecLinkTipoSeriePartenza(DecLinkTipoSerie decLinkTipoSeriePartenza) {
         getDecLinkTipoSeriePartenzas().remove(decLinkTipoSeriePartenza);
         decLinkTipoSeriePartenza.setDecTipoSeriePartenza(null);
-
         return decLinkTipoSeriePartenza;
     }
 
@@ -327,14 +398,12 @@ public class DecTipoSerie implements Serializable {
     public DecLinkTipoSerie addDecLinkTipoSeries2(DecLinkTipoSerie decLinkTipoSerieArrivo) {
         getDecLinkTipoSerieArrivos().add(decLinkTipoSerieArrivo);
         decLinkTipoSerieArrivo.setDecTipoSerieArrivo(this);
-
         return decLinkTipoSerieArrivo;
     }
 
     public DecLinkTipoSerie removeDecLinkTipoSeries2(DecLinkTipoSerie decLinkTipoSerieArrivo) {
         getDecLinkTipoSerieArrivos().remove(decLinkTipoSerieArrivo);
         decLinkTipoSerieArrivo.setDecTipoSerieArrivo(null);
-
         return decLinkTipoSerieArrivo;
     }
 
@@ -351,14 +420,12 @@ public class DecTipoSerie implements Serializable {
     public DecNotaTipoSerie addDecNotaTipoSery(DecNotaTipoSerie decNotaTipoSery) {
         getDecNotaTipoSeries().add(decNotaTipoSery);
         decNotaTipoSery.setDecTipoSerie(this);
-
         return decNotaTipoSery;
     }
 
     public DecNotaTipoSerie removeDecNotaTipoSery(DecNotaTipoSerie decNotaTipoSery) {
         getDecNotaTipoSeries().remove(decNotaTipoSery);
         decNotaTipoSery.setDecTipoSerie(null);
-
         return decNotaTipoSery;
     }
 
@@ -386,14 +453,12 @@ public class DecTipoSerie implements Serializable {
     public DecTipoSerie addDecTipoSeriePadre(DecTipoSerie decTipoSerie) {
         getDecTipoSeriePadres().add(decTipoSerie);
         decTipoSerie.setDecTipoSeriePadre(this);
-
         return decTipoSerie;
     }
 
     public DecTipoSerie removeDecTipoSeriePadre(DecTipoSerie decTipoSerie) {
         getDecTipoSeriePadres().remove(decTipoSerie);
         decTipoSerie.setDecTipoSeriePadre(null);
-
         return decTipoSerie;
     }
 
@@ -421,14 +486,12 @@ public class DecTipoSerie implements Serializable {
     public DecTipoSerieCreataAutom addDecTipoSerieCreataAutom(DecTipoSerieCreataAutom decTipoSerieCreataAutom) {
         getDecTipoSerieCreataAutoms().add(decTipoSerieCreataAutom);
         decTipoSerieCreataAutom.setDecTipoSerie(this);
-
         return decTipoSerieCreataAutom;
     }
 
     public DecTipoSerieCreataAutom removeDecTipoSerieCreataAutom(DecTipoSerieCreataAutom decTipoSerieCreataAutom) {
         getDecTipoSerieCreataAutoms().remove(decTipoSerieCreataAutom);
         decTipoSerieCreataAutom.setDecTipoSerie(null);
-
         return decTipoSerieCreataAutom;
     }
 
@@ -445,14 +508,12 @@ public class DecTipoSerie implements Serializable {
     public DecTipoSerieUd addDecTipoSerieUd(DecTipoSerieUd decTipoSerieUd) {
         getDecTipoSerieUds().add(decTipoSerieUd);
         decTipoSerieUd.setDecTipoSerie(this);
-
         return decTipoSerieUd;
     }
 
     public DecTipoSerieUd removeDecTipoSerieUd(DecTipoSerieUd decTipoSerieUd) {
         getDecTipoSerieUds().remove(decTipoSerieUd);
         decTipoSerieUd.setDecTipoSerie(null);
-
         return decTipoSerieUd;
     }
 
@@ -469,14 +530,12 @@ public class DecTipoSerie implements Serializable {
     public SerSerie addSerSery(SerSerie serSery) {
         getSerSeries().add(serSery);
         serSery.setDecTipoSerie(this);
-
         return serSery;
     }
 
     public SerSerie removeSerSery(SerSerie serSery) {
         getSerSeries().remove(serSery);
         serSery.setDecTipoSerie(null);
-
         return serSery;
     }
 
@@ -490,5 +549,4 @@ public class DecTipoSerie implements Serializable {
     public void setDecModelloTipoSerie(DecModelloTipoSerie decModelloTipoSerie) {
         this.decModelloTipoSerie = decModelloTipoSerie;
     }
-
 }

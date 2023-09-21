@@ -1,16 +1,40 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.grantedViewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the ORG_V_RIC_ENTE_CONVENZ database table.
  *
  */
 @Entity
-@Table(name = "SACER_IAM.ORG_V_RIC_ENTE_CONVENZ")
+@Table(schema = "SACER_IAM", name = "ORG_V_RIC_ENTE_CONVENZ")
 @NamedQuery(name = "OrgVRicEnteConvenz.findAll", query = "SELECT o FROM OrgVRicEnteConvenz o")
 public class OrgVRicEnteConvenz implements Serializable {
 
@@ -25,7 +49,7 @@ public class OrgVRicEnteConvenz implements Serializable {
     private String enteAttivo;
     private String flEsistonoModuli;
     private String flEsistonoGestAcc;
-    private String flInCorsoConvenz;
+    // private String flInCorsoConvenz;
     private String flNonConvenz;
     private String flRecesso;
     private BigDecimal idAmbienteEnteConvenz;
@@ -41,7 +65,7 @@ public class OrgVRicEnteConvenz implements Serializable {
     private String tiEnteConvenz;
     private String tipoGestioneAccordo;
 
-    public OrgVRicEnteConvenz() {
+    public OrgVRicEnteConvenz() {/* Hibernate */
     }
 
     public String getArchivista() {
@@ -111,7 +135,7 @@ public class OrgVRicEnteConvenz implements Serializable {
         this.dtScadAccordo = dtScadAccordo;
     }
 
-    @Column(name = "ENTE_ATTIVO")
+    @Column(name = "ENTE_ATTIVO", columnDefinition = "char")
     public String getEnteAttivo() {
         return this.enteAttivo;
     }
@@ -120,7 +144,7 @@ public class OrgVRicEnteConvenz implements Serializable {
         this.enteAttivo = enteAttivo;
     }
 
-    @Column(name = "FL_ESISTONO_MODULI")
+    @Column(name = "FL_ESISTONO_MODULI", columnDefinition = "char(1)")
     public String getFlEsistonoModuli() {
         return this.flEsistonoModuli;
     }
@@ -129,7 +153,7 @@ public class OrgVRicEnteConvenz implements Serializable {
         this.flEsistonoModuli = flEsistonoModuli;
     }
 
-    @Column(name = "FL_ESISTONO_GEST_ACC")
+    @Column(name = "FL_ESISTONO_GEST_ACC", columnDefinition = "char(1)")
     public String getFlEsistonoGestAcc() {
         return this.flEsistonoGestAcc;
     }
@@ -138,16 +162,16 @@ public class OrgVRicEnteConvenz implements Serializable {
         this.flEsistonoGestAcc = flEsistonoGestAcc;
     }
 
-    @Column(name = "FL_IN_CORSO_CONVENZ")
-    public String getFlInCorsoConvenz() {
-        return this.flInCorsoConvenz;
-    }
+    // @Column(name = "FL_IN_CORSO_CONVENZ", columnDefinition = "char(1)")
+    // public String getFlInCorsoConvenz() {
+    // return this.flInCorsoConvenz;
+    // }
+    //
+    // public void setFlInCorsoConvenz(String flInCorsoConvenz) {
+    // this.flInCorsoConvenz = flInCorsoConvenz;
+    // }
 
-    public void setFlInCorsoConvenz(String flInCorsoConvenz) {
-        this.flInCorsoConvenz = flInCorsoConvenz;
-    }
-
-    @Column(name = "FL_NON_CONVENZ")
+    @Column(name = "FL_NON_CONVENZ", columnDefinition = "char(1)")
     public String getFlNonConvenz() {
         return this.flNonConvenz;
     }
@@ -156,7 +180,7 @@ public class OrgVRicEnteConvenz implements Serializable {
         this.flNonConvenz = flNonConvenz;
     }
 
-    @Column(name = "FL_RECESSO")
+    @Column(name = "FL_RECESSO", columnDefinition = "char(1)")
     public String getFlRecesso() {
         return this.flRecesso;
     }

@@ -1,24 +1,46 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the SER_V_SEL_UD_NOVERS_BUCO database table.
- * 
  */
 @Entity
 @Table(name = "SER_V_SEL_UD_NOVERS_BUCO")
 @NamedQuery(name = "SerVSelUdNoversBuco.findAll", query = "SELECT s FROM SerVSelUdNoversBuco s")
 public class SerVSelUdNoversBuco implements Serializable {
+
     private static final long serialVersionUID = 1L;
+
     private BigDecimal idSerie;
-    private BigDecimal idUnitaDocNonVers;
-    private BigDecimal idVerSerie;
+
     private BigDecimal pgUnitaDoc;
 
-    public SerVSelUdNoversBuco() {
+    public SerVSelUdNoversBuco() {/* Hibernate */
     }
 
     @Column(name = "ID_SERIE")
@@ -30,26 +52,6 @@ public class SerVSelUdNoversBuco implements Serializable {
         this.idSerie = idSerie;
     }
 
-    @Id
-    @Column(name = "ID_UNITA_DOC_NON_VERS")
-    public BigDecimal getIdUnitaDocNonVers() {
-        return this.idUnitaDocNonVers;
-    }
-
-    public void setIdUnitaDocNonVers(BigDecimal idUnitaDocNonVers) {
-        this.idUnitaDocNonVers = idUnitaDocNonVers;
-    }
-
-    @Id
-    @Column(name = "ID_VER_SERIE")
-    public BigDecimal getIdVerSerie() {
-        return this.idVerSerie;
-    }
-
-    public void setIdVerSerie(BigDecimal idVerSerie) {
-        this.idVerSerie = idVerSerie;
-    }
-
     @Column(name = "PG_UNITA_DOC")
     public BigDecimal getPgUnitaDoc() {
         return this.pgUnitaDoc;
@@ -59,4 +61,14 @@ public class SerVSelUdNoversBuco implements Serializable {
         this.pgUnitaDoc = pgUnitaDoc;
     }
 
+    private SerVSelUdNoversBucoId serVSelUdNoversBucoId;
+
+    @EmbeddedId()
+    public SerVSelUdNoversBucoId getSerVSelUdNoversBucoId() {
+        return serVSelUdNoversBucoId;
+    }
+
+    public void setSerVSelUdNoversBucoId(SerVSelUdNoversBucoId serVSelUdNoversBucoId) {
+        this.serVSelUdNoversBucoId = serVSelUdNoversBucoId;
+    }
 }

@@ -1,14 +1,50 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlTransient;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 /**
  * The persistent class for the DEC_TIPO_FASCICOLO database table.
- *
  */
 @Entity
 @Table(name = "DEC_TIPO_FASCICOLO")
@@ -17,29 +53,44 @@ import javax.xml.bind.annotation.XmlTransient;
 public class DecTipoFascicolo implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idTipoFascicolo;
-    private String dsTipoFascicolo;
-    private Date dtIstituz;
-    private Date dtSoppres;
-    private String nmTipoFascicolo;
-    private List<DecAaTipoFascicolo> decAaTipoFascicolos;
-    private OrgStrut orgStrut;
-    private List<FasFascicolo> fasFascicolos;
-    private List<DecSelCriterioRaggrFasc> decSelCriterioRaggrFascicolos;
-    private List<DecAttribFascicolo> decAttribFascicolos;
 
-    public DecTipoFascicolo() {
+    private Long idTipoFascicolo;
+
+    private String dsTipoFascicolo;
+
+    private Date dtIstituz;
+
+    private Date dtSoppres;
+
+    private String nmTipoFascicolo;
+
+    private List<DecAaTipoFascicolo> decAaTipoFascicolos = new ArrayList<>();
+
+    private OrgStrut orgStrut;
+
+    private List<FasFascicolo> fasFascicolos = new ArrayList<>();
+
+    private List<DecSelCriterioRaggrFasc> decSelCriterioRaggrFascicolos = new ArrayList<>();
+    private List<DecAttribFascicolo> decAttribFascicolos = new ArrayList<>();
+
+    public DecTipoFascicolo() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "DEC_TIPO_FASCICOLO_IDTIPOFASCICOLO_GENERATOR", sequenceName = "SDEC_TIPO_FASCICOLO", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DEC_TIPO_FASCICOLO_IDTIPOFASCICOLO_GENERATOR")
+    // "DEC_TIPO_FASCICOLO_IDTIPOFASCICOLO_GENERATOR",
+    // sequenceName = "SDEC_TIPO_FASCICOLO",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DEC_TIPO_FASCICOLO_IDTIPOFASCICOLO_GENERATOR")
     @Column(name = "ID_TIPO_FASCICOLO")
-    public long getIdTipoFascicolo() {
+    @GenericGenerator(name = "SDEC_TIPO_FASCICOLO_ID_TIPO_FASCICOLO_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SDEC_TIPO_FASCICOLO"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SDEC_TIPO_FASCICOLO_ID_TIPO_FASCICOLO_GENERATOR")
+    public Long getIdTipoFascicolo() {
         return this.idTipoFascicolo;
     }
 
-    public void setIdTipoFascicolo(long idTipoFascicolo) {
+    public void setIdTipoFascicolo(Long idTipoFascicolo) {
         this.idTipoFascicolo = idTipoFascicolo;
     }
 
@@ -125,7 +176,7 @@ public class DecTipoFascicolo implements Serializable {
     }
 
     // bi-directional one-to-many association to DecAttribFascicolo
-    @OneToMany(mappedBy = "decTipoFascicolo")
+    @OneToMany(mappedBy = "decTipoFascicolo", cascade = CascadeType.PERSIST)
     @XmlTransient
     public List<DecAttribFascicolo> getDecAttribFascicolos() {
         return this.decAttribFascicolos;

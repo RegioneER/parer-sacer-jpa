@@ -1,8 +1,30 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the OST_V_LIS_SUBPART_BLOB database table.
@@ -26,7 +48,7 @@ public class OstVLisSubpartBlob implements Serializable {
     private String tablespaceName;
     private String tiPartition;
 
-    public OstVLisSubpartBlob() {
+    public OstVLisSubpartBlob() {/* Hibernate */
     }
 
     @Column(name = "CD_PARTITION")
@@ -66,7 +88,7 @@ public class OstVLisSubpartBlob implements Serializable {
         this.mmMax = mmMax;
     }
 
-    @Column(name = "NM_COLONNA_BLOB_FILE")
+    @Column(name = "NM_COLONNA_BLOB_FILE", columnDefinition = "char")
     public String getNmColonnaBlobFile() {
         return this.nmColonnaBlobFile;
     }
@@ -75,7 +97,7 @@ public class OstVLisSubpartBlob implements Serializable {
         this.nmColonnaBlobFile = nmColonnaBlobFile;
     }
 
-    @Column(name = "NM_COLONNA_ID_FILE")
+    @Column(name = "NM_COLONNA_ID_FILE", columnDefinition = "char")
     public String getNmColonnaIdFile() {
         return this.nmColonnaIdFile;
     }
@@ -84,7 +106,7 @@ public class OstVLisSubpartBlob implements Serializable {
         this.nmColonnaIdFile = nmColonnaIdFile;
     }
 
-    @Column(name = "NM_TABELLA_FILE")
+    @Column(name = "NM_TABELLA_FILE", columnDefinition = "char")
     public String getNmTabellaFile() {
         return this.nmTabellaFile;
     }

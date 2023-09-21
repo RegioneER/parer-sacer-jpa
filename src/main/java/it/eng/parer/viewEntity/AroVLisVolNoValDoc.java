@@ -1,27 +1,50 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the ARO_V_LIS_VOL_NO_VAL_DOC database table.
- *
  */
 @Entity
 @Table(name = "ARO_V_LIS_VOL_NO_VAL_DOC")
 public class AroVLisVolNoValDoc implements Serializable {
 
-    private BigDecimal idDoc;
-    private BigDecimal idVolumeConserv;
     private static final long serialVersionUID = 1L;
+
     private String dsVolumeConserv;
+
     private Date dtCreazione;
+
     private String nmVolumeConserv;
+
     private String tiStatoVolumeConserv;
 
-    public AroVLisVolNoValDoc() {
+    public AroVLisVolNoValDoc() {/* Hibernate */
     }
 
     @Column(name = "DS_VOLUME_CONSERV")
@@ -43,26 +66,6 @@ public class AroVLisVolNoValDoc implements Serializable {
         this.dtCreazione = dtCreazione;
     }
 
-    @Id
-    @Column(name = "ID_DOC")
-    public BigDecimal getIdDoc() {
-        return this.idDoc;
-    }
-
-    public void setIdDoc(BigDecimal idDoc) {
-        this.idDoc = idDoc;
-    }
-
-    @Id
-    @Column(name = "ID_VOLUME_CONSERV")
-    public BigDecimal getIdVolumeConserv() {
-        return this.idVolumeConserv;
-    }
-
-    public void setIdVolumeConserv(BigDecimal idVolumeConserv) {
-        this.idVolumeConserv = idVolumeConserv;
-    }
-
     @Column(name = "NM_VOLUME_CONSERV")
     public String getNmVolumeConserv() {
         return this.nmVolumeConserv;
@@ -79,5 +82,16 @@ public class AroVLisVolNoValDoc implements Serializable {
 
     public void setTiStatoVolumeConserv(String tiStatoVolumeConserv) {
         this.tiStatoVolumeConserv = tiStatoVolumeConserv;
+    }
+
+    private AroVLisVolNoValDocId aroVLisVolNoValDocId;
+
+    @EmbeddedId()
+    public AroVLisVolNoValDocId getAroVLisVolNoValDocId() {
+        return aroVLisVolNoValDocId;
+    }
+
+    public void setAroVLisVolNoValDocId(AroVLisVolNoValDocId aroVLisVolNoValDocId) {
+        this.aroVLisVolNoValDocId = aroVLisVolNoValDocId;
     }
 }

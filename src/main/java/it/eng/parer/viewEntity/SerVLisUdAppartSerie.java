@@ -1,9 +1,33 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the SER_V_LIS_UD_APPART_SERIE database table.
@@ -30,7 +54,7 @@ public class SerVLisUdAppartSerie implements Serializable {
     private BigDecimal pgUdSerie;
     private String tiStatoConservazione;
 
-    public SerVLisUdAppartSerie() {
+    public SerVLisUdAppartSerie() {/* Hibernate */
     }
 
     @Column(name = "CD_KEY_UNITA_DOC")
@@ -70,7 +94,7 @@ public class SerVLisUdAppartSerie implements Serializable {
         this.dtUdSerie = dtUdSerie;
     }
 
-    @Column(name = "FL_PRESENTE_ALTRA_SERIE")
+    @Column(name = "FL_PRESENTE_ALTRA_SERIE", columnDefinition = "char(1)")
     public String getFlPresenteAltraSerie() {
         return this.flPresenteAltraSerie;
     }
@@ -79,7 +103,7 @@ public class SerVLisUdAppartSerie implements Serializable {
         this.flPresenteAltraSerie = flPresenteAltraSerie;
     }
 
-    @Column(name = "FL_PRESENTE_CONTENUTO_1")
+    @Column(name = "FL_PRESENTE_CONTENUTO_1", columnDefinition = "char")
     public String getFlPresenteContenuto1() {
         return this.flPresenteContenuto1;
     }
@@ -88,7 +112,7 @@ public class SerVLisUdAppartSerie implements Serializable {
         this.flPresenteContenuto1 = flPresenteContenuto1;
     }
 
-    @Column(name = "FL_PRESENTE_CONTENUTO_2")
+    @Column(name = "FL_PRESENTE_CONTENUTO_2", columnDefinition = "char")
     public String getFlPresenteContenuto2() {
         return this.flPresenteContenuto2;
     }
@@ -97,7 +121,7 @@ public class SerVLisUdAppartSerie implements Serializable {
         this.flPresenteContenuto2 = flPresenteContenuto2;
     }
 
-    @Column(name = "FL_UNITA_DOC_ANNUL")
+    @Column(name = "FL_UNITA_DOC_ANNUL", columnDefinition = "char(1)")
     public String getFlUnitaDocAnnul() {
         return this.flUnitaDocAnnul;
     }

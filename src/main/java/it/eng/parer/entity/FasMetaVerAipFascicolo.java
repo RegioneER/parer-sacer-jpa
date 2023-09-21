@@ -1,43 +1,93 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 /**
  * The persistent class for the FAS_META_VER_AIP_FASCICOLO database table.
- * 
  */
 @Entity
 @Table(name = "FAS_META_VER_AIP_FASCICOLO")
 public class FasMetaVerAipFascicolo implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idMetaVerAipFascicolo;
+
+    private Long idMetaVerAipFascicolo;
+
     private String nmMeta;
+
     private String tiMeta;
+
     private String tiFormatoMeta;
+
     private String dsHashFile;
+
     private String dsAlgoHashFile;
+
     private String cdEncodingHashFile;
+
     private FasVerAipFascicolo fasVerAipFascicolo;
-    private List<FasFileMetaVerAipFasc> fasFileMetaVerAipFascs;
-    private List<FasXsdMetaVerAipFasc> fasXsdMetaVerAipFascs;
+
+    private List<FasFileMetaVerAipFasc> fasFileMetaVerAipFascs = new ArrayList<>();
+
+    private List<FasXsdMetaVerAipFasc> fasXsdMetaVerAipFascs = new ArrayList<>();
+
     private String dsUrnMetaFascicolo;
+
     private String dsUrnNormalizMetaFascicolo;
 
-    public FasMetaVerAipFascicolo() {
+    public FasMetaVerAipFascicolo() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "FAS_META_VER_AIP_FASCICOLO_IDMETAVERAIPFASCICOLO_GENERATOR", allocationSize = 1, sequenceName = "SFAS_META_VER_AIP_FASCICOLO")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "FAS_META_VER_AIP_FASCICOLO_IDMETAVERAIPFASCICOLO_GENERATOR")
+    // "FAS_META_VER_AIP_FASCICOLO_IDMETAVERAIPFASCICOLO_GENERATOR",
+    // allocationSize = 1, sequenceName =
+    // "SFAS_META_VER_AIP_FASCICOLO")
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
+    // "FAS_META_VER_AIP_FASCICOLO_IDMETAVERAIPFASCICOLO_GENERATOR")
     @Column(name = "ID_META_VER_AIP_FASCICOLO")
-    public long getIdMetaVerAipFascicolo() {
+    @GenericGenerator(name = "SFAS_META_VER_AIP_FASCICOLO_ID_META_VER_AIP_FASCICOLO_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SFAS_META_VER_AIP_FASCICOLO"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SFAS_META_VER_AIP_FASCICOLO_ID_META_VER_AIP_FASCICOLO_GENERATOR")
+    public Long getIdMetaVerAipFascicolo() {
         return this.idMetaVerAipFascicolo;
     }
 
-    public void setIdMetaVerAipFascicolo(long idMetaVerAipFascicolo) {
+    public void setIdMetaVerAipFascicolo(Long idMetaVerAipFascicolo) {
         this.idMetaVerAipFascicolo = idMetaVerAipFascicolo;
     }
 
@@ -125,7 +175,7 @@ public class FasMetaVerAipFascicolo implements Serializable {
     }
 
     // bi-directional many-to-one association to FasFileMetaVerAipFasc
-    @OneToMany(mappedBy = "FasMetaVerAipFascicolo")
+    @OneToMany(mappedBy = "fasMetaVerAipFascicolo")
     public List<FasFileMetaVerAipFasc> getFasFileMetaVerAipFascs() {
         return this.fasFileMetaVerAipFascs;
     }
@@ -135,7 +185,7 @@ public class FasMetaVerAipFascicolo implements Serializable {
     }
 
     // bi-directional many-to-one association to FasXsdMetaVerAipFasc
-    @OneToMany(mappedBy = "FasMetaVerAipFascicolo")
+    @OneToMany(mappedBy = "fasMetaVerAipFascicolo")
     public List<FasXsdMetaVerAipFasc> getFasXsdMetaVerAipFascs() {
         return this.fasXsdMetaVerAipFascs;
     }
@@ -143,5 +193,4 @@ public class FasMetaVerAipFascicolo implements Serializable {
     public void setFasXsdMetaVerAipFascs(List<FasXsdMetaVerAipFasc> fasXsdMetaVerAipFascs) {
         this.fasXsdMetaVerAipFascs = fasXsdMetaVerAipFascs;
     }
-
 }

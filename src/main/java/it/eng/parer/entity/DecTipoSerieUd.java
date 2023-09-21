@@ -1,43 +1,91 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 /**
  * The persistent class for the DEC_TIPO_SERIE_UD database table.
- * 
  */
 @Entity
 @Table(name = "DEC_TIPO_SERIE_UD")
 @NamedQuery(name = "DecTipoSerieUd.findAll", query = "SELECT d FROM DecTipoSerieUd d")
 public class DecTipoSerieUd implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    private long idTipoSerieUd;
+
+    private Long idTipoSerieUd;
+
     private String flSelUnitaDocAnnul;
-    private List<DecFiltroSelUd> decFiltroSelUds;
-    private List<DecFiltroSelUdAttb> decFiltroSelUdAttbs;
-    private List<DecOutSelUd> decOutSelUds;
+
+    private List<DecFiltroSelUd> decFiltroSelUds = new ArrayList<>();
+
+    private List<DecFiltroSelUdAttb> decFiltroSelUdAttbs = new ArrayList<>();
+
+    private List<DecOutSelUd> decOutSelUds = new ArrayList<>();
+
     private DecRegistroUnitaDoc decRegistroUnitaDoc;
+
     private DecTipoSerie decTipoSerie;
+
     private DecTipoUnitaDoc decTipoUnitaDoc;
 
-    public DecTipoSerieUd() {
+    public DecTipoSerieUd() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "DEC_TIPO_SERIE_UD_IDTIPOSERIEUD_GENERATOR", sequenceName = "SDEC_TIPO_SERIE_UD", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DEC_TIPO_SERIE_UD_IDTIPOSERIEUD_GENERATOR")
+    // "DEC_TIPO_SERIE_UD_IDTIPOSERIEUD_GENERATOR",
+    // sequenceName = "SDEC_TIPO_SERIE_UD",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DEC_TIPO_SERIE_UD_IDTIPOSERIEUD_GENERATOR")
     @Column(name = "ID_TIPO_SERIE_UD")
-    public long getIdTipoSerieUd() {
+    @GenericGenerator(name = "SDEC_TIPO_SERIE_UD_ID_TIPO_SERIE_UD_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SDEC_TIPO_SERIE_UD"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SDEC_TIPO_SERIE_UD_ID_TIPO_SERIE_UD_GENERATOR")
+    public Long getIdTipoSerieUd() {
         return this.idTipoSerieUd;
     }
 
-    public void setIdTipoSerieUd(long idTipoSerieUd) {
+    public void setIdTipoSerieUd(Long idTipoSerieUd) {
         this.idTipoSerieUd = idTipoSerieUd;
     }
 
-    @Column(name = "FL_SEL_UNITA_DOC_ANNUL")
+    @Column(name = "FL_SEL_UNITA_DOC_ANNUL", columnDefinition = "char(1)")
     public String getFlSelUnitaDocAnnul() {
         return this.flSelUnitaDocAnnul;
     }
@@ -59,14 +107,12 @@ public class DecTipoSerieUd implements Serializable {
     public DecFiltroSelUd addDecFiltroSelUd(DecFiltroSelUd decFiltroSelUd) {
         getDecFiltroSelUds().add(decFiltroSelUd);
         decFiltroSelUd.setDecTipoSerieUd(this);
-
         return decFiltroSelUd;
     }
 
     public DecFiltroSelUd removeDecFiltroSelUd(DecFiltroSelUd decFiltroSelUd) {
         getDecFiltroSelUds().remove(decFiltroSelUd);
         decFiltroSelUd.setDecTipoSerieUd(null);
-
         return decFiltroSelUd;
     }
 
@@ -84,14 +130,12 @@ public class DecTipoSerieUd implements Serializable {
     public DecFiltroSelUdAttb addDecFiltroSelUdAttb(DecFiltroSelUdAttb decFiltroSelUdAttb) {
         getDecFiltroSelUdAttbs().add(decFiltroSelUdAttb);
         decFiltroSelUdAttb.setDecTipoSerieUd(this);
-
         return decFiltroSelUdAttb;
     }
 
     public DecFiltroSelUdAttb removeDecFiltroSelUdAttb(DecFiltroSelUdAttb decFiltroSelUdAttb) {
         getDecFiltroSelUdAttbs().remove(decFiltroSelUdAttb);
         decFiltroSelUdAttb.setDecTipoSerieUd(null);
-
         return decFiltroSelUdAttb;
     }
 
@@ -108,14 +152,12 @@ public class DecTipoSerieUd implements Serializable {
     public DecOutSelUd addDecOutSelUd(DecOutSelUd decOutSelUd) {
         getDecOutSelUds().add(decOutSelUd);
         decOutSelUd.setDecTipoSerieUd(this);
-
         return decOutSelUd;
     }
 
     public DecOutSelUd removeDecOutSelUd(DecOutSelUd decOutSelUd) {
         getDecOutSelUds().remove(decOutSelUd);
         decOutSelUd.setDecTipoSerieUd(null);
-
         return decOutSelUd;
     }
 

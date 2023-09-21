@@ -1,64 +1,134 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 /**
  * The persistent class for the VRS_SESSIONE_VERS database table.
- *
  */
 @Entity
 @Table(name = "VRS_SESSIONE_VERS")
 public class VrsSessioneVers implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idSessioneVers;
-    private BigDecimal aaKeyUnitaDoc;
-    private String cdErrPrinc;
-    private String cdKeyDocVers;
-    private String cdKeyUnitaDoc;
-    private String cdRegistroKeyUnitaDoc;
-    private String cdVersioneWs;
-    private String dsErrPrinc;
-    private Date dtApertura;
-    private Date dtChiusura;
-    private Date tsApertura;
-    private Date tsChiusura;
-    private String flSessioneErrNonRisolub;
-    private String flSessioneErrVerif;
-    private BigDecimal niFileErr;
-    private String nmAmbiente;
-    private String nmEnte;
-    private String nmStrut;
-    private String nmUserid;
-    private String nmUseridWs;
-    private String nmUtente;
-    private String tiSessioneVers;
-    private String tiStatoSessioneVers;
-    private String cdIndIpClient;
-    private String cdIndServer;
-    private List<VrsDatiSessioneVers> vrsDatiSessioneVers;
-    private AroDoc aroDoc;
-    private AroUnitaDoc aroUnitaDoc;
-    private OrgStrut orgStrut;
-    private IamUser iamUser;
-    private List<VrsSessioneVersSosp> vrsSessioneVersSosps;
 
-    public VrsSessioneVers() {
+    private Long idSessioneVers;
+
+    private BigDecimal aaKeyUnitaDoc;
+
+    private String cdErrPrinc;
+
+    private String cdKeyDocVers;
+
+    private String cdKeyUnitaDoc;
+
+    private String cdRegistroKeyUnitaDoc;
+
+    private String cdVersioneWs;
+
+    private String dsErrPrinc;
+
+    private Date dtApertura;
+
+    private Date dtChiusura;
+
+    private Date tsApertura;
+
+    private Date tsChiusura;
+
+    private String flSessioneErrNonRisolub;
+
+    private String flSessioneErrVerif;
+
+    private BigDecimal niFileErr;
+
+    private String nmAmbiente;
+
+    private String nmEnte;
+
+    private String nmStrut;
+
+    private String nmUserid;
+
+    private String nmUseridWs;
+
+    private String nmUtente;
+
+    private String tiSessioneVers;
+
+    private String tiStatoSessioneVers;
+
+    private String cdIndIpClient;
+
+    private String cdIndServer;
+
+    private List<VrsDatiSessioneVers> vrsDatiSessioneVers = new ArrayList<>();
+
+    private AroDoc aroDoc;
+
+    private AroUnitaDoc aroUnitaDoc;
+
+    private OrgStrut orgStrut;
+
+    private IamUser iamUser;
+
+    private List<VrsSessioneVersSosp> vrsSessioneVersSosps = new ArrayList<>();
+
+    public VrsSessioneVers() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "VRS_SESSIONE_VERS_IDSESSIONEVERS_GENERATOR", sequenceName = "SVRS_SESSIONE_VERS", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VRS_SESSIONE_VERS_IDSESSIONEVERS_GENERATOR")
+    // "VRS_SESSIONE_VERS_IDSESSIONEVERS_GENERATOR",
+    // sequenceName = "SVRS_SESSIONE_VERS",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VRS_SESSIONE_VERS_IDSESSIONEVERS_GENERATOR")
     @Column(name = "ID_SESSIONE_VERS")
-    public long getIdSessioneVers() {
+    @GenericGenerator(name = "SVRS_SESSIONE_VERS_ID_SESSIONE_VERS_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SVRS_SESSIONE_VERS"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SVRS_SESSIONE_VERS_ID_SESSIONE_VERS_GENERATOR")
+    public Long getIdSessioneVers() {
         return this.idSessioneVers;
     }
 
-    public void setIdSessioneVers(long idSessioneVers) {
+    public void setIdSessioneVers(Long idSessioneVers) {
         this.idSessioneVers = idSessioneVers;
     }
 
@@ -165,7 +235,7 @@ public class VrsSessioneVers implements Serializable {
         this.tsChiusura = tsChiusura;
     }
 
-    @Column(name = "FL_SESSIONE_ERR_NON_RISOLUB")
+    @Column(name = "FL_SESSIONE_ERR_NON_RISOLUB", columnDefinition = "char(1)")
     public String getFlSessioneErrNonRisolub() {
         return this.flSessioneErrNonRisolub;
     }
@@ -174,7 +244,7 @@ public class VrsSessioneVers implements Serializable {
         this.flSessioneErrNonRisolub = flSessioneErrNonRisolub;
     }
 
-    @Column(name = "FL_SESSIONE_ERR_VERIF")
+    @Column(name = "FL_SESSIONE_ERR_VERIF", columnDefinition = "char(1)")
     public String getFlSessioneErrVerif() {
         return this.flSessioneErrVerif;
     }
@@ -345,5 +415,4 @@ public class VrsSessioneVers implements Serializable {
     public void setVrsSessioneVersSosps(List<VrsSessioneVersSosp> vrsSessioneVersSosps) {
         this.vrsSessioneVersSosps = vrsSessioneVersSosps;
     }
-
 }

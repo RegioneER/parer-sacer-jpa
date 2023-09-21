@@ -1,8 +1,30 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the DEC_V_CREA_CRIT_RAGGR_TIPO_UD database table.
@@ -33,7 +55,7 @@ public class DecVCreaCritRaggrTipoUd implements Serializable {
     private String tiValidElenco;
     private String tiModValidElenco;
 
-    public DecVCreaCritRaggrTipoUd() {
+    public DecVCreaCritRaggrTipoUd() {/* Hibernate */
     }
 
     @Column(name = "DS_CRITERIO_RAGGR")
@@ -45,7 +67,7 @@ public class DecVCreaCritRaggrTipoUd implements Serializable {
         this.dsCriterioRaggr = dsCriterioRaggr;
     }
 
-    @Column(name = "FL_CRITERIO_RAGGR_FISC")
+    @Column(name = "FL_CRITERIO_RAGGR_FISC", columnDefinition = "char(1)")
     public String getFlCriterioRaggrFisc() {
         return this.flCriterioRaggrFisc;
     }
@@ -54,7 +76,7 @@ public class DecVCreaCritRaggrTipoUd implements Serializable {
         this.flCriterioRaggrFisc = flCriterioRaggrFisc;
     }
 
-    @Column(name = "FL_FILTRO_RANGE_REGISTRO_KEY")
+    @Column(name = "FL_FILTRO_RANGE_REGISTRO_KEY", columnDefinition = "char(1)")
     public String getFlFiltroRangeRegistroKey() {
         return this.flFiltroRangeRegistroKey;
     }
@@ -63,7 +85,7 @@ public class DecVCreaCritRaggrTipoUd implements Serializable {
         this.flFiltroRangeRegistroKey = flFiltroRangeRegistroKey;
     }
 
-    @Column(name = "FL_FILTRO_REGISTRO_KEY")
+    @Column(name = "FL_FILTRO_REGISTRO_KEY", columnDefinition = "char(1)")
     public String getFlFiltroRegistroKey() {
         return this.flFiltroRegistroKey;
     }
@@ -72,7 +94,7 @@ public class DecVCreaCritRaggrTipoUd implements Serializable {
         this.flFiltroRegistroKey = flFiltroRegistroKey;
     }
 
-    @Column(name = "FL_FILTRO_SISTEMA_MIGRAZ")
+    @Column(name = "FL_FILTRO_SISTEMA_MIGRAZ", columnDefinition = "char(1)")
     public String getFlFiltroSistemaMigraz() {
         return this.flFiltroSistemaMigraz;
     }
@@ -81,7 +103,7 @@ public class DecVCreaCritRaggrTipoUd implements Serializable {
         this.flFiltroSistemaMigraz = flFiltroSistemaMigraz;
     }
 
-    @Column(name = "FL_FILTRO_TI_ESITO_VERIF_FIRME")
+    @Column(name = "FL_FILTRO_TI_ESITO_VERIF_FIRME", columnDefinition = "char(1)")
     public String getFlFiltroTiEsitoVerifFirme() {
         return this.flFiltroTiEsitoVerifFirme;
     }
@@ -90,7 +112,7 @@ public class DecVCreaCritRaggrTipoUd implements Serializable {
         this.flFiltroTiEsitoVerifFirme = flFiltroTiEsitoVerifFirme;
     }
 
-    @Column(name = "FL_FILTRO_TIPO_DOC")
+    @Column(name = "FL_FILTRO_TIPO_DOC", columnDefinition = "char(1)")
     public String getFlFiltroTipoDoc() {
         return this.flFiltroTipoDoc;
     }
@@ -99,7 +121,7 @@ public class DecVCreaCritRaggrTipoUd implements Serializable {
         this.flFiltroTipoDoc = flFiltroTipoDoc;
     }
 
-    @Column(name = "FL_FILTRO_TIPO_UNITA_DOC")
+    @Column(name = "FL_FILTRO_TIPO_UNITA_DOC", columnDefinition = "char(1)")
     public String getFlFiltroTipoUnitaDoc() {
         return this.flFiltroTipoUnitaDoc;
     }
@@ -127,7 +149,7 @@ public class DecVCreaCritRaggrTipoUd implements Serializable {
         this.idTipoUnitaDoc = idTipoUnitaDoc;
     }
 
-    @Column(name = "NI_MAX_COMP")
+    @Column(name = "NI_MAX_COMP", columnDefinition = "varchar2")
     public BigDecimal getNiMaxComp() {
         return this.niMaxComp;
     }
@@ -163,7 +185,7 @@ public class DecVCreaCritRaggrTipoUd implements Serializable {
         this.nmCriterioRaggr = nmCriterioRaggr;
     }
 
-    @Column(name = "TI_TEMPO_SCAD_CHIUS")
+    @Column(name = "TI_TEMPO_SCAD_CHIUS", columnDefinition = "char")
     public String getTiTempoScadChius() {
         return this.tiTempoScadChius;
     }
@@ -172,7 +194,7 @@ public class DecVCreaCritRaggrTipoUd implements Serializable {
         this.tiTempoScadChius = tiTempoScadChius;
     }
 
-    @Column(name = "TI_TEMPO_SCAD_CHIUS_FIRME")
+    @Column(name = "TI_TEMPO_SCAD_CHIUS_FIRME", columnDefinition = "char")
     public String getTiTempoScadChiusFirme() {
         return this.tiTempoScadChiusFirme;
     }

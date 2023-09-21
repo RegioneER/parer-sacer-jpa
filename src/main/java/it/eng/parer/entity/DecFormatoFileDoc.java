@@ -1,8 +1,27 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,48 +33,70 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlTransient;
+
 import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 /**
  * The persistent class for the DEC_FORMATO_FILE_DOC database table.
- *
  */
 @Entity
 @Cacheable(true)
 @Table(name = "DEC_FORMATO_FILE_DOC")
 public class DecFormatoFileDoc implements Serializable {
-    private static final long serialVersionUID = 1L;
-    private long idFormatoFileDoc;
-    private String cdVersione;
-    private String dsFormatoFileDoc;
-    private Date dtIstituz;
-    private Date dtSoppres;
-    private String nmFormatoFileDoc;
-    private List<AroCompDoc> aroCompDocs;
-    private List<DecFormatoFileAmmesso> decFormatoFileAmmessos;
-    private OrgStrut orgStrut;
-    private List<DecUsoFormatoFileStandard> decUsoFormatoFileStandards;
-    private List<DecTipoRapprComp> decTipoRapprCompConts;
-    private List<DecTipoRapprComp> decTipoRapprCompConvs;
 
-    public DecFormatoFileDoc() {
+    private static final long serialVersionUID = 1L;
+
+    private Long idFormatoFileDoc;
+
+    private String cdVersione;
+
+    private String dsFormatoFileDoc;
+
+    private Date dtIstituz;
+
+    private Date dtSoppres;
+
+    private String nmFormatoFileDoc;
+
+    private List<AroCompDoc> aroCompDocs = new ArrayList<>();
+
+    private List<DecFormatoFileAmmesso> decFormatoFileAmmessos = new ArrayList<>();
+
+    private OrgStrut orgStrut;
+
+    private List<DecUsoFormatoFileStandard> decUsoFormatoFileStandards = new ArrayList<>();
+
+    private List<DecTipoRapprComp> decTipoRapprCompConts = new ArrayList<>();
+
+    private List<DecTipoRapprComp> decTipoRapprCompConvs = new ArrayList<>();
+
+    public DecFormatoFileDoc() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "DEC_FORMATO_FILE_DOC_IDFORMATOFILEDOC_GENERATOR", sequenceName = "SDEC_FORMATO_FILE_DOC", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DEC_FORMATO_FILE_DOC_IDFORMATOFILEDOC_GENERATOR")
+    // "DEC_FORMATO_FILE_DOC_IDFORMATOFILEDOC_GENERATOR",
+    // sequenceName = "SDEC_FORMATO_FILE_DOC",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
+    // "DEC_FORMATO_FILE_DOC_IDFORMATOFILEDOC_GENERATOR")
     @Column(name = "ID_FORMATO_FILE_DOC")
-    public long getIdFormatoFileDoc() {
+    @GenericGenerator(name = "SDEC_FORMATO_FILE_DOC_ID_FORMATO_FILE_DOC_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SDEC_FORMATO_FILE_DOC"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SDEC_FORMATO_FILE_DOC_ID_FORMATO_FILE_DOC_GENERATOR")
+    public Long getIdFormatoFileDoc() {
         return this.idFormatoFileDoc;
     }
 
-    public void setIdFormatoFileDoc(long idFormatoFileDoc) {
+    public void setIdFormatoFileDoc(Long idFormatoFileDoc) {
         this.idFormatoFileDoc = idFormatoFileDoc;
     }
 

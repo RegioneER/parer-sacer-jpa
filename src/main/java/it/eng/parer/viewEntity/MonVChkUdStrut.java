@@ -1,8 +1,30 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the MON_V_CHK_UD_STRUT database table.
@@ -23,10 +45,10 @@ public class MonVChkUdStrut implements Serializable {
     private String flUdNoselSchedCorr;
     private BigDecimal idStrut;
 
-    public MonVChkUdStrut() {
+    public MonVChkUdStrut() {/* Hibernate */
     }
 
-    @Column(name = "FL_UD_30GG")
+    @Column(name = "FL_UD_30GG", columnDefinition = "char")
     public String getFlUd30gg() {
         return this.flUd30gg;
     }
@@ -35,7 +57,7 @@ public class MonVChkUdStrut implements Serializable {
         this.flUd30gg = flUd30gg;
     }
 
-    @Column(name = "FL_UD_ATTESA_MEM_30GG")
+    @Column(name = "FL_UD_ATTESA_MEM_30GG", columnDefinition = "char")
     public String getFlUdAttesaMem30gg() {
         return this.flUdAttesaMem30gg;
     }
@@ -44,7 +66,7 @@ public class MonVChkUdStrut implements Serializable {
         this.flUdAttesaMem30gg = flUdAttesaMem30gg;
     }
 
-    @Column(name = "FL_UD_ATTESA_MEM_CORR")
+    @Column(name = "FL_UD_ATTESA_MEM_CORR", columnDefinition = "char(1)")
     public String getFlUdAttesaMemCorr() {
         return this.flUdAttesaMemCorr;
     }
@@ -53,7 +75,7 @@ public class MonVChkUdStrut implements Serializable {
         this.flUdAttesaMemCorr = flUdAttesaMemCorr;
     }
 
-    @Column(name = "FL_UD_ATTESA_SCHED_30GG")
+    @Column(name = "FL_UD_ATTESA_SCHED_30GG", columnDefinition = "char")
     public String getFlUdAttesaSched30gg() {
         return this.flUdAttesaSched30gg;
     }
@@ -62,7 +84,7 @@ public class MonVChkUdStrut implements Serializable {
         this.flUdAttesaSched30gg = flUdAttesaSched30gg;
     }
 
-    @Column(name = "FL_UD_ATTESA_SCHED_CORR")
+    @Column(name = "FL_UD_ATTESA_SCHED_CORR", columnDefinition = "char(1)")
     public String getFlUdAttesaSchedCorr() {
         return this.flUdAttesaSchedCorr;
     }
@@ -71,7 +93,7 @@ public class MonVChkUdStrut implements Serializable {
         this.flUdAttesaSchedCorr = flUdAttesaSchedCorr;
     }
 
-    @Column(name = "FL_UD_CORR")
+    @Column(name = "FL_UD_CORR", columnDefinition = "char(1)")
     public String getFlUdCorr() {
         return this.flUdCorr;
     }
@@ -80,7 +102,7 @@ public class MonVChkUdStrut implements Serializable {
         this.flUdCorr = flUdCorr;
     }
 
-    @Column(name = "FL_UD_NOSEL_SCHED_30GG")
+    @Column(name = "FL_UD_NOSEL_SCHED_30GG", columnDefinition = "char")
     public String getFlUdNoselSched30gg() {
         return this.flUdNoselSched30gg;
     }
@@ -89,7 +111,7 @@ public class MonVChkUdStrut implements Serializable {
         this.flUdNoselSched30gg = flUdNoselSched30gg;
     }
 
-    @Column(name = "FL_UD_NOSEL_SCHED_CORR")
+    @Column(name = "FL_UD_NOSEL_SCHED_CORR", columnDefinition = "char(1)")
     public String getFlUdNoselSchedCorr() {
         return this.flUdNoselSchedCorr;
     }

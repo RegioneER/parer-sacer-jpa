@@ -1,9 +1,32 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the MON_V_VIS_DOC_NON_VERS database table.
@@ -14,10 +37,17 @@ import java.util.Date;
 public class MonVVisDocNonVers implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private BigDecimal aaKeyUnitaDoc;
-    private String cdKeyDocVers;
-    private String cdKeyUnitaDoc;
-    private String cdRegistroKeyUnitaDoc;
+    private MonVVisDocNonVersId monVVisDocNonVersId;
+
+    @EmbeddedId
+    public MonVVisDocNonVersId getMonVVisDocNonVersId() {
+        return monVVisDocNonVersId;
+    }
+
+    public void setMonVVisDocNonVersId(MonVVisDocNonVersId monVVisDocNonVersId) {
+        this.monVVisDocNonVersId = monVVisDocNonVersId;
+    }
+
     private Date dtFirstSesErr;
     private Date dtLastSesErr;
     private String flNonRisolub;
@@ -25,52 +55,11 @@ public class MonVVisDocNonVers implements Serializable {
     private BigDecimal idAmbiente;
     private BigDecimal idDocNonVers;
     private BigDecimal idEnte;
-    private BigDecimal idStrut;
     private String nmAmbiente;
     private String nmEnte;
     private String nmStrut;
 
-    public MonVVisDocNonVers() {
-    }
-
-    @Id
-    @Column(name = "AA_KEY_UNITA_DOC")
-    public BigDecimal getAaKeyUnitaDoc() {
-        return this.aaKeyUnitaDoc;
-    }
-
-    public void setAaKeyUnitaDoc(BigDecimal aaKeyUnitaDoc) {
-        this.aaKeyUnitaDoc = aaKeyUnitaDoc;
-    }
-
-    @Id
-    @Column(name = "CD_KEY_DOC_VERS")
-    public String getCdKeyDocVers() {
-        return this.cdKeyDocVers;
-    }
-
-    public void setCdKeyDocVers(String cdKeyDocVers) {
-        this.cdKeyDocVers = cdKeyDocVers;
-    }
-
-    @Id
-    @Column(name = "CD_KEY_UNITA_DOC")
-    public String getCdKeyUnitaDoc() {
-        return this.cdKeyUnitaDoc;
-    }
-
-    public void setCdKeyUnitaDoc(String cdKeyUnitaDoc) {
-        this.cdKeyUnitaDoc = cdKeyUnitaDoc;
-    }
-
-    @Id
-    @Column(name = "CD_REGISTRO_KEY_UNITA_DOC")
-    public String getCdRegistroKeyUnitaDoc() {
-        return this.cdRegistroKeyUnitaDoc;
-    }
-
-    public void setCdRegistroKeyUnitaDoc(String cdRegistroKeyUnitaDoc) {
-        this.cdRegistroKeyUnitaDoc = cdRegistroKeyUnitaDoc;
+    public MonVVisDocNonVers() {/* Hibernate */
     }
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -93,7 +82,7 @@ public class MonVVisDocNonVers implements Serializable {
         this.dtLastSesErr = dtLastSesErr;
     }
 
-    @Column(name = "FL_NON_RISOLUB")
+    @Column(name = "FL_NON_RISOLUB", columnDefinition = "char(1)")
     public String getFlNonRisolub() {
         return this.flNonRisolub;
     }
@@ -102,7 +91,7 @@ public class MonVVisDocNonVers implements Serializable {
         this.flNonRisolub = flNonRisolub;
     }
 
-    @Column(name = "FL_VERIF")
+    @Column(name = "FL_VERIF", columnDefinition = "char(1)")
     public String getFlVerif() {
         return this.flVerif;
     }
@@ -136,16 +125,6 @@ public class MonVVisDocNonVers implements Serializable {
 
     public void setIdEnte(BigDecimal idEnte) {
         this.idEnte = idEnte;
-    }
-
-    @Id
-    @Column(name = "ID_STRUT")
-    public BigDecimal getIdStrut() {
-        return this.idStrut;
-    }
-
-    public void setIdStrut(BigDecimal idStrut) {
-        this.idStrut = idStrut;
     }
 
     @Column(name = "NM_AMBIENTE")

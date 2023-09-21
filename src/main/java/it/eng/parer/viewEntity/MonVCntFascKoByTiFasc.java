@@ -1,8 +1,30 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the MON_V_CNT_FASC_KO_BY_TI_FASC database table.
@@ -10,26 +32,24 @@ import java.math.BigDecimal;
  */
 @Entity
 @Table(name = "MON_V_CNT_FASC_KO_BY_TI_FASC")
-@NamedQuery(name = "MonVCntFascKoByTiFasc.findByTiFasc", query = "SELECT m FROM MonVCntFascKoByTiFasc m WHERE m.idTipoFascicolo = :idTipoFascicolo")
+@NamedQuery(name = "MonVCntFascKoByTiFasc.findByTiFasc", query = "SELECT m FROM MonVCntFascKoByTiFasc m WHERE m.monVCntFascKoByTiFascId.idTipoFascicolo = :idTipoFascicolo")
 public class MonVCntFascKoByTiFasc implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private BigDecimal idTipoFascicolo;
+
     private BigDecimal niFascKo;
-    private String tiDtCreazione;
-    private String tiStatoFascKo;
+    private MonVCntFascKoByTiFascId monVCntFascKoByTiFascId;
 
-    public MonVCntFascKoByTiFasc() {
+    public MonVCntFascKoByTiFasc() {/* Hibernate */
     }
 
-    @Id
-    @Column(name = "ID_TIPO_FASCICOLO")
-    public BigDecimal getIdTipoFascicolo() {
-        return this.idTipoFascicolo;
+    @EmbeddedId
+    public MonVCntFascKoByTiFascId getMonVCntFascKoByTiFascId() {
+        return monVCntFascKoByTiFascId;
     }
 
-    public void setIdTipoFascicolo(BigDecimal idTipoFascicolo) {
-        this.idTipoFascicolo = idTipoFascicolo;
+    public void setMonVCntFascKoByTiFascId(MonVCntFascKoByTiFascId monVCntFascKoByTiFascId) {
+        this.monVCntFascKoByTiFascId = monVCntFascKoByTiFascId;
     }
 
     @Column(name = "NI_FASC_KO")
@@ -40,25 +60,4 @@ public class MonVCntFascKoByTiFasc implements Serializable {
     public void setNiFascKo(BigDecimal niFascKo) {
         this.niFascKo = niFascKo;
     }
-
-    @Id
-    @Column(name = "TI_DT_CREAZIONE")
-    public String getTiDtCreazione() {
-        return this.tiDtCreazione;
-    }
-
-    public void setTiDtCreazione(String tiDtCreazione) {
-        this.tiDtCreazione = tiDtCreazione;
-    }
-
-    @Id
-    @Column(name = "TI_STATO_FASC_KO")
-    public String getTiStatoFascKo() {
-        return this.tiStatoFascKo;
-    }
-
-    public void setTiStatoFascKo(String tiStatoFascKo) {
-        this.tiStatoFascKo = tiStatoFascKo;
-    }
-
 }

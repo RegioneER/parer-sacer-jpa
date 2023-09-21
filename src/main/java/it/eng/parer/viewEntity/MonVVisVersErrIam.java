@@ -1,9 +1,33 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the MON_V_VIS_VERS_ERR_IAM database table.
@@ -40,7 +64,7 @@ public class MonVVisVersErrIam implements Serializable {
     private String nmUseridWs;
     private String tiSessioneVers;
 
-    public MonVVisVersErrIam() {
+    public MonVVisVersErrIam() {/* Hibernate */
     }
 
     @Column(name = "AA_KEY_UNITA_DOC")
@@ -156,7 +180,7 @@ public class MonVVisVersErrIam implements Serializable {
         this.dtChiusura = dtChiusura;
     }
 
-    @Column(name = "FL_RISOLTO")
+    @Column(name = "FL_RISOLTO", columnDefinition = "char(1)")
     public String getFlRisolto() {
         return this.flRisolto;
     }
@@ -165,7 +189,7 @@ public class MonVVisVersErrIam implements Serializable {
         this.flRisolto = flRisolto;
     }
 
-    @Column(name = "FL_SESSIONE_ERR_NON_RISOLUB")
+    @Column(name = "FL_SESSIONE_ERR_NON_RISOLUB", columnDefinition = "char(1)")
     public String getFlSessioneErrNonRisolub() {
         return this.flSessioneErrNonRisolub;
     }
@@ -174,7 +198,7 @@ public class MonVVisVersErrIam implements Serializable {
         this.flSessioneErrNonRisolub = flSessioneErrNonRisolub;
     }
 
-    @Column(name = "FL_SESSIONE_ERR_VERIF")
+    @Column(name = "FL_SESSIONE_ERR_VERIF", columnDefinition = "char(1)")
     public String getFlSessioneErrVerif() {
         return this.flSessioneErrVerif;
     }

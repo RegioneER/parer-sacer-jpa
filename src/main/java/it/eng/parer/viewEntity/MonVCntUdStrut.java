@@ -1,34 +1,44 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the MON_V_CNT_UD_STRUT database table.
- * 
  */
 @Entity
 @Table(name = "MON_V_CNT_UD_STRUT")
 @NamedQuery(name = "MonVCntUdStrut.findAll", query = "SELECT m FROM MonVCntUdStrut m")
 public class MonVCntUdStrut implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    private BigDecimal idStrut;
+
     private BigDecimal niUd;
-    private String tiDtCreazione;
-    private String tiStatoUd;
 
-    public MonVCntUdStrut() {
-    }
-
-    @Id
-    @Column(name = "ID_STRUT")
-    public BigDecimal getIdStrut() {
-        return this.idStrut;
-    }
-
-    public void setIdStrut(BigDecimal idStrut) {
-        this.idStrut = idStrut;
+    public MonVCntUdStrut() {/* Hibernate */
     }
 
     @Column(name = "NI_UD")
@@ -40,24 +50,14 @@ public class MonVCntUdStrut implements Serializable {
         this.niUd = niUd;
     }
 
-    @Id
-    @Column(name = "TI_DT_CREAZIONE")
-    public String getTiDtCreazione() {
-        return this.tiDtCreazione;
+    private MonVCntUdStrutId monVCntUdStrutId;
+
+    @EmbeddedId()
+    public MonVCntUdStrutId getMonVCntUdStrutId() {
+        return monVCntUdStrutId;
     }
 
-    public void setTiDtCreazione(String tiDtCreazione) {
-        this.tiDtCreazione = tiDtCreazione;
+    public void setMonVCntUdStrutId(MonVCntUdStrutId monVCntUdStrutId) {
+        this.monVCntUdStrutId = monVCntUdStrutId;
     }
-
-    @Id
-    @Column(name = "TI_STATO_UD")
-    public String getTiStatoUd() {
-        return this.tiStatoUd;
-    }
-
-    public void setTiStatoUd(String tiStatoUd) {
-        this.tiStatoUd = tiStatoUd;
-    }
-
 }

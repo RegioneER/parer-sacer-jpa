@@ -1,15 +1,49 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 import it.eng.parer.entity.constraint.ElvStatoElencoVersFasc.TiStatoElencoFasc;
 
-import java.util.Date;
-
 /**
  * The persistent class for the ELV_STATO_ELENCO_VERS_FASC database table.
- *
  */
 @Entity
 @Table(name = "ELV_STATO_ELENCO_VERS_FASC")
@@ -18,24 +52,38 @@ import java.util.Date;
 public class ElvStatoElencoVersFasc implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idStatoElencoVersFasc;
+
+    private Long idStatoElencoVersFasc;
+
     private IamUser iamUser;
+
     private TiStatoElencoFasc tiStato;
+
     private Date tsStato;
+
     private ElvElencoVersFasc elvElencoVersFasc;
 
     public ElvStatoElencoVersFasc() {
+        // Hibernate
     }
 
     @Id
-    @SequenceGenerator(name = "ELV_STATO_ELENCO_VERS_FASC_IDSTATOELENCOVERSFASC_GENERATOR", sequenceName = "SELV_STATO_ELENCO_VERS_FASC", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ELV_STATO_ELENCO_VERS_FASC_IDSTATOELENCOVERSFASC_GENERATOR")
+    // "ELV_STATO_ELENCO_VERS_FASC_IDSTATOELENCOVERSFASC_GENERATOR",
+    // sequenceName =
+    // "SELV_STATO_ELENCO_VERS_FASC",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
+    // "ELV_STATO_ELENCO_VERS_FASC_IDSTATOELENCOVERSFASC_GENERATOR")
     @Column(name = "ID_STATO_ELENCO_VERS_FASC")
-    public long getIdStatoElencoVersFasc() {
+    @GenericGenerator(name = "SELV_STATO_ELENCO_VERS_FASC_ID_STATO_ELENCO_VERS_FASC_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SELV_STATO_ELENCO_VERS_FASC"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SELV_STATO_ELENCO_VERS_FASC_ID_STATO_ELENCO_VERS_FASC_GENERATOR")
+    public Long getIdStatoElencoVersFasc() {
         return this.idStatoElencoVersFasc;
     }
 
-    public void setIdStatoElencoVersFasc(long idStatoElencoVersFasc) {
+    public void setIdStatoElencoVersFasc(Long idStatoElencoVersFasc) {
         this.idStatoElencoVersFasc = idStatoElencoVersFasc;
     }
 
@@ -72,7 +120,7 @@ public class ElvStatoElencoVersFasc implements Serializable {
 
     // bi-directional many-to-one association to ElvElencoVersFasc
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_ELENCO_VERS_FASC")
+    @JoinColumn(name = "ID_ELENCO_VERS_FASC", nullable = false)
     public ElvElencoVersFasc getElvElencoVersFasc() {
         return this.elvElencoVersFasc;
     }

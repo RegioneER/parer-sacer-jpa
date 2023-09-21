@@ -1,32 +1,61 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 /**
  * The persistent class for the FAS_V_LIS_UD_IN_FASC database table.
- *
  */
 @Entity
 @Table(name = "FAS_V_LIS_UD_IN_FASC")
-@NamedQuery(name = "FasVLisUdInFasc.find", query = "SELECT f FROM FasVLisUdInFasc f WHERE f.idFascicolo = :idFascicolo AND f.idUserIamCorrente = :userId")
+@NamedQuery(name = "FasVLisUdInFasc.find", query = "SELECT f FROM FasVLisUdInFasc f WHERE f.fasVLisUdInFascId.idFascicolo = :idFascicolo AND f.idUserIamCorrente = :userId")
 public class FasVLisUdInFasc implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     private BigDecimal aaKeyUnitaDoc;
+
     private String cdKeyUnitaDoc;
+
     private String cdRegistroKeyUnitaDoc;
+
     private Date dtCreazione;
-    private BigDecimal idFascicolo;
-    private BigDecimal idUnitaDoc;
+
     private BigDecimal idUserIamCorrente;
+
     private String nmTipoDoc;
+
     private String nmTipoUnitaDoc;
+
     private String tiStatoConservazione;
 
-    public FasVLisUdInFasc() {
+    public FasVLisUdInFasc() {/* Hibernate */
     }
 
     @Column(name = "AA_KEY_UNITA_DOC")
@@ -66,26 +95,6 @@ public class FasVLisUdInFasc implements Serializable {
         this.dtCreazione = dtCreazione;
     }
 
-    @Id
-    @Column(name = "ID_FASCICOLO")
-    public BigDecimal getIdFascicolo() {
-        return this.idFascicolo;
-    }
-
-    public void setIdFascicolo(BigDecimal idFascicolo) {
-        this.idFascicolo = idFascicolo;
-    }
-
-    @Id
-    @Column(name = "ID_UNITA_DOC")
-    public BigDecimal getIdUnitaDoc() {
-        return this.idUnitaDoc;
-    }
-
-    public void setIdUnitaDoc(BigDecimal idUnitaDoc) {
-        this.idUnitaDoc = idUnitaDoc;
-    }
-
     @Column(name = "ID_USER_IAM_CORRENTE")
     public BigDecimal getIdUserIamCorrente() {
         return this.idUserIamCorrente;
@@ -120,5 +129,16 @@ public class FasVLisUdInFasc implements Serializable {
 
     public void setTiStatoConservazione(String tiStatoConservazione) {
         this.tiStatoConservazione = tiStatoConservazione;
+    }
+
+    private FasVLisUdInFascId fasVLisUdInFascId;
+
+    @EmbeddedId()
+    public FasVLisUdInFascId getFasVLisUdInFascId() {
+        return fasVLisUdInFascId;
+    }
+
+    public void setFasVLisUdInFascId(FasVLisUdInFascId fasVLisUdInFascId) {
+        this.fasVLisUdInFascId = fasVLisUdInFascId;
     }
 }

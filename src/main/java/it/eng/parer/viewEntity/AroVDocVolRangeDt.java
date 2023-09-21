@@ -1,75 +1,48 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 
-import java.math.BigDecimal;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the ARO_V_DOC_VOL_RANGE_DT database table.
- * 
  */
 @Entity
 @Table(name = "ARO_V_DOC_VOL_RANGE_DT")
 public class AroVDocVolRangeDt implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    private BigDecimal idStrut;
-    private String tiDoc;
-    private String tiDtCreazione;
-    private String tiStatoDoc;
-    private String tiStatoVolumeConserv;
 
-    public AroVDocVolRangeDt() {
+    public AroVDocVolRangeDt() {/* Hibernate */
     }
 
-    @Id
-    @Column(name = "ID_STRUT")
-    public BigDecimal getIdStrut() {
-        return this.idStrut;
+    private AroVDocVolRangeDtId aroVDocVolRangeDtId;
+
+    @EmbeddedId()
+    public AroVDocVolRangeDtId getAroVDocVolRangeDtId() {
+        return aroVDocVolRangeDtId;
     }
 
-    public void setIdStrut(BigDecimal idStrut) {
-        this.idStrut = idStrut;
+    public void setAroVDocVolRangeDtId(AroVDocVolRangeDtId aroVDocVolRangeDtId) {
+        this.aroVDocVolRangeDtId = aroVDocVolRangeDtId;
     }
-
-    @Id
-    @Column(name = "TI_DOC")
-    public String getTiDoc() {
-        return this.tiDoc;
-    }
-
-    public void setTiDoc(String tiDoc) {
-        this.tiDoc = tiDoc;
-    }
-
-    @Id
-    @Column(name = "TI_DT_CREAZIONE")
-    public String getTiDtCreazione() {
-        return this.tiDtCreazione;
-    }
-
-    public void setTiDtCreazione(String tiDtCreazione) {
-        this.tiDtCreazione = tiDtCreazione;
-    }
-
-    @Id
-    @Column(name = "TI_STATO_DOC")
-    public String getTiStatoDoc() {
-        return this.tiStatoDoc;
-    }
-
-    public void setTiStatoDoc(String tiStatoDoc) {
-        this.tiStatoDoc = tiStatoDoc;
-    }
-
-    @Id
-    @Column(name = "TI_STATO_VOLUME_CONSERV")
-    public String getTiStatoVolumeConserv() {
-        return this.tiStatoVolumeConserv;
-    }
-
-    public void setTiStatoVolumeConserv(String tiStatoVolumeConserv) {
-        this.tiStatoVolumeConserv = tiStatoVolumeConserv;
-    }
-
 }

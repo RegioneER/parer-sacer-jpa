@@ -1,9 +1,31 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
-import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the MON_V_LIS_UD_UPD_KO_BY_ERR database table.
@@ -57,7 +79,7 @@ public class MonVLisUdUpdKoByErr implements MonVLisUdUpdKoInterface {
     private Timestamp tsIniSes;
     private Timestamp tsIniLastSes;
 
-    public MonVLisUdUpdKoByErr() {
+    public MonVLisUdUpdKoByErr() {/* Hibernate */
     }
 
     public MonVLisUdUpdKoByErr(BigDecimal idUserIamCor, BigDecimal idAmbiente, String nmAmbiente, BigDecimal idEnte,
@@ -82,6 +104,38 @@ public class MonVLisUdUpdKoByErr implements MonVLisUdUpdKoInterface {
         this.cdKeyUnitaDoc = cdKeyUnitaDoc;
         this.tiStatoUpdUdKo = tiStatoUpdUdKo;
         this.tsIniLastSes = tsIniLastSes;
+        this.idSesUpdUdKoLast = idSesUpdUdKoLast;
+        this.idUpdUnitaDocKo = idUpdUnitaDocKo;
+        this.dsTsIniLastSes = dsTsIniLastSes;
+        this.dsEnteStrut = dsEnteStrut;
+        this.dsUnitaDoc = dsUnitaDoc;
+        this.dsErrPrincLast = dsErrPrincLast;
+        this.cdErrPrincLast = cdErrPrincLast;
+        this.cdControlloWsPrincLast = cdControlloWsPrincLast;
+    }
+
+    public MonVLisUdUpdKoByErr(BigDecimal idUserIamCor, BigDecimal idAmbiente, String nmAmbiente, BigDecimal idEnte,
+            String nmEnte, BigDecimal idStrut, String nmStrut, BigDecimal idTipoUnitaDocLast, String nmTipoUnitaDocLast,
+            String cdRegistroKeyUnitaDoc, BigDecimal idTipoDocPrincLast, String nmTipoDocPrincLast,
+            BigDecimal aaKeyUnitaDoc, String cdKeyUnitaDoc, String tiStatoUpdUdKo, Date tsIniLastSes,
+            BigDecimal idSesUpdUdKoLast, BigDecimal idUpdUnitaDocKo, String dsTsIniLastSes, String dsEnteStrut,
+            String dsUnitaDoc, String dsErrPrincLast, String cdErrPrincLast, String cdControlloWsPrincLast) {
+        this.idUserIamCor = idUserIamCor;
+        this.idAmbiente = idAmbiente;
+        this.nmAmbiente = nmAmbiente;
+        this.idEnte = idEnte;
+        this.nmEnte = nmEnte;
+        this.idStrut = idStrut;
+        this.nmStrut = nmStrut;
+        this.idTipoUnitaDocLast = idTipoUnitaDocLast;
+        this.nmTipoUnitaDocLast = nmTipoUnitaDocLast;
+        this.cdRegistroKeyUnitaDoc = cdRegistroKeyUnitaDoc;
+        this.idTipoDocPrincLast = idTipoDocPrincLast;
+        this.nmTipoDocPrincLast = nmTipoDocPrincLast;
+        this.aaKeyUnitaDoc = aaKeyUnitaDoc;
+        this.cdKeyUnitaDoc = cdKeyUnitaDoc;
+        this.tiStatoUpdUdKo = tiStatoUpdUdKo;
+        this.tsIniLastSes = new Timestamp(tsIniLastSes.getTime());
         this.idSesUpdUdKoLast = idSesUpdUdKoLast;
         this.idUpdUnitaDocKo = idUpdUnitaDocKo;
         this.dsTsIniLastSes = dsTsIniLastSes;

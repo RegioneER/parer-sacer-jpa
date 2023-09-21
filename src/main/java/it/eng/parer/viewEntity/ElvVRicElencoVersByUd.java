@@ -1,13 +1,36 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 /**
  * The persistent class for the ELV_V_RIC_ELENCO_VERS_BY_UD database table.
- *
  */
 @Entity
 @Table(name = "ELV_V_RIC_ELENCO_VERS_BY_UD")
@@ -15,46 +38,80 @@ import java.util.Date;
 public class ElvVRicElencoVersByUd implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     private BigDecimal aaKeyUnitaDoc;
+
     private String cdKeyUnitaDoc;
+
     private String cdRegistroKeyUnitaDoc;
+
     private String dsElenco;
+
     private Date dtChius;
+
     private Date dtCreazioneElenco;
+
     private Date dtCreazioneElencoIxAip;
+
     private Date dtFirmaElencoIxAip;
+
     private Date dtFirmaIndice;
+
     private String flElencoFisc;
+
     private String flElencoStandard;
+
     private String flElencoFirmato;
+
     private BigDecimal idAmbiente;
+
     private BigDecimal idCriterioRaggr;
-    private BigDecimal idElencoVers;
+
     private BigDecimal idEnte;
+
     private BigDecimal idRegistroUnitaDoc;
+
     private BigDecimal idStrut;
+
     private BigDecimal idStrutUniDoc;
-    private BigDecimal idUnitaDoc;
+
     private BigDecimal idUserIam;
+
     private BigDecimal niCompAggElenco;
+
     private BigDecimal niCompVersElenco;
+
     private BigDecimal niIndiciAip;
+
     private BigDecimal niSizeAggElenco;
+
     private BigDecimal niSizeVersElenco;
+
     private String nmAmbiente;
+
     private String nmCriterioRaggr;
+
     private String nmElenco;
+
     private String nmEnte;
+
     private String nmStrut;
+
     private String ntElencoChiuso;
+
     private String ntIndiceElenco;
+
     private String tiStatoElenco;
+
     private String tiValidElenco;
+
     private String tiModValidElenco;
+
     private String tiGestElenco;
+
     private Date tsStatoElencoInCodaJms;
 
-    public ElvVRicElencoVersByUd() {
+    public ElvVRicElencoVersByUd() {/* Hibernate */
     }
 
     public ElvVRicElencoVersByUd(BigDecimal idElencoVers, String nmElenco, String dsElenco, String tiStatoElenco,
@@ -63,7 +120,8 @@ public class ElvVRicElencoVersByUd implements Serializable {
             BigDecimal idCriterioRaggr, String nmCriterioRaggr, String nmAmbiente, String nmEnte, String nmStrut,
             String flElencoFisc, String flElencoStandard, String flElencoFirmato, BigDecimal niIndiciAip,
             Date dtCreazioneElencoIxAip, Date dtFirmaElencoIxAip, Date tsStatoElencoInCodaJms) {
-        this.idElencoVers = idElencoVers;
+        this.elvVRicElencoVersByUdId = new ElvVRicElencoVersByUdId();
+        this.elvVRicElencoVersByUdId.setIdElencoVers(idElencoVers);
         this.nmElenco = nmElenco;
         this.dsElenco = dsElenco;
         this.tiStatoElenco = tiStatoElenco;
@@ -175,7 +233,7 @@ public class ElvVRicElencoVersByUd implements Serializable {
         this.dtFirmaIndice = dtFirmaIndice;
     }
 
-    @Column(name = "FL_ELENCO_FISC")
+    @Column(name = "FL_ELENCO_FISC", columnDefinition = "char(1)")
     public String getFlElencoFisc() {
         return this.flElencoFisc;
     }
@@ -184,7 +242,7 @@ public class ElvVRicElencoVersByUd implements Serializable {
         this.flElencoFisc = flElencoFisc;
     }
 
-    @Column(name = "FL_ELENCO_STANDARD")
+    @Column(name = "FL_ELENCO_STANDARD", columnDefinition = "char(1)")
     public String getFlElencoStandard() {
         return this.flElencoStandard;
     }
@@ -193,7 +251,7 @@ public class ElvVRicElencoVersByUd implements Serializable {
         this.flElencoStandard = flElencoStandard;
     }
 
-    @Column(name = "FL_ELENCO_FIRMATO")
+    @Column(name = "FL_ELENCO_FIRMATO", columnDefinition = "char(1)")
     public String getFlElencoFirmato() {
         return this.flElencoFirmato;
     }
@@ -218,16 +276,6 @@ public class ElvVRicElencoVersByUd implements Serializable {
 
     public void setIdCriterioRaggr(BigDecimal idCriterioRaggr) {
         this.idCriterioRaggr = idCriterioRaggr;
-    }
-
-    @Id
-    @Column(name = "ID_ELENCO_VERS")
-    public BigDecimal getIdElencoVers() {
-        return this.idElencoVers;
-    }
-
-    public void setIdElencoVers(BigDecimal idElencoVers) {
-        this.idElencoVers = idElencoVers;
     }
 
     @Column(name = "ID_ENTE")
@@ -264,16 +312,6 @@ public class ElvVRicElencoVersByUd implements Serializable {
 
     public void setIdStrutUniDoc(BigDecimal idStrutUniDoc) {
         this.idStrutUniDoc = idStrutUniDoc;
-    }
-
-    @Id
-    @Column(name = "ID_UNITA_DOC")
-    public BigDecimal getIdUnitaDoc() {
-        return this.idUnitaDoc;
-    }
-
-    public void setIdUnitaDoc(BigDecimal idUnitaDoc) {
-        this.idUnitaDoc = idUnitaDoc;
     }
 
     @Column(name = "ID_USER_IAM")
@@ -437,5 +475,16 @@ public class ElvVRicElencoVersByUd implements Serializable {
 
     public void setTsStatoElencoInCodaJms(Date tsStatoElencoInCodaJms) {
         this.tsStatoElencoInCodaJms = tsStatoElencoInCodaJms;
+    }
+
+    private ElvVRicElencoVersByUdId elvVRicElencoVersByUdId;
+
+    @EmbeddedId()
+    public ElvVRicElencoVersByUdId getElvVRicElencoVersByUdId() {
+        return elvVRicElencoVersByUdId;
+    }
+
+    public void setElvVRicElencoVersByUdId(ElvVRicElencoVersByUdId elvVRicElencoVersByUdId) {
+        this.elvVRicElencoVersByUdId = elvVRicElencoVersByUdId;
     }
 }

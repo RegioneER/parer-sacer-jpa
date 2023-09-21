@@ -1,9 +1,33 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the ELV_V_RIC_ELENCO_FASC_BY_STATO database table.
@@ -43,7 +67,7 @@ public class ElvVRicElencoFascByStato implements Serializable {
     private Date dtCreazioneElencoIxAip;
     private String flAnnull;
 
-    public ElvVRicElencoFascByStato() {
+    public ElvVRicElencoFascByStato() {/* Hibernate */
     }
 
     public ElvVRicElencoFascByStato(BigDecimal idElencoVersFasc, String tiStato, BigDecimal aaFascicolo,
@@ -121,7 +145,7 @@ public class ElvVRicElencoFascByStato implements Serializable {
         this.dlMotivoChius = dlMotivoChius;
     }
 
-    @Column(name = "FL_ELENCO_STANDARD")
+    @Column(name = "FL_ELENCO_STANDARD", columnDefinition = "char(1)")
     public String getFlElencoStandard() {
         return this.flElencoStandard;
     }
@@ -313,7 +337,7 @@ public class ElvVRicElencoFascByStato implements Serializable {
         this.dtCreazioneElencoIxAip = dtCreazioneElencoIxAip;
     }
 
-    @Column(name = "FL_ANNULL")
+    @Column(name = "FL_ANNULL", columnDefinition = "char(1)")
     public String getFlAnnull() {
         return this.flAnnull;
     }

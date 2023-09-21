@@ -1,53 +1,112 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
-
-import it.eng.parer.entity.constraint.VrsUpdUnitaDocKo.TiStatoUdpUdKo;
-
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
+
+import it.eng.parer.entity.constraint.VrsUpdUnitaDocKo.TiStatoUdpUdKo;
+
 /**
  * The persistent class for the VRS_UPD_UNITA_DOC_KO database table.
- * 
  */
 @Entity
 @Table(name = "VRS_UPD_UNITA_DOC_KO")
 @NamedQuery(name = "VrsUpdUnitaDocKo.findAll", query = "SELECT v FROM VrsUpdUnitaDocKo v")
 public class VrsUpdUnitaDocKo implements Serializable {
-    private static final long serialVersionUID = 1L;
-    private long idUpdUnitaDocKo;
-    private BigDecimal aaKeyUnitaDoc;
-    private String cdKeyUnitaDoc;
-    private String cdRegistroKeyUnitaDoc;
-    private String dsErrPrinc;
-    private DecControlloWs decControlloWsPrinc;
-    private DecErrSacer decErrSacerPrinc;
-    private DecRegistroUnitaDoc decRegistroUnitaDocLast;
-    private VrsSesUpdUnitaDocKo vrsSesUpdUnitaDocKoFirst;
-    private VrsSesUpdUnitaDocKo vrsSesUpdUnitaDocKoLast;
-    private OrgStrut orgStrut;
-    private DecTipoDoc decTipoDocPrincLast;
-    private DecTipoUnitaDoc decTipoUnitaDocLast;
-    private TiStatoUdpUdKo tiStatoUdpUdKo;
-    private Date tsIniFirstSes;
-    private Date tsIniLastSes;
-    private List<VrsSesUpdUnitaDocKo> vrsSesUpdUnitaDocKos;
 
-    public VrsUpdUnitaDocKo() {
+    private static final long serialVersionUID = 1L;
+
+    private Long idUpdUnitaDocKo;
+
+    private BigDecimal aaKeyUnitaDoc;
+
+    private String cdKeyUnitaDoc;
+
+    private String cdRegistroKeyUnitaDoc;
+
+    private String dsErrPrinc;
+
+    private DecControlloWs decControlloWsPrinc;
+
+    private DecErrSacer decErrSacerPrinc;
+
+    private DecRegistroUnitaDoc decRegistroUnitaDocLast;
+
+    private VrsSesUpdUnitaDocKo vrsSesUpdUnitaDocKoFirst;
+
+    private VrsSesUpdUnitaDocKo vrsSesUpdUnitaDocKoLast;
+
+    private OrgStrut orgStrut;
+
+    private DecTipoDoc decTipoDocPrincLast;
+
+    private DecTipoUnitaDoc decTipoUnitaDocLast;
+
+    private TiStatoUdpUdKo tiStatoUdpUdKo;
+
+    private Date tsIniFirstSes;
+
+    private Date tsIniLastSes;
+
+    private List<VrsSesUpdUnitaDocKo> vrsSesUpdUnitaDocKos = new ArrayList<>();
+
+    public VrsUpdUnitaDocKo() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "VRS_UPD_UNITA_DOC_KO_IDUPDUNITADOCKO_GENERATOR", sequenceName = "SVRS_UPD_UNITA_DOC_KO", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VRS_UPD_UNITA_DOC_KO_IDUPDUNITADOCKO_GENERATOR")
+    // "VRS_UPD_UNITA_DOC_KO_IDUPDUNITADOCKO_GENERATOR",
+    // sequenceName = "SVRS_UPD_UNITA_DOC_KO",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VRS_UPD_UNITA_DOC_KO_IDUPDUNITADOCKO_GENERATOR")
     @Column(name = "ID_UPD_UNITA_DOC_KO")
-    public long getIdUpdUnitaDocKo() {
+    @GenericGenerator(name = "SVRS_UPD_UNITA_DOC_KO_ID_UPD_UNITA_DOC_KO_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SVRS_UPD_UNITA_DOC_KO"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SVRS_UPD_UNITA_DOC_KO_ID_UPD_UNITA_DOC_KO_GENERATOR")
+    public Long getIdUpdUnitaDocKo() {
         return this.idUpdUnitaDocKo;
     }
 
-    public void setIdUpdUnitaDocKo(long idUpdUnitaDocKo) {
+    public void setIdUpdUnitaDocKo(Long idUpdUnitaDocKo) {
         this.idUpdUnitaDocKo = idUpdUnitaDocKo;
     }
 

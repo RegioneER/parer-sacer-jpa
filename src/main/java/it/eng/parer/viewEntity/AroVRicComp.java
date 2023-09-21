@@ -1,13 +1,36 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 /**
  * The persistent class for the ARO_V_RIC_COMP database table.
- *
  */
 @Entity
 @Table(name = "ARO_V_RIC_COMP")
@@ -15,58 +38,104 @@ import java.util.Date;
 public class AroVRicComp implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     private BigDecimal aaKeyUnitaDoc;
+
     private String cdEncodingHashFileCalc;
+
     private String cdKeyUnitaDoc;
+
     private String cdRegistroKeyUnitaDoc;
+
     private String dlUrnCompVers;
+
     private String dsAlgoHashFileCalc;
+
     private String dsFormatoRapprCalc;
+
     private String dsFormatoRapprEstesoCalc;
+
     private String dsHashFileCalc;
+
     private String dsHashFileVers;
+
     private String dsIdCompVers;
+
     private String dsNomeCompVers;
+
     private String dsOrdComp;
+
     private String dsRifTempVers;
+
     private String dsUrnCompCalc;
+
     private String dsUrnCompCalcShort;
+
     private Date dtCreazioneDoc;
+
     private Date dtScadCertifFirmatario;
+
     private String flCompFirmato;
+
     private String flForzaAccettazione;
+
     private String flForzaConservazione;
+
     private String flHashVers;
+
     private String flRifTempVers;
-    private BigDecimal idCompDoc;
+
     private BigDecimal idDoc;
-    private BigDecimal idFirmaComp;
+
     private BigDecimal idFormatoFileDocVers;
+
     private BigDecimal idRegistroUnitaDoc;
+
     private BigDecimal idStrutDoc;
+
     private BigDecimal idStrutFormatoFileVers;
+
     private BigDecimal idStrutTipoStrut;
+
     private BigDecimal idStrutUnitaDoc;
+
     private BigDecimal idSubStrut;
+
     private BigDecimal idTipoCompDoc;
+
     private BigDecimal idTipoDoc;
+
     private BigDecimal idTipoStrutDoc;
+
     private BigDecimal idTipoUnitaDoc;
+
     private BigDecimal idUnitaDoc;
+
     private BigDecimal niSizeFileCalc;
+
     private String nmFormatoFileDocVers;
+
     private String nmMimetypeFile;
+
     private String nmTipoCompDoc;
+
     private String nmTipoRapprComp;
+
     private String nmTipoStrutDoc;
+
     private String tiEsitoContrConforme;
+
     private String tiEsitoContrFormatoFile;
+
     private String tiEsitoVerifFirmeVers;
+
     private String tiStatoConservazione;
+
     private String tiStatoElencoVers;
+
     private String tiSupportoComp;
 
-    public AroVRicComp() {
+    public AroVRicComp() {/* Hibernate */
     }
 
     public AroVRicComp(BigDecimal idCompDoc, BigDecimal idFirmaComp, String dsUrnCompCalc, String dsUrnCompCalcShort,
@@ -74,8 +143,9 @@ public class AroVRicComp implements Serializable {
             String nmFormatoFileDocVers, Date dtCreazioneDoc, BigDecimal niFileSizeCalc, String flCompFirmato,
             String tiEsitoVerifFirmeVers, BigDecimal idUnitaDoc, BigDecimal idStrutUnitaDoc, String tiStatoElencoVers,
             String tiStatoConservazione) {
-        this.idCompDoc = idCompDoc;
-        this.idFirmaComp = idFirmaComp;
+        this.aroVRicCompId = new AroVRicCompId();
+        this.aroVRicCompId.setIdCompDoc(idCompDoc);
+        this.aroVRicCompId.setIdFirmaComp(idFirmaComp);
         this.dsUrnCompCalc = dsUrnCompCalc;
         this.dsUrnCompCalcShort = dsUrnCompCalcShort;
         this.dsNomeCompVers = dsNomeCompVers;
@@ -94,10 +164,13 @@ public class AroVRicComp implements Serializable {
         this.tiStatoConservazione = tiStatoConservazione;
     }
 
-    public AroVRicComp(BigDecimal idCompDoc, String dsUrnCompCalc, String dsNomeCompVers, String tiSupportoComp,
-            String nmTipoCompDoc, String nmFormatoFileDocVers, Date dtCreazioneDoc, BigDecimal niFileSizeCalc,
-            String flCompFirmato, String tiEsitoVerifFirmeVers, String tiStatoElencoVers, String tiStatoConservazione) {
-        this.idCompDoc = idCompDoc;
+    public AroVRicComp(BigDecimal idCompDoc, BigDecimal idFirmaComp, String dsUrnCompCalc, String dsNomeCompVers,
+            String tiSupportoComp, String nmTipoCompDoc, String nmFormatoFileDocVers, Date dtCreazioneDoc,
+            BigDecimal niFileSizeCalc, String flCompFirmato, String tiEsitoVerifFirmeVers, String tiStatoElencoVers,
+            String tiStatoConservazione, String dsOrdComp) {
+        this.aroVRicCompId = new AroVRicCompId();
+        this.aroVRicCompId.setIdCompDoc(idCompDoc);
+        this.aroVRicCompId.setIdFirmaComp(idFirmaComp);
         this.dsUrnCompCalc = dsUrnCompCalc;
         this.dsNomeCompVers = dsNomeCompVers;
         this.tiSupportoComp = tiSupportoComp;
@@ -109,6 +182,7 @@ public class AroVRicComp implements Serializable {
         this.tiEsitoVerifFirmeVers = tiEsitoVerifFirmeVers;
         this.tiStatoElencoVers = tiStatoElencoVers;
         this.tiStatoConservazione = tiStatoConservazione;
+        this.dsOrdComp = dsOrdComp;
     }
 
     @Column(name = "AA_KEY_UNITA_DOC")
@@ -275,7 +349,7 @@ public class AroVRicComp implements Serializable {
         this.dtScadCertifFirmatario = dtScadCertifFirmatario;
     }
 
-    @Column(name = "FL_COMP_FIRMATO")
+    @Column(name = "FL_COMP_FIRMATO", columnDefinition = "char(1)")
     public String getFlCompFirmato() {
         return this.flCompFirmato;
     }
@@ -284,7 +358,7 @@ public class AroVRicComp implements Serializable {
         this.flCompFirmato = flCompFirmato;
     }
 
-    @Column(name = "FL_FORZA_ACCETTAZIONE")
+    @Column(name = "FL_FORZA_ACCETTAZIONE", columnDefinition = "char(1)")
     public String getFlForzaAccettazione() {
         return this.flForzaAccettazione;
     }
@@ -293,7 +367,7 @@ public class AroVRicComp implements Serializable {
         this.flForzaAccettazione = flForzaAccettazione;
     }
 
-    @Column(name = "FL_FORZA_CONSERVAZIONE")
+    @Column(name = "FL_FORZA_CONSERVAZIONE", columnDefinition = "char(1)")
     public String getFlForzaConservazione() {
         return this.flForzaConservazione;
     }
@@ -302,7 +376,7 @@ public class AroVRicComp implements Serializable {
         this.flForzaConservazione = flForzaConservazione;
     }
 
-    @Column(name = "FL_HASH_VERS")
+    @Column(name = "FL_HASH_VERS", columnDefinition = "char(1)")
     public String getFlHashVers() {
         return this.flHashVers;
     }
@@ -311,23 +385,13 @@ public class AroVRicComp implements Serializable {
         this.flHashVers = flHashVers;
     }
 
-    @Column(name = "FL_RIF_TEMP_VERS")
+    @Column(name = "FL_RIF_TEMP_VERS", columnDefinition = "char(1)")
     public String getFlRifTempVers() {
         return this.flRifTempVers;
     }
 
     public void setFlRifTempVers(String flRifTempVers) {
         this.flRifTempVers = flRifTempVers;
-    }
-
-    @Id
-    @Column(name = "ID_COMP_DOC")
-    public BigDecimal getIdCompDoc() {
-        return this.idCompDoc;
-    }
-
-    public void setIdCompDoc(BigDecimal idCompDoc) {
-        this.idCompDoc = idCompDoc;
     }
 
     @Column(name = "ID_DOC")
@@ -337,16 +401,6 @@ public class AroVRicComp implements Serializable {
 
     public void setIdDoc(BigDecimal idDoc) {
         this.idDoc = idDoc;
-    }
-
-    @Id
-    @Column(name = "ID_FIRMA_COMP")
-    public BigDecimal getIdFirmaComp() {
-        return this.idFirmaComp;
-    }
-
-    public void setIdFirmaComp(BigDecimal idFirmaComp) {
-        this.idFirmaComp = idFirmaComp;
     }
 
     @Column(name = "ID_FORMATO_FILE_DOC_VERS")
@@ -565,4 +619,14 @@ public class AroVRicComp implements Serializable {
         this.tiSupportoComp = tiSupportoComp;
     }
 
+    private AroVRicCompId aroVRicCompId;
+
+    @EmbeddedId()
+    public AroVRicCompId getAroVRicCompId() {
+        return aroVRicCompId;
+    }
+
+    public void setAroVRicCompId(AroVRicCompId aroVRicCompId) {
+        this.aroVRicCompId = aroVRicCompId;
+    }
 }

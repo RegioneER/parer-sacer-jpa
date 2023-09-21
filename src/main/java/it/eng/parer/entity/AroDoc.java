@@ -1,10 +1,47 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 /**
  * The persistent class for the ARO_DOC database table.
@@ -15,7 +52,7 @@ import java.util.List;
 public class AroDoc implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idDoc;
+    private Long idDoc;
     private String cdKeyDocVers;
     private String dlDoc;
     private String dsAutoreDoc;
@@ -44,30 +81,35 @@ public class AroDoc implements Serializable {
     private Date tsLastResetStato;
     private AroUnitaDoc aroUnitaDoc;
     private DecTipoDoc decTipoDoc;
-    private long idDecTipoDoc;
-    private List<AroStrutDoc> aroStrutDocs;
-    private List<AroUsoXsdDatiSpec> aroUsoXsdDatiSpecs;
-    private List<AroWarnUnitaDoc> aroWarnUnitaDocs;
-    private List<RecSessioneRecup> recSessioneRecups;
-    private List<VolAppartDocVolume> volAppartDocVolumes;
-    private List<VrsSessioneVers> vrsSessioneVers;
+    private Long idDecTipoDoc;
+    private AroXmlDocObjectStorage aroXmlDocObjectStorage;
+
+    private List<AroStrutDoc> aroStrutDocs = new ArrayList<>();
+    private List<AroUsoXsdDatiSpec> aroUsoXsdDatiSpecs = new ArrayList<>();
+    private List<AroWarnUnitaDoc> aroWarnUnitaDocs = new ArrayList<>();
+    private List<RecSessioneRecup> recSessioneRecups = new ArrayList<>();
+    private List<VolAppartDocVolume> volAppartDocVolumes = new ArrayList<>();
+    private List<VrsSessioneVers> vrsSessioneVers = new ArrayList<>();
     private ElvElencoVer elvElencoVer;
-    private List<ElvDocAggDaElabElenco> elvDocAggDaElabElencos;
-    private List<AroVersIniDoc> aroVersIniDocs;
-    private List<AroUpdDocUnitaDoc> aroUpdDocUnitaDocs;
+    private List<ElvDocAggDaElabElenco> elvDocAggDaElabElencos = new ArrayList<>();
+    private List<AroVersIniDoc> aroVersIniDocs = new ArrayList<>();
+    private List<AroUpdDocUnitaDoc> aroUpdDocUnitaDocs = new ArrayList<>();
 
     public AroDoc() {
+        // hibernate
     }
 
     @Id
-    @SequenceGenerator(name = "ARO_DOC_IDDOC_GENERATOR", sequenceName = "SARO_DOC", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ARO_DOC_IDDOC_GENERATOR")
     @Column(name = "ID_DOC")
-    public long getIdDoc() {
+    @GenericGenerator(name = "ARO_DOC_ID_DOC_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SARO_DOC"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ARO_DOC_ID_DOC_GENERATOR")
+    public Long getIdDoc() {
         return this.idDoc;
     }
 
-    public void setIdDoc(long idDoc) {
+    public void setIdDoc(Long idDoc) {
         this.idDoc = idDoc;
     }
 
@@ -127,7 +169,7 @@ public class AroDoc implements Serializable {
         this.dtCreazione = dtCreazione;
     }
 
-    @Column(name = "FL_DOC_FIRMATO")
+    @Column(name = "FL_DOC_FIRMATO", columnDefinition = "char(1)")
     public String getFlDocFirmato() {
         return this.flDocFirmato;
     }
@@ -136,7 +178,7 @@ public class AroDoc implements Serializable {
         this.flDocFirmato = flDocFirmato;
     }
 
-    @Column(name = "FL_DOC_FISC")
+    @Column(name = "FL_DOC_FISC", columnDefinition = "char(1)")
     public String getFlDocFisc() {
         return this.flDocFisc;
     }
@@ -145,7 +187,7 @@ public class AroDoc implements Serializable {
         this.flDocFisc = flDocFisc;
     }
 
-    @Column(name = "FL_FORZA_ACCETTAZIONE")
+    @Column(name = "FL_FORZA_ACCETTAZIONE", columnDefinition = "char(1)")
     public String getFlForzaAccettazione() {
         return this.flForzaAccettazione;
     }
@@ -154,7 +196,7 @@ public class AroDoc implements Serializable {
         this.flForzaAccettazione = flForzaAccettazione;
     }
 
-    @Column(name = "FL_FORZA_CONSERVAZIONE")
+    @Column(name = "FL_FORZA_CONSERVAZIONE", columnDefinition = "char(1)")
     public String getFlForzaConservazione() {
         return this.flForzaConservazione;
     }
@@ -310,11 +352,11 @@ public class AroDoc implements Serializable {
     }
 
     @Column(name = "ID_TIPO_DOC", insertable = false, updatable = false)
-    public long getIdDecTipoDoc() {
+    public Long getIdDecTipoDoc() {
         return idDecTipoDoc;
     }
 
-    public void setIdDecTipoDoc(long idDecTipoDoc) {
+    public void setIdDecTipoDoc(Long idDecTipoDoc) {
         this.idDecTipoDoc = idDecTipoDoc;
     }
 
@@ -439,6 +481,16 @@ public class AroDoc implements Serializable {
 
     public void setAroUpdDocUnitaDocs(List<AroUpdDocUnitaDoc> aroUpdDocUnitaDocs) {
         this.aroUpdDocUnitaDocs = aroUpdDocUnitaDocs;
+    }
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    public AroXmlDocObjectStorage getAroXmlDocObjectStorage() {
+        return aroXmlDocObjectStorage;
+    }
+
+    public void setAroXmlDocObjectStorage(AroXmlDocObjectStorage aroXmlDocObjectStorage) {
+        this.aroXmlDocObjectStorage = aroXmlDocObjectStorage;
     }
 
 }

@@ -1,13 +1,36 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 /**
  * The persistent class for the ARO_V_RIC_RICH_ANNVRS database table.
- *
  */
 @Entity
 @Table(name = "ARO_V_RIC_RICH_ANNVRS")
@@ -15,35 +38,58 @@ import java.util.Date;
 public class AroVRicRichAnnvrs implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     private BigDecimal aaFascicolo;
+
     private BigDecimal aaKeyUnitaDoc;
+
     private String cdKeyFascicolo;
+
     private String cdKeyUnitaDoc;
+
     private String cdRegistroKeyUnitaDoc;
+
     private String cdRichAnnulVers;
+
     private String dsRichAnnulVers;
+
     private Date dtCreazioneRichAnnulVers;
+
     private String flAnnulPing;
+
     private String flImmediata;
+
     private String flNonAnnul;
+
     private BigDecimal idAmbiente;
+
     private BigDecimal idEnte;
+
     private BigDecimal idItemRichAnnulVers;
-    private BigDecimal idRichAnnulVers;
+
     private BigDecimal idStrut;
-    private BigDecimal idUserIam;
+
     private BigDecimal niItem;
+
     private BigDecimal niItemNonAnnul;
+
     private BigDecimal niItemPing;
+
     private String nmAmbiente;
+
     private String nmEnte;
+
     private String nmStrut;
+
     private String ntRichAnnulVers;
+
     private String tiCreazioneRichAnnulVers;
+
     private String tiRichAnnulVers;
+
     private String tiStatoRichAnnulVersCor;
 
-    public AroVRicRichAnnvrs() {
+    public AroVRicRichAnnvrs() {/* Hibernate */
     }
 
     public AroVRicRichAnnvrs(String cdRichAnnulVers, String dsRichAnnulVers, Date dtCreazioneRichAnnulVers,
@@ -59,9 +105,10 @@ public class AroVRicRichAnnvrs implements Serializable {
         this.flNonAnnul = flNonAnnul;
         this.idAmbiente = idAmbiente;
         this.idEnte = idEnte;
-        this.idRichAnnulVers = idRichAnnulVers;
+        this.aroVRicRichAnnvrsId = new AroVRicRichAnnvrsId();
+        this.aroVRicRichAnnvrsId.setIdRichAnnulVers(idRichAnnulVers);
+        this.aroVRicRichAnnvrsId.setIdUserIam(idUserIam);
         this.idStrut = idStrut;
-        this.idUserIam = idUserIam;
         this.niItem = niItem;
         this.niItemNonAnnul = niItemNonAnnul;
         this.niItemPing = niItemPing;
@@ -146,7 +193,7 @@ public class AroVRicRichAnnvrs implements Serializable {
         this.dtCreazioneRichAnnulVers = dtCreazioneRichAnnulVers;
     }
 
-    @Column(name = "FL_ANNUL_PING")
+    @Column(name = "FL_ANNUL_PING", columnDefinition = "char(1)")
     public String getFlAnnulPing() {
         return this.flAnnulPing;
     }
@@ -155,7 +202,7 @@ public class AroVRicRichAnnvrs implements Serializable {
         this.flAnnulPing = flAnnulPing;
     }
 
-    @Column(name = "FL_IMMEDIATA")
+    @Column(name = "FL_IMMEDIATA", columnDefinition = "char(1)")
     public String getFlImmediata() {
         return this.flImmediata;
     }
@@ -164,7 +211,7 @@ public class AroVRicRichAnnvrs implements Serializable {
         this.flImmediata = flImmediata;
     }
 
-    @Column(name = "FL_NON_ANNUL")
+    @Column(name = "FL_NON_ANNUL", columnDefinition = "char(1)")
     public String getFlNonAnnul() {
         return this.flNonAnnul;
     }
@@ -200,16 +247,6 @@ public class AroVRicRichAnnvrs implements Serializable {
         this.idItemRichAnnulVers = idItemRichAnnulVers;
     }
 
-    @Id
-    @Column(name = "ID_RICH_ANNUL_VERS")
-    public BigDecimal getIdRichAnnulVers() {
-        return this.idRichAnnulVers;
-    }
-
-    public void setIdRichAnnulVers(BigDecimal idRichAnnulVers) {
-        this.idRichAnnulVers = idRichAnnulVers;
-    }
-
     @Column(name = "ID_STRUT")
     public BigDecimal getIdStrut() {
         return this.idStrut;
@@ -217,16 +254,6 @@ public class AroVRicRichAnnvrs implements Serializable {
 
     public void setIdStrut(BigDecimal idStrut) {
         this.idStrut = idStrut;
-    }
-
-    @Id
-    @Column(name = "ID_USER_IAM")
-    public BigDecimal getIdUserIam() {
-        return this.idUserIam;
-    }
-
-    public void setIdUserIam(BigDecimal idUserIam) {
-        this.idUserIam = idUserIam;
     }
 
     @Column(name = "NI_ITEM")
@@ -319,4 +346,14 @@ public class AroVRicRichAnnvrs implements Serializable {
         this.tiStatoRichAnnulVersCor = tiStatoRichAnnulVersCor;
     }
 
+    private AroVRicRichAnnvrsId aroVRicRichAnnvrsId;
+
+    @EmbeddedId()
+    public AroVRicRichAnnvrsId getAroVRicRichAnnvrsId() {
+        return aroVRicRichAnnvrsId;
+    }
+
+    public void setAroVRicRichAnnvrsId(AroVRicRichAnnvrsId aroVRicRichAnnvrsId) {
+        this.aroVRicRichAnnvrsId = aroVRicRichAnnvrsId;
+    }
 }

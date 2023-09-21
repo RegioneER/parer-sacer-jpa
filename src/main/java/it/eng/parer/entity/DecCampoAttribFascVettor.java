@@ -1,7 +1,25 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -23,7 +41,7 @@ import javax.xml.bind.annotation.XmlID;
 public class DecCampoAttribFascVettor implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idCampoAttribFascVettor;
+    private Long idCampoAttribFascVettor;
     private DecModelloXsdAttribFascicolo decModelloXsdAttribFascicolo;
     private String nmCampo;
     private String dsCampo;
@@ -44,11 +62,11 @@ public class DecCampoAttribFascVettor implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DEC_CAMPO_ATTRIB_FASC_VETTOR_IDCAMPOATTRIBFASCVETTOR_GENERATOR")
     @Column(name = "ID_CAMPO_ATTRIB_FASC_VETTOR")
     @XmlID
-    public long getIdCampoAttribFascVettor() {
+    public Long getIdCampoAttribFascVettor() {
         return this.idCampoAttribFascVettor;
     }
 
-    public void setIdCampoAttribFascVettor(long idCampoAttribFascVettor) {
+    public void setIdCampoAttribFascVettor(Long idCampoAttribFascVettor) {
         this.idCampoAttribFascVettor = idCampoAttribFascVettor;
     }
 
@@ -99,7 +117,7 @@ public class DecCampoAttribFascVettor implements Serializable {
         this.niOrd = niOrd;
     }
 
-    @Column(name = "FL_OBBL")
+    @Column(name = "FL_OBBL", columnDefinition = "CHAR")
     public String getCdXsd() {
         return this.flObbl;
     }

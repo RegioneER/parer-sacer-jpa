@@ -1,14 +1,49 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
+
 /**
  * The persistent class for the ELV_ELENCO_VERS_FASC database table.
- *
  */
 @Entity
 @Table(name = "ELV_ELENCO_VERS_FASC")
@@ -16,45 +51,78 @@ import java.util.List;
 public class ElvElencoVersFasc implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idElencoVersFasc;
-    private BigDecimal aaFascicolo;
-    private String dlMotivoChius;
-    private String dsUrnElenco;
-    private String dsUrnNormalizElenco;
-    private Date dtScadChius;
-    private String flElencoStandard;
-    private BigDecimal idStatoElencoVersFascCor;
-    private BigDecimal niFascVersElenco;
-    private BigDecimal niMaxFascCrit;
-    private BigDecimal niTempoScadChiusCrit;
-    private BigDecimal niIndiciAip;
-    private String ntElencoChiuso;
-    private String ntIndiceElenco;
-    private String tiScadChiusCrit;
-    private String tiTempoScadChiusCrit;
-    private Date tsCreazioneElenco;
-    private List<FasFascicolo> fasFascicoli;
-    private DecCriterioRaggrFasc decCriterioRaggrFasc;
-    private OrgStrut orgStrut;
-    private List<ElvElencoVersFascDaElab> elvElencoVersFascDaElabs;
-    private List<ElvStatoElencoVersFasc> elvStatoElencoVersFascicoli;
-    private List<ElvFileElencoVersFasc> elvFileElencoVersFasc;
-    private List<FasVerAipFascicolo> fasVerAipFascicolos;
-    private List<FasAipFascicoloDaElab> fasAipFascicoloDaElabs;
-    private List<ElvElencoVersFascAnnul> elvElencoVersFascAnnuls;
 
-    public ElvElencoVersFasc() {
+    private Long idElencoVersFasc;
+
+    private BigDecimal aaFascicolo;
+
+    private String dlMotivoChius;
+
+    private String dsUrnElenco;
+
+    private String dsUrnNormalizElenco;
+
+    private Date dtScadChius;
+
+    private String flElencoStandard;
+
+    private BigDecimal idStatoElencoVersFascCor;
+
+    private BigDecimal niFascVersElenco;
+
+    private BigDecimal niMaxFascCrit;
+
+    private BigDecimal niTempoScadChiusCrit;
+
+    private BigDecimal niIndiciAip;
+
+    private String ntElencoChiuso;
+
+    private String ntIndiceElenco;
+
+    private String tiScadChiusCrit;
+
+    private String tiTempoScadChiusCrit;
+
+    private Date tsCreazioneElenco;
+
+    private List<FasFascicolo> fasFascicoli = new ArrayList<>();
+
+    private DecCriterioRaggrFasc decCriterioRaggrFasc;
+
+    private OrgStrut orgStrut;
+
+    private List<ElvElencoVersFascDaElab> elvElencoVersFascDaElabs = new ArrayList<>();
+
+    private List<ElvStatoElencoVersFasc> elvStatoElencoVersFascicoli = new ArrayList<>();
+
+    private List<ElvFileElencoVersFasc> elvFileElencoVersFasc = new ArrayList<>();
+
+    private List<FasVerAipFascicolo> fasVerAipFascicolos = new ArrayList<>();
+
+    private List<FasAipFascicoloDaElab> fasAipFascicoloDaElabs = new ArrayList<>();
+
+    private List<ElvElencoVersFascAnnul> elvElencoVersFascAnnuls = new ArrayList<>();
+
+    public ElvElencoVersFasc() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "ELV_ELENCO_VERS_FASC_IDELENCOVERSFASC_GENERATOR", sequenceName = "SELV_ELENCO_VERS_FASC", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ELV_ELENCO_VERS_FASC_IDELENCOVERSFASC_GENERATOR")
+    // "ELV_ELENCO_VERS_FASC_IDELENCOVERSFASC_GENERATOR",
+    // sequenceName = "SELV_ELENCO_VERS_FASC",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
+    // "ELV_ELENCO_VERS_FASC_IDELENCOVERSFASC_GENERATOR")
     @Column(name = "ID_ELENCO_VERS_FASC")
-    public long getIdElencoVersFasc() {
+    @GenericGenerator(name = "SELV_ELENCO_VERS_FASC_ID_ELENCO_VERS_FASC_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SELV_ELENCO_VERS_FASC"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SELV_ELENCO_VERS_FASC_ID_ELENCO_VERS_FASC_GENERATOR")
+    public Long getIdElencoVersFasc() {
         return this.idElencoVersFasc;
     }
 
-    public void setIdElencoVersFasc(long idElencoVersFasc) {
+    public void setIdElencoVersFasc(Long idElencoVersFasc) {
         this.idElencoVersFasc = idElencoVersFasc;
     }
 
@@ -104,7 +172,7 @@ public class ElvElencoVersFasc implements Serializable {
         this.dtScadChius = dtScadChius;
     }
 
-    @Column(name = "FL_ELENCO_STANDARD")
+    @Column(name = "FL_ELENCO_STANDARD", columnDefinition = "char(1)")
     public String getFlElencoStandard() {
         return this.flElencoStandard;
     }
@@ -270,14 +338,12 @@ public class ElvElencoVersFasc implements Serializable {
     public ElvFileElencoVersFasc addElvFileElencoVersFasc(ElvFileElencoVersFasc elvFileElencoVersFasc) {
         getElvFileElencoVersFasc().add(elvFileElencoVersFasc);
         elvFileElencoVersFasc.setElvElencoVersFasc(this);
-
         return elvFileElencoVersFasc;
     }
 
     public ElvFileElencoVersFasc removeElvFileElencoVersFasc(ElvFileElencoVersFasc elvFileElencoVersFasc) {
         getElvFileElencoVersFasc().remove(elvFileElencoVersFasc);
         elvFileElencoVersFasc.setElvElencoVersFasc(null);
-
         return elvFileElencoVersFasc;
     }
 
@@ -294,14 +360,12 @@ public class ElvElencoVersFasc implements Serializable {
     public FasVerAipFascicolo addFasVerAipFascicolo(FasVerAipFascicolo fasVerAipFascicolo) {
         getFasVerAipFascicolos().add(fasVerAipFascicolo);
         fasVerAipFascicolo.setElvElencoVersFasc(this);
-
         return fasVerAipFascicolo;
     }
 
     public FasVerAipFascicolo removeFasVerAipFascicolo(FasVerAipFascicolo fasVerAipFascicolo) {
         getFasVerAipFascicolos().remove(fasVerAipFascicolo);
         fasVerAipFascicolo.setElvElencoVersFasc(null);
-
         return fasVerAipFascicolo;
     }
 
@@ -318,14 +382,12 @@ public class ElvElencoVersFasc implements Serializable {
     public FasAipFascicoloDaElab addFasAipFascicoloDaElab(FasAipFascicoloDaElab fasAipFascicoloDaElab) {
         getFasAipFascicoloDaElabs().add(fasAipFascicoloDaElab);
         fasAipFascicoloDaElab.setElvElencoVersFasc(this);
-
         return fasAipFascicoloDaElab;
     }
 
     public FasAipFascicoloDaElab removeFasAipFascicoloDaElab(FasAipFascicoloDaElab fasAipFascicoloDaElab) {
         getFasAipFascicoloDaElabs().remove(fasAipFascicoloDaElab);
         fasAipFascicoloDaElab.setElvElencoVersFasc(null);
-
         return fasAipFascicoloDaElab;
     }
 
@@ -342,14 +404,12 @@ public class ElvElencoVersFasc implements Serializable {
     public ElvElencoVersFascAnnul addElvElencoVersFascAnnul(ElvElencoVersFascAnnul elvElencoVersFascAnnul) {
         getElvElencoVersFascAnnuls().add(elvElencoVersFascAnnul);
         elvElencoVersFascAnnul.setElvElencoVersFasc(this);
-
         return elvElencoVersFascAnnul;
     }
 
     public ElvElencoVersFascAnnul removeElvElencoVersFascAnnul(ElvElencoVersFascAnnul elvElencoVersFascAnnul) {
         getElvElencoVersFascAnnuls().remove(elvElencoVersFascAnnul);
         elvElencoVersFascAnnul.setElvElencoVersFasc(null);
-
         return elvElencoVersFascAnnul;
     }
 }

@@ -1,16 +1,51 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlIDREF;
+
 import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 /**
  * The persistent class for the DEC_TIPO_STRUT_UNITA_DOC database table.
- *
  */
 @Entity
 @Cacheable(true)
@@ -18,39 +53,67 @@ import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 public class DecTipoStrutUnitaDoc implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idTipoStrutUnitaDoc;
+
+    private Long idTipoStrutUnitaDoc;
+
     private String dsTipoStrutUnitaDoc;
+
     private String dsDataTipoStrutUnitaDoc;
+
     private String dsOggTipoStrutUnitaDoc;
+
     private String dsNumeroTipoStrutUnitaDoc;
+
     private String dsAnnoTipoStrutUnitaDoc;
+
     private BigDecimal aaMinTipoStrutUnitaDoc;
+
     private BigDecimal aaMaxTipoStrutUnitaDoc;
+
     private String dsRifTempTipoStrutUd;
+
     private String dsCollegamentiUd;
+
     private String dsPeriodicitaVers;
+
     private String dsFirma;
+
     private Date dtIstituz;
+
     private Date dtSoppres;
+
     private String nmTipoStrutUnitaDoc;
-    private List<DecTipoDocAmmesso> decTipoDocAmmessos;
-    private List<DecTipoStrutUdReg> decTipoStrutUdRegs;
-    private List<DecTipoStrutUdXsd> decTipoStrutUdXsds;
-    private List<DecTipoStrutUdSisVer> decTipoStrutUdSisVers;
+
+    private List<DecTipoDocAmmesso> decTipoDocAmmessos = new ArrayList<>();
+
+    private List<DecTipoStrutUdReg> decTipoStrutUdRegs = new ArrayList<>();
+
+    private List<DecTipoStrutUdXsd> decTipoStrutUdXsds = new ArrayList<>();
+
+    private List<DecTipoStrutUdSisVer> decTipoStrutUdSisVers = new ArrayList<>();
+
     private DecTipoUnitaDoc decTipoUnitaDoc;
 
-    public DecTipoStrutUnitaDoc() {
+    public DecTipoStrutUnitaDoc() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "DEC_TIPO_STRUT_UNITA_DOC_IDTIPOSTRUTUNITADOC_GENERATOR", sequenceName = "SDEC_TIPO_STRUT_UNITA_DOC", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DEC_TIPO_STRUT_UNITA_DOC_IDTIPOSTRUTUNITADOC_GENERATOR")
+    // "DEC_TIPO_STRUT_UNITA_DOC_IDTIPOSTRUTUNITADOC_GENERATOR",
+    // sequenceName =
+    // "SDEC_TIPO_STRUT_UNITA_DOC",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
+    // "DEC_TIPO_STRUT_UNITA_DOC_IDTIPOSTRUTUNITADOC_GENERATOR")
     @Column(name = "ID_TIPO_STRUT_UNITA_DOC")
-    public long getIdTipoStrutUnitaDoc() {
+    @GenericGenerator(name = "SDEC_TIPO_STRUT_UNITA_DOC_ID_TIPO_STRUT_UNITA_DOC_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SDEC_TIPO_STRUT_UNITA_DOC"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SDEC_TIPO_STRUT_UNITA_DOC_ID_TIPO_STRUT_UNITA_DOC_GENERATOR")
+    public Long getIdTipoStrutUnitaDoc() {
         return this.idTipoStrutUnitaDoc;
     }
 
-    public void setIdTipoStrutUnitaDoc(long idTipoStrutUnitaDoc) {
+    public void setIdTipoStrutUnitaDoc(Long idTipoStrutUnitaDoc) {
         this.idTipoStrutUnitaDoc = idTipoStrutUnitaDoc;
     }
 
@@ -207,8 +270,8 @@ public class DecTipoStrutUnitaDoc implements Serializable {
 
     // bi-directional many-to-one association to DecTipoStrutUdSisVer
     @OneToMany(mappedBy = "decTipoStrutUnitaDoc", cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
-    // @XmlIDREF
-    public List<DecTipoStrutUdSisVer> getDecTipoStrutUdSisVers() {
+    public // @XmlIDREF
+    List<DecTipoStrutUdSisVer> getDecTipoStrutUdSisVers() {
         return this.decTipoStrutUdSisVers;
     }
 
@@ -218,8 +281,8 @@ public class DecTipoStrutUnitaDoc implements Serializable {
 
     // bi-directional many-to-one association to DecTipoStrutUdRegs
     @OneToMany(mappedBy = "decTipoStrutUnitaDoc", cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
-    // @XmlIDREF
-    public List<DecTipoStrutUdReg> getDecTipoStrutUdRegs() {
+    public // @XmlIDREF
+    List<DecTipoStrutUdReg> getDecTipoStrutUdRegs() {
         return this.decTipoStrutUdRegs;
     }
 
@@ -229,13 +292,12 @@ public class DecTipoStrutUnitaDoc implements Serializable {
 
     // bi-directional many-to-one association to DecTipoStrutUdRegs
     @OneToMany(mappedBy = "decTipoStrutUnitaDoc", cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
-    // @XmlIDREF
-    public List<DecTipoStrutUdXsd> getDecTipoStrutUdXsds() {
+    public // @XmlIDREF
+    List<DecTipoStrutUdXsd> getDecTipoStrutUdXsds() {
         return this.decTipoStrutUdXsds;
     }
 
     public void setDecTipoStrutUdXsds(List<DecTipoStrutUdXsd> decTipoStrutUdXsds) {
         this.decTipoStrutUdXsds = decTipoStrutUdXsds;
     }
-
 }

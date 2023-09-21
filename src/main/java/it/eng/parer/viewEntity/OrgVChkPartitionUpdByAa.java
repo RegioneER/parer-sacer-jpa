@@ -1,8 +1,30 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the ORG_V_CHK_PARTITION_UPD_BY_AA database table.
@@ -34,7 +56,7 @@ public class OrgVChkPartitionUpdByAa implements Serializable {
     private String flPartXmlupdOk;
     private BigDecimal idStrut;
 
-    public OrgVChkPartitionUpdByAa() {
+    public OrgVChkPartitionUpdByAa() {/* Hibernate */
     }
 
     @Column(name = "ANNO")
@@ -100,7 +122,7 @@ public class OrgVChkPartitionUpdByAa implements Serializable {
         this.cdPartitionXmlupd = cdPartitionXmlupd;
     }
 
-    @Column(name = "FL_PART_SESUPDKO_AA_OK")
+    @Column(name = "FL_PART_SESUPDKO_AA_OK", columnDefinition = "char(1)")
     public String getFlPartSesupdkoAaOk() {
         return this.flPartSesupdkoAaOk;
     }
@@ -109,7 +131,7 @@ public class OrgVChkPartitionUpdByAa implements Serializable {
         this.flPartSesupdkoAaOk = flPartSesupdkoAaOk;
     }
 
-    @Column(name = "FL_PART_SESUPDKO_OK")
+    @Column(name = "FL_PART_SESUPDKO_OK", columnDefinition = "char(1)")
     public String getFlPartSesupdkoOk() {
         return this.flPartSesupdkoOk;
     }
@@ -118,7 +140,7 @@ public class OrgVChkPartitionUpdByAa implements Serializable {
         this.flPartSesupdkoOk = flPartSesupdkoOk;
     }
 
-    @Column(name = "FL_PART_UPDDATISPEC_AA_OK")
+    @Column(name = "FL_PART_UPDDATISPEC_AA_OK", columnDefinition = "char(1)")
     public String getFlPartUpddatispecAaOk() {
         return this.flPartUpddatispecAaOk;
     }
@@ -127,7 +149,7 @@ public class OrgVChkPartitionUpdByAa implements Serializable {
         this.flPartUpddatispecAaOk = flPartUpddatispecAaOk;
     }
 
-    @Column(name = "FL_PART_UPDDATISPEC_OK")
+    @Column(name = "FL_PART_UPDDATISPEC_OK", columnDefinition = "char(1)")
     public String getFlPartUpddatispecOk() {
         return this.flPartUpddatispecOk;
     }
@@ -136,7 +158,7 @@ public class OrgVChkPartitionUpdByAa implements Serializable {
         this.flPartUpddatispecOk = flPartUpddatispecOk;
     }
 
-    @Column(name = "FL_PART_UPDKO_AA_OK")
+    @Column(name = "FL_PART_UPDKO_AA_OK", columnDefinition = "char(1)")
     public String getFlPartUpdkoAaOk() {
         return this.flPartUpdkoAaOk;
     }
@@ -145,7 +167,7 @@ public class OrgVChkPartitionUpdByAa implements Serializable {
         this.flPartUpdkoAaOk = flPartUpdkoAaOk;
     }
 
-    @Column(name = "FL_PART_UPDKO_OK")
+    @Column(name = "FL_PART_UPDKO_OK", columnDefinition = "char(1)")
     public String getFlPartUpdkoOk() {
         return this.flPartUpdkoOk;
     }
@@ -154,7 +176,7 @@ public class OrgVChkPartitionUpdByAa implements Serializable {
         this.flPartUpdkoOk = flPartUpdkoOk;
     }
 
-    @Column(name = "FL_PART_VERSINIDATISPEC_AA_OK")
+    @Column(name = "FL_PART_VERSINIDATISPEC_AA_OK", columnDefinition = "char(1)")
     public String getFlPartVersinidatispecAaOk() {
         return this.flPartVersinidatispecAaOk;
     }
@@ -163,7 +185,7 @@ public class OrgVChkPartitionUpdByAa implements Serializable {
         this.flPartVersinidatispecAaOk = flPartVersinidatispecAaOk;
     }
 
-    @Column(name = "FL_PART_VERSINIDATISPEC_OK")
+    @Column(name = "FL_PART_VERSINIDATISPEC_OK", columnDefinition = "char(1)")
     public String getFlPartVersinidatispecOk() {
         return this.flPartVersinidatispecOk;
     }
@@ -172,7 +194,7 @@ public class OrgVChkPartitionUpdByAa implements Serializable {
         this.flPartVersinidatispecOk = flPartVersinidatispecOk;
     }
 
-    @Column(name = "FL_PART_XMLSESUPDKO_OK")
+    @Column(name = "FL_PART_XMLSESUPDKO_OK", columnDefinition = "char(1)")
     public String getFlPartXmlsesupdkoOk() {
         return this.flPartXmlsesupdkoOk;
     }
@@ -181,7 +203,7 @@ public class OrgVChkPartitionUpdByAa implements Serializable {
         this.flPartXmlsesupdkoOk = flPartXmlsesupdkoOk;
     }
 
-    @Column(name = "FL_PART_XMLSESUPDKP_AA_OK")
+    @Column(name = "FL_PART_XMLSESUPDKP_AA_OK", columnDefinition = "char(1)")
     public String getFlPartXmlsesupdkpAaOk() {
         return this.flPartXmlsesupdkpAaOk;
     }
@@ -190,7 +212,7 @@ public class OrgVChkPartitionUpdByAa implements Serializable {
         this.flPartXmlsesupdkpAaOk = flPartXmlsesupdkpAaOk;
     }
 
-    @Column(name = "FL_PART_XMLUPD_AA_OK")
+    @Column(name = "FL_PART_XMLUPD_AA_OK", columnDefinition = "char(1)")
     public String getFlPartXmlupdAaOk() {
         return this.flPartXmlupdAaOk;
     }
@@ -199,7 +221,7 @@ public class OrgVChkPartitionUpdByAa implements Serializable {
         this.flPartXmlupdAaOk = flPartXmlupdAaOk;
     }
 
-    @Column(name = "FL_PART_XMLUPD_OK")
+    @Column(name = "FL_PART_XMLUPD_OK", columnDefinition = "char(1)")
     public String getFlPartXmlupdOk() {
         return this.flPartXmlupdOk;
     }

@@ -3,30 +3,34 @@
     <parent>
         <groupId>it.eng.parer</groupId>
         <artifactId>parer-pom</artifactId>
-        <version>3.0.17</version>
+        <version>4.2.0</version>
     </parent>
-    <groupId>it.eng.parer</groupId>
+
     <artifactId>sacer-jpa-el</artifactId>
-    <version>1.5.3-SNAPSHOT</version>
+    <version>2.13.1-SNAPSHOT</version>
     <name>sacer-jpa</name>
     <description>Progetto SACER-JPA. Strato jpa comune ai progetti sacer e sacerws.</description>
     
     <scm>
-        <developerConnection>scm:git:https://github.com/RegioneER/parer.sacer.jpa.git</developerConnection>
+        <developerConnection>scm:git:https://github.com/RegioneER/parer-sacer-jpa.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
 
     <repositories>
         <repository>
             <id>github</id>
-            <url>https://maven.pkg.github.com/RegioneER/parer.sacer.parent</url>            
+            <url>https://maven.pkg.github.com/RegioneER/parer-framework-parerpom</url>            
         </repository>        	            
 	</repositories>
     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
          <!-- spagofat bom -->
-        <spagofat.version>4.1.26</spagofat.version>
+        <spagofat.version>4.11.0</spagofat.version>
+        <org.eclipse.persistence.moxy.version>2.3.2</org.eclipse.persistence.moxy.version>
+        <!-- resource filter -->
+        <hibernate.show_sql>false</hibernate.show_sql>
+		<hibernate.hbm2ddl.auto>validate</hibernate.hbm2ddl.auto>
     </properties>
 
     <dependencyManagement>
@@ -45,32 +49,36 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.glassfish.main.persistence</groupId>
-            <artifactId>eclipselink-wrapper</artifactId>
-            <type>pom</type>
-            <scope>provided</scope>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>org.eclipse.persistence.moxy</artifactId>
+            <version>${org.eclipse.persistence.moxy.version}</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.logging</groupId>
             <artifactId>jboss-logging</artifactId>
-            <version>3.1.0.GA</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.jboss</groupId>
             <artifactId>jboss-vfs</artifactId>
-            <version>3.1.0.Final</version>
+            <version>${jboss-vfs.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.jboss.spec</groupId>
-            <artifactId>jboss-javaee-6.0</artifactId>
+            <artifactId>jboss-jakartaee-8.0</artifactId>
             <type>pom</type>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>it.eng.parer</groupId>
             <artifactId>spagofat-timer-wrapper-common</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>it.eng.parer</groupId>
+            <artifactId>spagofat-paginator-ejb</artifactId>
+            <type>ejb</type>
             <scope>provided</scope>
         </dependency>
 
@@ -88,6 +96,27 @@
         </dependency>
 
         <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <exclusions>
+                <exclusion>
+                   <groupId>antlr</groupId>
+                   <artifactId>antlr</artifactId>
+                </exclusion>
+            </exclusions>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-jpamodelgen</artifactId>
+            <scope>compile</scope>
+        </dependency>
+	<dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
@@ -100,39 +129,6 @@
             </resource>
         </resources>
         <plugins>
-            <!-- IL BINDING E' NELLA FASE DI PACKAGE in modo che la manipolazione 
-            del bytecode avvenga dopo la generazione del jar principale. L'ordine è importante: 
-            il plugin JAR con il classifier "weaved" deve essere successivo al plugin 
-            eclipselink-staticweave-maven-plugin in modo da generare il secondo jar con 
-            le entity weaved. -->
-            <plugin>
-                <artifactId>eclipselink-staticweave-maven-plugin</artifactId>
-                <groupId>au.com.alderaan</groupId>
-                <version>1.0.4</version>
-                <!--                <configuration>
-                    <classesDirectory>${project.build.outputDirectory}/sacer-default</classesDirectory>
-                </configuration>-->
-                <executions>
-                    <execution>
-                        <id>weaved-exec</id>
-                        <goals>
-                            <goal>weave</goal>
-                        </goals>
-                        <phase>package</phase>
-                        <configuration>
-                            <logLevel>INFO</logLevel>
-                            <includeProjectClasspath>true</includeProjectClasspath>
-                        </configuration>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.eclipse.persistence</groupId>
-                        <artifactId>eclipselink</artifactId>
-                        <version>2.3.2</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -144,7 +140,6 @@
                             <goal>resources</goal>
                         </goals>
                         <configuration>
-                            <!--                            <outputDirectory>${project.build.outputDirectory}/sacer-default</outputDirectory>-->
                             <filters>
                                 <filter>${basedir}/src/main/filters/sacer-default.properties</filter>
                             </filters>
@@ -157,7 +152,6 @@
                             <goal>resources</goal>
                         </goals>
                         <configuration>
-                            <!--<outputDirectory>${project.build.outputDirectory}/sacer-vers</outputDirectory>-->
                             <outputDirectory>${project.build.directory}/sacer-vers</outputDirectory>
                             <filters>
                                 <filter>${basedir}/src/main/filters/sacer-vers.properties</filter>
@@ -171,7 +165,6 @@
                             <goal>resources</goal>
                         </goals>
                         <configuration>
-                            <!--<outputDirectory>${project.build.outputDirectory}/sacer-job</outputDirectory>-->
                             <outputDirectory>${project.build.directory}/sacer-job</outputDirectory>
                             <filters>
                                 <filter>${basedir}/src/main/filters/sacer-job.properties</filter>
@@ -185,7 +178,6 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <!--<outputDirectory>${project.build.outputDirectory}/sacer-vers</outputDirectory>-->
                             <outputDirectory>${project.build.directory}/sacer-vers</outputDirectory>
                             <resources>
                                 <resource>
@@ -202,7 +194,6 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <!--<outputDirectory>${project.build.outputDirectory}/sacer-vers</outputDirectory>-->
                             <outputDirectory>${project.build.directory}/sacer-job</outputDirectory>
                             <resources>
                                 <resource>
@@ -218,27 +209,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <executions>
-                    <!--                    <execution>
-                        <id>sacer-default</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                        <configuration>
-                            <classesDirectory>${project.build.outputDirectory}/sacer-default</classesDirectory>
-                        </configuration>
-                    </execution>-->
-                    <execution>
-                        <id>weaved-exec</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                        <configuration>
-                            <classifier>weaved</classifier>
-                            <!--<classesDirectory>${project.build.outputDirectory}/sacer-default</classesDirectory>-->
-                        </configuration>
-                    </execution>
                     <execution>
                         <id>sacer-vers</id>
                         <phase>package</phase>
@@ -280,96 +250,49 @@
                             <includes>META-INF/xmldbNativeQueries/xmlQueries.xml</includes>
                         </configuration>
                     </execution>
-                    <!--
-            <execution>
-                <id>extract-queries-from-sacerlog-vers</id>
-                <phase>generate-resources</phase>
-                <goals>
-                    <goal>unpack-dependencies</goal>
-                </goals>
-                <configuration>
-                    <outputDirectory>${project.build.outputDirectory}/sacer-vers</outputDirectory>
-                    <includeGroupIds>${project.groupId}</includeGroupIds>
-                    <includeArtifactIds>spagofat-sl-jpa</includeArtifactIds>
-                    <includes>META-INF/xmldbNativeQueries/xmlQueries.xml</includes>
-                </configuration>
-            </execution>
-            <execution>
-                <id>extract-queries-from-sacerlog-job</id>
-                <phase>generate-resources</phase>
-                <goals>
-                    <goal>unpack-dependencies</goal>
-                </goals>
-                <configuration>
-                    <outputDirectory>${project.build.outputDirectory}/sacer-job</outputDirectory>
-                    <includeGroupIds>${project.groupId}</includeGroupIds>
-                    <includeArtifactIds>spagofat-sl-jpa</includeArtifactIds>
-                    <includes>META-INF/xmldbNativeQueries/xmlQueries.xml</includes>
-                </configuration>
-            </execution>
-                    -->
                 </executions>
             </plugin>
             <!-- metamodel generator -->
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <!-- disabilito la generazione automatica dei metamodel, la voglio gestire puntualmente -->
+                    <compilerArgument>-proc:none</compilerArgument>
+                </configuration>
+            </plugin>
+
+            <!-- configurazione del metamodel generator -->
             <plugin>
                 <groupId>org.bsc.maven</groupId>
                 <artifactId>maven-processor-plugin</artifactId>
                 <version>2.2.4</version>
                 <executions>
                     <execution>
-                        <id>eclipselink-jpa-metamodel</id>
+                        <id>process</id>
                         <goals>
                             <goal>process</goal>
                         </goals>
                         <phase>generate-sources</phase>
                         <configuration>
                             <processors>
-                                <processor>org.eclipse.persistence.internal.jpa.modelgen.CanonicalModelProcessor</processor>
+                                <processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
                             </processors>
-                            <compilerArguments>-Aeclipselink.persistencexml=${basedir}/src/main/resources/META-INF/persistence.xml</compilerArguments>
+                            <compilerArguments>-ApersistenceXml=${basedir}/src/main/resources/META-INF/persistence.xml</compilerArguments>
                             <outputDirectory>${project.build.directory}/generated-sources/metamodel</outputDirectory>
                         </configuration>
                     </execution>
-                    <!--
-                <execution>
-                    <id>eclipselink-jpa-metamodel-vers</id>
-                    <goals>
-                        <goal>process</goal>
-                    </goals>
-                    <phase>generate-sources</phase>
-                    <configuration>
-                        <processors>
-                            <processor>org.eclipse.persistence.internal.jpa.modelgen.CanonicalModelProcessor</processor>
-                        </processors>
-                        <compilerArguments>-Aeclipselink.persistencexml=${basedir}/src/main/resources/META-INF/persistence.xml</compilerArguments>
-                        <outputDirectory>${project.build.directory}/sacer-vers/generated-sources/metamodel</outputDirectory>
-                    </configuration>
-                </execution>
-                <execution>
-                    <id>eclipselink-jpa-metamodel-job</id>
-                    <goals>
-                        <goal>process</goal>
-                    </goals>
-                    <phase>generate-sources</phase>
-                    <configuration>
-                        <processors>
-                            <processor>org.eclipse.persistence.internal.jpa.modelgen.CanonicalModelProcessor</processor>
-                        </processors>
-                        <compilerArguments>-Aeclipselink.persistencexml=${basedir}/src/main/resources/META-INF/persistence.xml</compilerArguments>
-                        <outputDirectory>${project.build.directory}/sacer-job/generated-sources/metamodel</outputDirectory>
-                    </configuration>
-                </execution>
-                    -->
                 </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.eclipse.persistence</groupId>
-                        <artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
-                        <version>2.6.1</version>
-                    </dependency>
-                </dependencies>
             </plugin>
-            <!-- end -->
         </plugins>
     </build>
+    
+    <profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<hibernate.show_sql>true</hibernate.show_sql>
+				<hibernate.hbm2ddl.auto>none</hibernate.hbm2ddl.auto>
+			</properties>
+		</profile>
+	</profiles>
 </project>

@@ -1,13 +1,43 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
 import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 /**
  * The persistent class for the DEC_PARTE_NUMERO_REGISTRO database table.
- *
  */
 @Entity
 @Table(name = "DEC_PARTE_NUMERO_REGISTRO")
@@ -15,31 +45,51 @@ import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 public class DecParteNumeroRegistro implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idParteNumeroRegistro;
+
+    private Long idParteNumeroRegistro;
+
     private String dlValoriParte;
+
     private String dsParteNumeroRegistro;
+
     private BigDecimal niMaxCharParte;
+
     private BigDecimal niMinCharParte;
+
     private BigDecimal niParteNumeroRegistro;
+
     private String nmParteNumeroRegistro;
+
     private String tiCharParte;
+
     private String tiCharSep;
+
     private String tiPadSxParte;
+
     private String tiParte;
+
     private DecAaRegistroUnitaDoc decAaRegistroUnitaDoc;
 
-    public DecParteNumeroRegistro() {
+    public DecParteNumeroRegistro() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "DEC_PARTE_NUMERO_REGISTRO_IDPARTENUMEROREGISTRO_GENERATOR", sequenceName = "SDEC_PARTE_NUMERO_REGISTRO", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DEC_PARTE_NUMERO_REGISTRO_IDPARTENUMEROREGISTRO_GENERATOR")
+    // "DEC_PARTE_NUMERO_REGISTRO_IDPARTENUMEROREGISTRO_GENERATOR",
+    // sequenceName =
+    // "SDEC_PARTE_NUMERO_REGISTRO",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
+    // "DEC_PARTE_NUMERO_REGISTRO_IDPARTENUMEROREGISTRO_GENERATOR")
     @Column(name = "ID_PARTE_NUMERO_REGISTRO")
-    public long getIdParteNumeroRegistro() {
+    @GenericGenerator(name = "SDEC_PARTE_NUMERO_REGISTRO_ID_PARTE_NUMERO_REGISTRO_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SDEC_PARTE_NUMERO_REGISTRO"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SDEC_PARTE_NUMERO_REGISTRO_ID_PARTE_NUMERO_REGISTRO_GENERATOR")
+    public Long getIdParteNumeroRegistro() {
         return this.idParteNumeroRegistro;
     }
 
-    public void setIdParteNumeroRegistro(long idParteNumeroRegistro) {
+    public void setIdParteNumeroRegistro(Long idParteNumeroRegistro) {
         this.idParteNumeroRegistro = idParteNumeroRegistro;
     }
 
@@ -106,7 +156,7 @@ public class DecParteNumeroRegistro implements Serializable {
         this.tiCharParte = tiCharParte;
     }
 
-    @Column(name = "TI_CHAR_SEP")
+    @Column(name = "TI_CHAR_SEP", columnDefinition = "char")
     public String getTiCharSep() {
         return this.tiCharSep;
     }
@@ -144,5 +194,4 @@ public class DecParteNumeroRegistro implements Serializable {
     public void setDecAaRegistroUnitaDoc(DecAaRegistroUnitaDoc decAaRegistroUnitaDoc) {
         this.decAaRegistroUnitaDoc = decAaRegistroUnitaDoc;
     }
-
 }

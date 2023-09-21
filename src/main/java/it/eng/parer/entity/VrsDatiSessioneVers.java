@@ -1,41 +1,93 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 /**
  * The persistent class for the VRS_DATI_SESSIONE_VERS database table.
- * 
  */
 @Entity
 @Table(name = "VRS_DATI_SESSIONE_VERS")
 public class VrsDatiSessioneVers implements Serializable {
-    private static final long serialVersionUID = 1L;
-    private long idDatiSessioneVers;
-    private String cdKeyAlleg;
-    private BigDecimal idStrut;
-    private BigDecimal niFile;
-    private BigDecimal pgDatiSessioneVers;
-    private String tiDatiSessioneVers;
-    private VrsSessioneVers vrsSessioneVers;
-    private List<VrsErrSessioneVers> vrsErrSessioneVers;
-    private List<VrsFileSessione> vrsFileSessiones;
-    private List<VrsXmlDatiSessioneVers> vrsXmlDatiSessioneVers;
 
-    public VrsDatiSessioneVers() {
+    private static final long serialVersionUID = 1L;
+
+    private Long idDatiSessioneVers;
+
+    private String cdKeyAlleg;
+
+    private BigDecimal idStrut;
+
+    private BigDecimal niFile;
+
+    private BigDecimal pgDatiSessioneVers;
+
+    private String tiDatiSessioneVers;
+
+    private VrsSessioneVers vrsSessioneVers;
+
+    private List<VrsErrSessioneVers> vrsErrSessioneVers = new ArrayList<>();
+
+    private List<VrsFileSessione> vrsFileSessiones = new ArrayList<>();
+
+    private List<VrsXmlDatiSessioneVers> vrsXmlDatiSessioneVers = new ArrayList<>();
+
+    private List<VrsXmlDatiSesObjectStorage> xmlDatiSesObjectStorages = new ArrayList<>();
+
+    public VrsDatiSessioneVers() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "VRS_DATI_SESSIONE_VERS_IDDATISESSIONEVERS_GENERATOR", sequenceName = "SVRS_DATI_SESSIONE_VERS", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VRS_DATI_SESSIONE_VERS_IDDATISESSIONEVERS_GENERATOR")
+    // "VRS_DATI_SESSIONE_VERS_IDDATISESSIONEVERS_GENERATOR",
+    // sequenceName =
+    // "SVRS_DATI_SESSIONE_VERS",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
+    // "VRS_DATI_SESSIONE_VERS_IDDATISESSIONEVERS_GENERATOR")
     @Column(name = "ID_DATI_SESSIONE_VERS")
-    public long getIdDatiSessioneVers() {
+    @GenericGenerator(name = "SVRS_DATI_SESSIONE_VERS_ID_DATI_SESSIONE_VERS_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SVRS_DATI_SESSIONE_VERS"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SVRS_DATI_SESSIONE_VERS_ID_DATI_SESSIONE_VERS_GENERATOR")
+    public Long getIdDatiSessioneVers() {
         return this.idDatiSessioneVers;
     }
 
-    public void setIdDatiSessioneVers(long idDatiSessioneVers) {
+    public void setIdDatiSessioneVers(Long idDatiSessioneVers) {
         this.idDatiSessioneVers = idDatiSessioneVers;
     }
 
@@ -123,6 +175,15 @@ public class VrsDatiSessioneVers implements Serializable {
 
     public void setVrsXmlDatiSessioneVers(List<VrsXmlDatiSessioneVers> vrsXmlDatiSessioneVers) {
         this.vrsXmlDatiSessioneVers = vrsXmlDatiSessioneVers;
+    }
+
+    @OneToMany(mappedBy = "datiSessioneVers")
+    public List<VrsXmlDatiSesObjectStorage> getXmlDatiSesObjectStorages() {
+        return xmlDatiSesObjectStorages;
+    }
+
+    public void setXmlDatiSesObjectStorages(List<VrsXmlDatiSesObjectStorage> xmlDatiSesObjectStorages) {
+        this.xmlDatiSesObjectStorages = xmlDatiSesObjectStorages;
     }
 
 }

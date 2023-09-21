@@ -1,18 +1,53 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlTransient;
+
 import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 /**
  * The persistent class for the DEC_REGISTRO_UNITA_DOC database table.
- *
  */
 @Entity
 @Cacheable(true)
@@ -20,46 +55,80 @@ import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 public class DecRegistroUnitaDoc implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idRegistroUnitaDoc;
-    private String cdRegistroNormaliz;
-    private String cdRegistroUnitaDoc;
-    private String cdSerieDaCreare;
-    private String dsRegistroUnitaDoc;
-    private String dsSerieDaCreare;
-    private String dsTipoSerieDaCreare;
-    private Date dtIstituz;
-    private Date dtSoppres;
-    private String flCreaSerie;
-    private String flCreaTipoSerieStandard;
-    private String flRegistroFisc;
-    private String flTipoSerieMult;
-    private BigDecimal niAnniConserv;
-    private String nmTipoSerieDaCreare;
-    private List<AroUnitaDoc> aroUnitaDocs;
-    private List<DecAaRegistroUnitaDoc> decAaRegistroUnitaDocs;
-    private List<DecCriterioFiltroMultiplo> decCriterioFiltroMultiplos;
-    private List<DecCriterioFiltroMultiplo> decRangeCriterioFiltroMultiplos;
-    private OrgStrut orgStrut;
-    private List<DecTipoUnitaDocAmmesso> decTipoUnitaDocAmmessos;
-    private List<MonAaUnitaDocRegistro> monAaUnitaDocRegistros;
-    private List<DecTipoSerieUd> decTipoSerieUds;
-    private List<MonContaUdDocComp> monContaUdDocComps;
-    private DecModelloTipoSerie decModelloTipoSerie;
-    private List<DecTipoStrutUdReg> decTipoStrutUdRegs;
 
-    public DecRegistroUnitaDoc() {
+    private Long idRegistroUnitaDoc;
+
+    private String cdRegistroNormaliz;
+
+    private String cdRegistroUnitaDoc;
+
+    private String cdSerieDaCreare;
+
+    private String dsRegistroUnitaDoc;
+
+    private String dsSerieDaCreare;
+
+    private String dsTipoSerieDaCreare;
+
+    private Date dtIstituz;
+
+    private Date dtSoppres;
+
+    private String flCreaSerie;
+
+    private String flCreaTipoSerieStandard;
+
+    private String flRegistroFisc;
+
+    private String flTipoSerieMult;
+
+    private BigDecimal niAnniConserv;
+
+    private String nmTipoSerieDaCreare;
+
+    private List<AroUnitaDoc> aroUnitaDocs = new ArrayList<>();
+
+    private List<DecAaRegistroUnitaDoc> decAaRegistroUnitaDocs = new ArrayList<>();
+
+    private List<DecCriterioFiltroMultiplo> decCriterioFiltroMultiplos = new ArrayList<>();
+
+    private List<DecCriterioFiltroMultiplo> decRangeCriterioFiltroMultiplos = new ArrayList<>();
+
+    private OrgStrut orgStrut;
+
+    private List<DecTipoUnitaDocAmmesso> decTipoUnitaDocAmmessos = new ArrayList<>();
+
+    private List<MonAaUnitaDocRegistro> monAaUnitaDocRegistros = new ArrayList<>();
+
+    private List<DecTipoSerieUd> decTipoSerieUds = new ArrayList<>();
+
+    private List<MonContaUdDocComp> monContaUdDocComps = new ArrayList<>();
+
+    private DecModelloTipoSerie decModelloTipoSerie;
+
+    private List<DecTipoStrutUdReg> decTipoStrutUdRegs = new ArrayList<>();
+
+    public DecRegistroUnitaDoc() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "DEC_REGISTRO_UNITA_DOC_IDREGISTROUNITADOC_GENERATOR", sequenceName = "SDEC_REGISTRO_UNITA_DOC", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DEC_REGISTRO_UNITA_DOC_IDREGISTROUNITADOC_GENERATOR")
+    // "DEC_REGISTRO_UNITA_DOC_IDREGISTROUNITADOC_GENERATOR",
+    // sequenceName =
+    // "SDEC_REGISTRO_UNITA_DOC",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
+    // "DEC_REGISTRO_UNITA_DOC_IDREGISTROUNITADOC_GENERATOR")
     @Column(name = "ID_REGISTRO_UNITA_DOC")
     @XmlID
-    public long getIdRegistroUnitaDoc() {
+    @GenericGenerator(name = "SDEC_REGISTRO_UNITA_DOC_ID_REGISTRO_UNITA_DOC_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SDEC_REGISTRO_UNITA_DOC"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SDEC_REGISTRO_UNITA_DOC_ID_REGISTRO_UNITA_DOC_GENERATOR")
+    public Long getIdRegistroUnitaDoc() {
         return this.idRegistroUnitaDoc;
     }
 
-    public void setIdRegistroUnitaDoc(long idRegistroUnitaDoc) {
+    public void setIdRegistroUnitaDoc(Long idRegistroUnitaDoc) {
         this.idRegistroUnitaDoc = idRegistroUnitaDoc;
     }
 
@@ -137,7 +206,7 @@ public class DecRegistroUnitaDoc implements Serializable {
         this.dtSoppres = dtSoppres;
     }
 
-    @Column(name = "FL_CREA_SERIE")
+    @Column(name = "FL_CREA_SERIE", columnDefinition = "char(1)")
     public String getFlCreaSerie() {
         return this.flCreaSerie;
     }
@@ -146,7 +215,7 @@ public class DecRegistroUnitaDoc implements Serializable {
         this.flCreaSerie = flCreaSerie;
     }
 
-    @Column(name = "FL_CREA_TIPO_SERIE_STANDARD")
+    @Column(name = "FL_CREA_TIPO_SERIE_STANDARD", columnDefinition = "char(1)")
     public String getFlCreaTipoSerieStandard() {
         return this.flCreaTipoSerieStandard;
     }
@@ -155,7 +224,7 @@ public class DecRegistroUnitaDoc implements Serializable {
         this.flCreaTipoSerieStandard = flCreaTipoSerieStandard;
     }
 
-    @Column(name = "FL_REGISTRO_FISC")
+    @Column(name = "FL_REGISTRO_FISC", columnDefinition = "char(1)")
     public String getFlRegistroFisc() {
         return this.flRegistroFisc;
     }
@@ -164,7 +233,7 @@ public class DecRegistroUnitaDoc implements Serializable {
         this.flRegistroFisc = flRegistroFisc;
     }
 
-    @Column(name = "FL_TIPO_SERIE_MULT")
+    @Column(name = "FL_TIPO_SERIE_MULT", columnDefinition = "char(1)")
     public String getFlTipoSerieMult() {
         return this.flTipoSerieMult;
     }
@@ -210,7 +279,6 @@ public class DecRegistroUnitaDoc implements Serializable {
 
     public void setDecAaRegistroUnitaDocs(List<DecAaRegistroUnitaDoc> decAaRegistroUnitaDocs) {
         this.decAaRegistroUnitaDocs = decAaRegistroUnitaDocs;
-
     }
 
     // bi-directional many-to-one association to DecCriterioFiltroMultiplo
@@ -311,5 +379,4 @@ public class DecRegistroUnitaDoc implements Serializable {
     public void setDecTipoStrutUdRegs(List<DecTipoStrutUdReg> decTipoStrutUdRegs) {
         this.decTipoStrutUdRegs = decTipoStrutUdRegs;
     }
-
 }

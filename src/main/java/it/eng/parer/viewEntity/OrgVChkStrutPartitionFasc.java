@@ -1,8 +1,30 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the ORG_V_CHK_STRUT_PARTITION_FASC database table.
@@ -40,7 +62,7 @@ public class OrgVChkStrutPartitionFasc implements Serializable {
     private String flPartXmlversfascOk;
     private BigDecimal idStrut;
 
-    public OrgVChkStrutPartitionFasc() {
+    public OrgVChkStrutPartitionFasc() {/* Hibernate */
     }
 
     @Column(name = "CD_PARTITION_FASC")
@@ -115,7 +137,7 @@ public class OrgVChkStrutPartitionFasc implements Serializable {
         this.cdPartitionXmlversfasc = cdPartitionXmlversfasc;
     }
 
-    @Column(name = "FL_PART_FASC_ANNO_OK")
+    @Column(name = "FL_PART_FASC_ANNO_OK", columnDefinition = "char(1)")
     public String getFlPartFascAnnoOk() {
         return this.flPartFascAnnoOk;
     }
@@ -124,7 +146,7 @@ public class OrgVChkStrutPartitionFasc implements Serializable {
         this.flPartFascAnnoOk = flPartFascAnnoOk;
     }
 
-    @Column(name = "FL_PART_FASC_OK")
+    @Column(name = "FL_PART_FASC_OK", columnDefinition = "char(1)")
     public String getFlPartFascOk() {
         return this.flPartFascOk;
     }
@@ -133,7 +155,7 @@ public class OrgVChkStrutPartitionFasc implements Serializable {
         this.flPartFascOk = flPartFascOk;
     }
 
-    @Column(name = "FL_PART_FASCKO_ANNO_OK")
+    @Column(name = "FL_PART_FASCKO_ANNO_OK", columnDefinition = "char(1)")
     public String getFlPartFasckoAnnoOk() {
         return this.flPartFasckoAnnoOk;
     }
@@ -142,7 +164,7 @@ public class OrgVChkStrutPartitionFasc implements Serializable {
         this.flPartFasckoAnnoOk = flPartFasckoAnnoOk;
     }
 
-    @Column(name = "FL_PART_FASCKO_OK")
+    @Column(name = "FL_PART_FASCKO_OK", columnDefinition = "char(1)")
     public String getFlPartFasckoOk() {
         return this.flPartFasckoOk;
     }
@@ -151,7 +173,7 @@ public class OrgVChkStrutPartitionFasc implements Serializable {
         this.flPartFasckoOk = flPartFasckoOk;
     }
 
-    @Column(name = "FL_PART_FILEELEVRSFASC_DATA_OK")
+    @Column(name = "FL_PART_FILEELEVRSFASC_DATA_OK", columnDefinition = "char(1)")
     public String getFlPartFileelevrsfascDataOk() {
         return this.flPartFileelevrsfascDataOk;
     }
@@ -160,7 +182,7 @@ public class OrgVChkStrutPartitionFasc implements Serializable {
         this.flPartFileelevrsfascDataOk = flPartFileelevrsfascDataOk;
     }
 
-    @Column(name = "FL_PART_FILEELEVRSFASC_OK")
+    @Column(name = "FL_PART_FILEELEVRSFASC_OK", columnDefinition = "char(1)")
     public String getFlPartFileelevrsfascOk() {
         return this.flPartFileelevrsfascOk;
     }
@@ -169,7 +191,7 @@ public class OrgVChkStrutPartitionFasc implements Serializable {
         this.flPartFileelevrsfascOk = flPartFileelevrsfascOk;
     }
 
-    @Column(name = "FL_PART_OK")
+    @Column(name = "FL_PART_OK", columnDefinition = "char(1)")
     public String getFlPartOk() {
         return this.flPartOk;
     }
@@ -178,7 +200,7 @@ public class OrgVChkStrutPartitionFasc implements Serializable {
         this.flPartOk = flPartOk;
     }
 
-    @Column(name = "FL_PART_SESFASCERR_OK")
+    @Column(name = "FL_PART_SESFASCERR_OK", columnDefinition = "char(1)")
     public String getFlPartSesfascerrOk() {
         return this.flPartSesfascerrOk;
     }
@@ -187,7 +209,7 @@ public class OrgVChkStrutPartitionFasc implements Serializable {
         this.flPartSesfascerrOk = flPartSesfascerrOk;
     }
 
-    @Column(name = "FL_PART_SESFASCKO_ANNO_OK")
+    @Column(name = "FL_PART_SESFASCKO_ANNO_OK", columnDefinition = "char(1)")
     public String getFlPartSesfasckoAnnoOk() {
         return this.flPartSesfasckoAnnoOk;
     }
@@ -196,7 +218,7 @@ public class OrgVChkStrutPartitionFasc implements Serializable {
         this.flPartSesfasckoAnnoOk = flPartSesfasckoAnnoOk;
     }
 
-    @Column(name = "FL_PART_SESFASCKO_OK")
+    @Column(name = "FL_PART_SESFASCKO_OK", columnDefinition = "char(1)")
     public String getFlPartSesfasckoOk() {
         return this.flPartSesfasckoOk;
     }
@@ -205,7 +227,7 @@ public class OrgVChkStrutPartitionFasc implements Serializable {
         this.flPartSesfasckoOk = flPartSesfasckoOk;
     }
 
-    @Column(name = "FL_PART_XMLFASC_DATA_OK")
+    @Column(name = "FL_PART_XMLFASC_DATA_OK", columnDefinition = "char(1)")
     public String getFlPartXmlfascDataOk() {
         return this.flPartXmlfascDataOk;
     }
@@ -214,7 +236,7 @@ public class OrgVChkStrutPartitionFasc implements Serializable {
         this.flPartXmlfascDataOk = flPartXmlfascDataOk;
     }
 
-    @Column(name = "FL_PART_XMLFASC_OK")
+    @Column(name = "FL_PART_XMLFASC_OK", columnDefinition = "char(1)")
     public String getFlPartXmlfascOk() {
         return this.flPartXmlfascOk;
     }
@@ -223,7 +245,7 @@ public class OrgVChkStrutPartitionFasc implements Serializable {
         this.flPartXmlfascOk = flPartXmlfascOk;
     }
 
-    @Column(name = "FL_PART_XMLSESFASCKO_DATA_OK")
+    @Column(name = "FL_PART_XMLSESFASCKO_DATA_OK", columnDefinition = "char(1)")
     public String getFlPartXmlsesfasckoDataOk() {
         return this.flPartXmlsesfasckoDataOk;
     }
@@ -232,7 +254,7 @@ public class OrgVChkStrutPartitionFasc implements Serializable {
         this.flPartXmlsesfasckoDataOk = flPartXmlsesfasckoDataOk;
     }
 
-    @Column(name = "FL_PART_XMLSESFASCKO_OK")
+    @Column(name = "FL_PART_XMLSESFASCKO_OK", columnDefinition = "char(1)")
     public String getFlPartXmlsesfasckoOk() {
         return this.flPartXmlsesfasckoOk;
     }
@@ -241,7 +263,7 @@ public class OrgVChkStrutPartitionFasc implements Serializable {
         this.flPartXmlsesfasckoOk = flPartXmlsesfasckoOk;
     }
 
-    @Column(name = "FL_PART_XMLVERSFASC_DATA_OK")
+    @Column(name = "FL_PART_XMLVERSFASC_DATA_OK", columnDefinition = "char(1)")
     public String getFlPartXmlversfascDataOk() {
         return this.flPartXmlversfascDataOk;
     }
@@ -250,7 +272,7 @@ public class OrgVChkStrutPartitionFasc implements Serializable {
         this.flPartXmlversfascDataOk = flPartXmlversfascDataOk;
     }
 
-    @Column(name = "FL_PART_XMLVERSFASC_OK")
+    @Column(name = "FL_PART_XMLVERSFASC_OK", columnDefinition = "char(1)")
     public String getFlPartXmlversfascOk() {
         return this.flPartXmlversfascOk;
     }

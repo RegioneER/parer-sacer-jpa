@@ -1,17 +1,53 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.*;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlTransient;
+
 import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 /**
  * The persistent class for the DEC_XSD_DATI_SPEC database table.
- *
  */
 @Entity
 // @Cacheable(true)
@@ -19,36 +55,58 @@ import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 public class DecXsdDatiSpec implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idXsdDatiSpec;
+
+    private Long idXsdDatiSpec;
+
     private String blXsd;
+
     private String cdVersioneXsd;
+
     private Date dtIstituz;
+
     private Date dtSoppres;
+
     private String nmSistemaMigraz;
+
     private String tiEntitaSacer;
+
     private String tiUsoXsd;
+
     private String dsVersioneXsd;
-    private List<AroUsoXsdDatiSpec> aroUsoXsdDatiSpecs;
-    private List<DecXsdAttribDatiSpec> decXsdAttribDatiSpecs;
-    private List<DecTipoStrutUdXsd> decTipoStrutUdXsds;
+
+    private List<AroUsoXsdDatiSpec> aroUsoXsdDatiSpecs = new ArrayList<>();
+
+    private List<DecXsdAttribDatiSpec> decXsdAttribDatiSpecs = new ArrayList<>();
+
+    private List<DecTipoStrutUdXsd> decTipoStrutUdXsds = new ArrayList<>();
+
     private DecTipoCompDoc decTipoCompDoc;
+
     private DecTipoDoc decTipoDoc;
+
     private DecTipoUnitaDoc decTipoUnitaDoc;
+
     private OrgStrut orgStrut;
 
-    public DecXsdDatiSpec() {
+    public DecXsdDatiSpec() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "DEC_XSD_DATI_SPEC_IDXSDDATISPEC_GENERATOR", sequenceName = "SDEC_XSD_DATI_SPEC", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DEC_XSD_DATI_SPEC_IDXSDDATISPEC_GENERATOR")
+    // "DEC_XSD_DATI_SPEC_IDXSDDATISPEC_GENERATOR",
+    // sequenceName = "SDEC_XSD_DATI_SPEC",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DEC_XSD_DATI_SPEC_IDXSDDATISPEC_GENERATOR")
     @Column(name = "ID_XSD_DATI_SPEC")
     @XmlID
-    public long getIdXsdDatiSpec() {
+    @GenericGenerator(name = "SDEC_XSD_DATI_SPEC_ID_XSD_DATI_SPEC_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SDEC_XSD_DATI_SPEC"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SDEC_XSD_DATI_SPEC_ID_XSD_DATI_SPEC_GENERATOR")
+    public Long getIdXsdDatiSpec() {
         return this.idXsdDatiSpec;
     }
 
-    public void setIdXsdDatiSpec(long idXsdDatiSpec) {
+    public void setIdXsdDatiSpec(Long idXsdDatiSpec) {
         this.idXsdDatiSpec = idXsdDatiSpec;
     }
 
@@ -138,6 +196,18 @@ public class DecXsdDatiSpec implements Serializable {
         this.aroUsoXsdDatiSpecs = aroUsoXsdDatiSpecs;
     }
 
+    public AroUsoXsdDatiSpec addAroUsoXsdDatiSpec(AroUsoXsdDatiSpec aroUsoXsdDatiSpec) {
+        getAroUsoXsdDatiSpecs().add(aroUsoXsdDatiSpec);
+        aroUsoXsdDatiSpec.setDecXsdDatiSpec(this);
+        return aroUsoXsdDatiSpec;
+    }
+
+    public AroUsoXsdDatiSpec removeAroUsoXsdDatiSpec(AroUsoXsdDatiSpec aroUsoXsdDatiSpec) {
+        getAroUsoXsdDatiSpecs().remove(aroUsoXsdDatiSpec);
+        aroUsoXsdDatiSpec.setDecXsdDatiSpec(null);
+        return aroUsoXsdDatiSpec;
+    }
+
     // bi-directional many-to-one association to DecXsdAttribDatiSpec
     @OneToMany(mappedBy = "decXsdDatiSpec", cascade = CascadeType.PERSIST)
     @OrderBy("niOrdAttrib ASC")
@@ -148,6 +218,18 @@ public class DecXsdDatiSpec implements Serializable {
 
     public void setDecXsdAttribDatiSpecs(List<DecXsdAttribDatiSpec> decXsdAttribDatiSpecs) {
         this.decXsdAttribDatiSpecs = decXsdAttribDatiSpecs;
+    }
+
+    public DecXsdAttribDatiSpec addDecXsdAttribDatiSpec(DecXsdAttribDatiSpec decXsdAttribDatiSpec) {
+        getDecXsdAttribDatiSpecs().add(decXsdAttribDatiSpec);
+        decXsdAttribDatiSpec.setDecXsdDatiSpec(this);
+        return decXsdAttribDatiSpec;
+    }
+
+    public DecXsdAttribDatiSpec removeDecXsdAttribDatiSpec(DecXsdAttribDatiSpec decXsdAttribDatiSpec) {
+        getDecXsdAttribDatiSpecs().remove(decXsdAttribDatiSpec);
+        decXsdAttribDatiSpec.setDecXsdDatiSpec(null);
+        return decXsdAttribDatiSpec;
     }
 
     // bi-directional many-to-one association to DecTipoCompDoc
@@ -209,4 +291,15 @@ public class DecXsdDatiSpec implements Serializable {
         this.decTipoStrutUdXsds = decTipoStrutUdXsds;
     }
 
+    public DecTipoStrutUdXsd addDecTipoStrutUdXsd(DecTipoStrutUdXsd decTipoStrutUdXsd) {
+        getDecTipoStrutUdXsds().add(decTipoStrutUdXsd);
+        decTipoStrutUdXsd.setDecXsdDatiSpec(this);
+        return decTipoStrutUdXsd;
+    }
+
+    public DecTipoStrutUdXsd removeDecTipoStrutUdXsd(DecTipoStrutUdXsd decTipoStrutUdXsd) {
+        getDecTipoStrutUdXsds().remove(decTipoStrutUdXsd);
+        decTipoStrutUdXsd.setDecXsdDatiSpec(null);
+        return decTipoStrutUdXsd;
+    }
 }

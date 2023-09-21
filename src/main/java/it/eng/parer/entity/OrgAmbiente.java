@@ -1,15 +1,47 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlTransient;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 /**
  * The persistent class for the ORG_AMBIENTE database table.
- *
  */
 @Entity
 @Cacheable(true)
@@ -17,32 +49,50 @@ import javax.xml.bind.annotation.XmlTransient;
 public class OrgAmbiente implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idAmbiente;
-    private String dsAmbiente;
-    private String nmAmbiente;
-    private String dsNote;
-    private Date dtFinVal;
-    private Date dtIniVal;
-    private BigDecimal idEnteConserv;
-    private BigDecimal idEnteGestore;
-    private List<DecModelloTipoSerie> decModelloTipoSeries;
-    private List<OrgEnte> orgEntes;
-    private List<AplValoreParamApplic> aplValoreParamApplics;
-    private List<AplValParamApplicMulti> aplValParamApplicMultis;
-    private List<OrgStoricoEnteAmbiente> orgStoricoEnteAmbientes;
 
-    public OrgAmbiente() {
+    private Long idAmbiente;
+
+    private String dsAmbiente;
+
+    private String nmAmbiente;
+
+    private String dsNote;
+
+    private Date dtFinVal;
+
+    private Date dtIniVal;
+
+    private BigDecimal idEnteConserv;
+
+    private BigDecimal idEnteGestore;
+
+    private List<DecModelloTipoSerie> decModelloTipoSeries = new ArrayList<>();
+
+    private List<OrgEnte> orgEntes = new ArrayList<>();
+
+    private List<AplValoreParamApplic> aplValoreParamApplics = new ArrayList<>();
+
+    private List<AplValParamApplicMulti> aplValParamApplicMultis = new ArrayList<>();
+
+    private List<OrgStoricoEnteAmbiente> orgStoricoEnteAmbientes = new ArrayList<>();
+
+    public OrgAmbiente() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "ORG_AMBIENTE_IDAMBIENTE_GENERATOR", sequenceName = "SORG_AMBIENTE", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ORG_AMBIENTE_IDAMBIENTE_GENERATOR")
+    // "ORG_AMBIENTE_IDAMBIENTE_GENERATOR", sequenceName
+    // = "SORG_AMBIENTE", allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ORG_AMBIENTE_IDAMBIENTE_GENERATOR")
     @Column(name = "ID_AMBIENTE")
-    public long getIdAmbiente() {
+    @GenericGenerator(name = "SORG_AMBIENTE_ID_AMBIENTE_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SORG_AMBIENTE"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SORG_AMBIENTE_ID_AMBIENTE_GENERATOR")
+    public Long getIdAmbiente() {
         return this.idAmbiente;
     }
 
-    public void setIdAmbiente(long idAmbiente) {
+    public void setIdAmbiente(Long idAmbiente) {
         this.idAmbiente = idAmbiente;
     }
 
@@ -78,14 +128,12 @@ public class OrgAmbiente implements Serializable {
     public DecModelloTipoSerie addDecModelloTipoSery(DecModelloTipoSerie decModelloTipoSery) {
         getDecModelloTipoSeries().add(decModelloTipoSery);
         decModelloTipoSery.setOrgAmbiente(this);
-
         return decModelloTipoSery;
     }
 
     public DecModelloTipoSerie removeDecModelloTipoSery(DecModelloTipoSerie decModelloTipoSery) {
         getDecModelloTipoSeries().remove(decModelloTipoSery);
         decModelloTipoSery.setOrgAmbiente(null);
-
         return decModelloTipoSery;
     }
 
@@ -102,14 +150,12 @@ public class OrgAmbiente implements Serializable {
     public OrgEnte addOrgEnte(OrgEnte orgEnte) {
         getOrgEntes().add(orgEnte);
         orgEnte.setOrgAmbiente(this);
-
         return orgEnte;
     }
 
     public OrgEnte removeOrgEnte(OrgEnte orgEnte) {
         getOrgEntes().remove(orgEnte);
         orgEnte.setOrgAmbiente(null);
-
         return orgEnte;
     }
 
@@ -173,14 +219,12 @@ public class OrgAmbiente implements Serializable {
     public AplValoreParamApplic addAplValoreParamApplic(AplValoreParamApplic aplValoreParamApplic) {
         getAplValoreParamApplics().add(aplValoreParamApplic);
         aplValoreParamApplic.setOrgAmbiente(this);
-
         return aplValoreParamApplic;
     }
 
     public AplValoreParamApplic removeAplValoreParamApplic(AplValoreParamApplic aplValoreParamApplic) {
         getAplValoreParamApplics().remove(aplValoreParamApplic);
         aplValoreParamApplic.setOrgAmbiente(null);
-
         return aplValoreParamApplic;
     }
 
@@ -197,14 +241,12 @@ public class OrgAmbiente implements Serializable {
     public AplValParamApplicMulti addAplValParamApplicMulti(AplValParamApplicMulti aplValParamApplicMulti) {
         getAplValParamApplicMultis().add(aplValParamApplicMulti);
         aplValParamApplicMulti.setOrgAmbiente(this);
-
         return aplValParamApplicMulti;
     }
 
     public AplValParamApplicMulti removeAplValParamApplicMulti(AplValParamApplicMulti aplValParamApplicMulti) {
         getAplValParamApplicMultis().remove(aplValParamApplicMulti);
         aplValParamApplicMulti.setOrgAmbiente(null);
-
         return aplValParamApplicMulti;
     }
 
@@ -221,15 +263,12 @@ public class OrgAmbiente implements Serializable {
     public OrgStoricoEnteAmbiente addOrgStoricoEnteAmbiente(OrgStoricoEnteAmbiente orgStoricoEnteAmbiente) {
         getOrgStoricoEnteAmbientes().add(orgStoricoEnteAmbiente);
         orgStoricoEnteAmbiente.setOrgAmbiente(this);
-
         return orgStoricoEnteAmbiente;
     }
 
     public OrgStoricoEnteAmbiente removeOrgStoricoEnteAmbiente(OrgStoricoEnteAmbiente orgStoricoEnteAmbiente) {
         getOrgStoricoEnteAmbientes().remove(orgStoricoEnteAmbiente);
         orgStoricoEnteAmbiente.setOrgAmbiente(null);
-
         return orgStoricoEnteAmbiente;
     }
-
 }

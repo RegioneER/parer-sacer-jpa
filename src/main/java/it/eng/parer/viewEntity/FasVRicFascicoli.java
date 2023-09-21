@@ -1,9 +1,34 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the FAS_V_RIC_FASCICOLI database table.
@@ -48,8 +73,76 @@ public class FasVRicFascicoli implements Serializable {
     private String tiStatoConservazione;
     private String tiStatoFascElencoVers;
     private Date tsVersFascicolo;
+    private String cdVersioneXsd;
+    private String tiModelloXsd;
 
-    public FasVRicFascicoli() {
+    public FasVRicFascicoli() {/* Hibernate */
+    }
+
+    public FasVRicFascicoli(BigDecimal aaFascicolo, BigDecimal aaFascicoloPadre, String cdCompositoVoceTitol,
+            String cdKeyFascicolo, String cdKeyFascicoloPadre, String cdLivelloRiserv, String cdProcAmmin,
+            String dsOggettoFascicolo, String dsOggettoFascicoloPadre, String dsProcAmmin, Date dtApeFascicolo,
+            Date dtChiuFascicolo, String flForzaContrClassif, String flForzaContrColleg, String flForzaContrNumero,
+            BigDecimal idFascicolo, BigDecimal idSistemaVersante, BigDecimal idStrut, BigDecimal idTipoFascicolo,
+            BigDecimal idUserIamCorrente, BigDecimal idUserIamVers, BigDecimal idVoceTitol,
+            BigDecimal niAaConservazione, BigDecimal niUnitaDoc, String nmSistemaVersante, String nmTipoFascicolo,
+            String nmUserid, String tiConservazione, String tiEsito, String tiStatoConservazione,
+            String tiStatoFascElencoVers, Date tsVersFascicolo) {
+        this.aaFascicolo = aaFascicolo;
+        this.aaFascicoloPadre = aaFascicoloPadre;
+        this.cdCompositoVoceTitol = cdCompositoVoceTitol;
+        this.cdKeyFascicolo = cdKeyFascicolo;
+        this.cdKeyFascicoloPadre = cdKeyFascicoloPadre;
+        this.cdLivelloRiserv = cdLivelloRiserv;
+        this.cdProcAmmin = cdProcAmmin;
+        this.dsOggettoFascicolo = dsOggettoFascicolo;
+        this.dsOggettoFascicoloPadre = dsOggettoFascicoloPadre;
+        this.dsProcAmmin = dsProcAmmin;
+        this.dtApeFascicolo = dtApeFascicolo;
+        this.dtChiuFascicolo = dtChiuFascicolo;
+        this.flForzaContrClassif = flForzaContrClassif;
+        this.flForzaContrColleg = flForzaContrColleg;
+        this.flForzaContrNumero = flForzaContrNumero;
+        this.idFascicolo = idFascicolo;
+        this.idSistemaVersante = idSistemaVersante;
+        this.idStrut = idStrut;
+        this.idTipoFascicolo = idTipoFascicolo;
+        this.idUserIamCorrente = idUserIamCorrente;
+        this.idUserIamVers = idUserIamVers;
+        this.idVoceTitol = idVoceTitol;
+        this.niAaConservazione = niAaConservazione;
+        this.niUnitaDoc = niUnitaDoc;
+        this.nmSistemaVersante = nmSistemaVersante;
+        this.nmTipoFascicolo = nmTipoFascicolo;
+        this.nmUserid = nmUserid;
+        this.tiConservazione = tiConservazione;
+        this.tiEsito = tiEsito;
+        this.tiStatoConservazione = tiStatoConservazione;
+        this.tiStatoFascElencoVers = tiStatoFascElencoVers;
+        this.tsVersFascicolo = tsVersFascicolo;
+    }
+
+    public FasVRicFascicoli(BigDecimal idFascicolo, BigDecimal aaFascicolo, String cdKeyFascicolo,
+            String cdCompositoVoceTitol, String nmTipoFascicolo, Date dtApeFascicolo, Date dtChiuFascicolo,
+            Date tsVersFascicolo, BigDecimal niUnitaDoc, BigDecimal niAaConservazione, String cdLivelloRiserv,
+            String flForzaContrClassif, String flForzaContrNumero, String flForzaContrColleg,
+            String tiStatoFascElencoVers, String tiStatoConservazione) {
+        this.idFascicolo = idFascicolo;
+        this.aaFascicolo = aaFascicolo;
+        this.cdKeyFascicolo = cdKeyFascicolo;
+        this.cdCompositoVoceTitol = cdCompositoVoceTitol;
+        this.nmTipoFascicolo = nmTipoFascicolo;
+        this.dtApeFascicolo = dtApeFascicolo;
+        this.dtChiuFascicolo = dtChiuFascicolo;
+        this.tsVersFascicolo = tsVersFascicolo;
+        this.niUnitaDoc = niUnitaDoc;
+        this.niAaConservazione = niAaConservazione;
+        this.cdLivelloRiserv = cdLivelloRiserv;
+        this.flForzaContrClassif = flForzaContrClassif;
+        this.flForzaContrColleg = flForzaContrColleg;
+        this.flForzaContrNumero = flForzaContrNumero;
+        this.tiStatoFascElencoVers = tiStatoFascElencoVers;
+        this.tiStatoConservazione = tiStatoConservazione;
     }
 
     @Column(name = "AA_FASCICOLO")
@@ -162,7 +255,7 @@ public class FasVRicFascicoli implements Serializable {
         this.dtChiuFascicolo = dtChiuFascicolo;
     }
 
-    @Column(name = "FL_FORZA_CONTR_CLASSIF")
+    @Column(name = "FL_FORZA_CONTR_CLASSIF", columnDefinition = "char(1)")
     public String getFlForzaContrClassif() {
         return this.flForzaContrClassif;
     }
@@ -171,7 +264,7 @@ public class FasVRicFascicoli implements Serializable {
         this.flForzaContrClassif = flForzaContrClassif;
     }
 
-    @Column(name = "FL_FORZA_CONTR_COLLEG")
+    @Column(name = "FL_FORZA_CONTR_COLLEG", columnDefinition = "char(1)")
     public String getFlForzaContrColleg() {
         return this.flForzaContrColleg;
     }
@@ -180,7 +273,7 @@ public class FasVRicFascicoli implements Serializable {
         this.flForzaContrColleg = flForzaContrColleg;
     }
 
-    @Column(name = "FL_FORZA_CONTR_NUMERO")
+    @Column(name = "FL_FORZA_CONTR_NUMERO", columnDefinition = "char(1)")
     public String getFlForzaContrNumero() {
         return this.flForzaContrNumero;
     }
@@ -343,4 +436,23 @@ public class FasVRicFascicoli implements Serializable {
     public void setTsVersFascicolo(Date tsVersFascicolo) {
         this.tsVersFascicolo = tsVersFascicolo;
     }
+
+    @Column(name = "CD_VERSIONE_XSD")
+    public String getCdVersioneXsd() {
+        return cdVersioneXsd;
+    }
+
+    public void setCdVersioneXsd(String cdVersioneXsd) {
+        this.cdVersioneXsd = cdVersioneXsd;
+    }
+
+    @Column(name = "TI_MODELLO_XSD")
+    public String getTiModelloXsd() {
+        return tiModelloXsd;
+    }
+
+    public void setTiModelloXsd(String tiModelloXsd) {
+        this.tiModelloXsd = tiModelloXsd;
+    }
+
 }

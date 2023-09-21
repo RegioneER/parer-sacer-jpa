@@ -1,38 +1,71 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.grantedEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the APL_NOTA_RILASCIO database table.
- * 
  */
 @Entity
-@Table(name = "SACER_IAM.APL_NOTA_RILASCIO")
+@Table(schema = "SACER_IAM", name = "APL_NOTA_RILASCIO")
 public class SIAplNotaRilascio implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    private long idNotaRilascio;
+
+    private Long idNotaRilascio;
+
     private String cdVersione;
+
     private Date dtVersione;
+
     private Date dtIniVal;
+
     private Date dtFineVal;
+
     private String dsEvidenza;
+
     private String blNota;
+
     private SIAplApplic siAplApplic;
 
-    public SIAplNotaRilascio() {
+    public SIAplNotaRilascio() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "APL_NOTA_RILASCIO_IDNOTARILASCIO_GENERATOR", sequenceName = "SACER_IAM.SAPL_NOTA_RILASCIO", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "APL_NOTA_RILASCIO_IDNOTARILASCIO_GENERATOR")
     @Column(name = "ID_NOTA_RILASCIO")
-    public long getIdNotaRilascio() {
+    public Long getIdNotaRilascio() {
         return this.idNotaRilascio;
     }
 
-    public void setIdNotaRilascio(long idNotaRilascio) {
+    public void setIdNotaRilascio(Long idNotaRilascio) {
         this.idNotaRilascio = idNotaRilascio;
     }
 

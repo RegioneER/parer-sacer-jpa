@@ -1,17 +1,30 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlID;
 
@@ -24,7 +37,7 @@ import javax.xml.bind.annotation.XmlID;
 public class FasValoreAttribFascicolo implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idValoreAttribFascicolo;
+    private Long idValoreAttribFascicolo;
     private DecUsoModelloXsdFasc decUsoModelloXsdFasc;
     private FasFascicolo fasFascicolo;
     private DecAttribFascicolo decAttribFascicolo;
@@ -35,15 +48,13 @@ public class FasValoreAttribFascicolo implements Serializable {
     }
 
     @Id
-    @SequenceGenerator(name = "DEC_VALORE_ATTRIB_FASCICOLO_IDVALOREATTRIBFASCICOLO_GENERATOR", sequenceName = "SDEC_VALORE_ATTRIB_FASCICOLO", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DEC_VALORE_ATTRIB_FASCICOLO_IDVALOREATTRIBFASCICOLO_GENERATOR")
     @Column(name = "ID_VALORE_ATTRIB_FASCICOLO")
     @XmlID
-    public long getIdValoreAttribFascicolo() {
+    public Long getIdValoreAttribFascicolo() {
         return this.idValoreAttribFascicolo;
     }
 
-    public void setIdValoreAttribFascicolo(long idValoreAttribFascicolo) {
+    public void setIdValoreAttribFascicolo(Long idValoreAttribFascicolo) {
         this.idValoreAttribFascicolo = idValoreAttribFascicolo;
     }
 

@@ -1,9 +1,33 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the ELV_V_RIC_ELENCO_VERS_BY_STATO database table.
@@ -49,7 +73,7 @@ public class ElvVRicElencoVersByStato implements Serializable {
     private Date tsStatoElencoInCodaJms;
     private BigDecimal hhStatoElencoInCodaJms;
 
-    public ElvVRicElencoVersByStato() {
+    public ElvVRicElencoVersByStato() {/* Hibernate */
     }
 
     @Column(name = "DS_ELENCO")
@@ -111,7 +135,7 @@ public class ElvVRicElencoVersByStato implements Serializable {
         this.dtFirmaIndice = dtFirmaIndice;
     }
 
-    @Column(name = "FL_ELENCO_FISC")
+    @Column(name = "FL_ELENCO_FISC", columnDefinition = "char(1)")
     public String getFlElencoFisc() {
         return this.flElencoFisc;
     }
@@ -120,12 +144,12 @@ public class ElvVRicElencoVersByStato implements Serializable {
         this.flElencoFisc = flElencoFisc;
     }
 
-    @Column(name = "FL_ELENCO_STANDARD")
+    @Column(name = "FL_ELENCO_STANDARD", columnDefinition = "char(1)")
     public String getFlElencoStandard() {
         return this.flElencoStandard;
     }
 
-    @Column(name = "FL_ELENCO_FIRMATO")
+    @Column(name = "FL_ELENCO_FIRMATO", columnDefinition = "char(1)")
     public String getFlElencoFirmato() {
         return this.flElencoFirmato;
     }

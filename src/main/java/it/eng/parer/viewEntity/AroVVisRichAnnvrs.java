@@ -1,9 +1,33 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the ARO_V_VIS_RICH_ANNVRS database table.
@@ -39,7 +63,7 @@ public class AroVVisRichAnnvrs implements Serializable {
     private String tiStatoRichAnnulVers;
     private String tiRichAnnulVers;
 
-    public AroVVisRichAnnvrs() {
+    public AroVVisRichAnnvrs() {/* Hibernate */
     }
 
     @Column(name = "CD_RICH_ANNUL_VERS")
@@ -89,7 +113,7 @@ public class AroVVisRichAnnvrs implements Serializable {
         this.dtRegStatoRichAnnulVers = dtRegStatoRichAnnulVers;
     }
 
-    @Column(name = "FL_FORZA_ANNUL")
+    @Column(name = "FL_FORZA_ANNUL", columnDefinition = "char(1)")
     public String getFlForzaAnnul() {
         return this.flForzaAnnul;
     }
@@ -98,7 +122,7 @@ public class AroVVisRichAnnvrs implements Serializable {
         this.flForzaAnnul = flForzaAnnul;
     }
 
-    @Column(name = "FL_IMMEDIATA")
+    @Column(name = "FL_IMMEDIATA", columnDefinition = "char(1)")
     public String getFlImmediata() {
         return this.flImmediata;
     }
@@ -107,7 +131,7 @@ public class AroVVisRichAnnvrs implements Serializable {
         this.flImmediata = flImmediata;
     }
 
-    @Column(name = "FL_RICH_PING")
+    @Column(name = "FL_RICH_PING", columnDefinition = "char(1)")
     public String getFlRichPing() {
         return this.flRichPing;
     }

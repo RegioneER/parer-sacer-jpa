@@ -1,8 +1,30 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the MON_V_CHK_FASC_BY_TI_FASC database table.
@@ -25,10 +47,10 @@ public class MonVChkFascByTiFasc implements Serializable {
     private String flFascNoselSchedCorr;
     private BigDecimal idTipoFascicolo;
 
-    public MonVChkFascByTiFasc() {
+    public MonVChkFascByTiFasc() {/* Hibernate */
     }
 
-    @Column(name = "FL_FASC_30GG")
+    @Column(name = "FL_FASC_30GG", columnDefinition = "char")
     public String getFlFasc30gg() {
         return this.flFasc30gg;
     }
@@ -37,7 +59,7 @@ public class MonVChkFascByTiFasc implements Serializable {
         this.flFasc30gg = flFasc30gg;
     }
 
-    @Column(name = "FL_FASC_ATTESA_SCHED_30GG")
+    @Column(name = "FL_FASC_ATTESA_SCHED_30GG", columnDefinition = "char")
     public String getFlFascAttesaSched30gg() {
         return this.flFascAttesaSched30gg;
     }
@@ -46,7 +68,7 @@ public class MonVChkFascByTiFasc implements Serializable {
         this.flFascAttesaSched30gg = flFascAttesaSched30gg;
     }
 
-    @Column(name = "FL_FASC_ATTESA_SCHED_B30GG")
+    @Column(name = "FL_FASC_ATTESA_SCHED_B30GG", columnDefinition = "char")
     public String getFlFascAttesaSchedB30gg() {
         return this.flFascAttesaSchedB30gg;
     }
@@ -55,7 +77,7 @@ public class MonVChkFascByTiFasc implements Serializable {
         this.flFascAttesaSchedB30gg = flFascAttesaSchedB30gg;
     }
 
-    @Column(name = "FL_FASC_ATTESA_SCHED_CORR")
+    @Column(name = "FL_FASC_ATTESA_SCHED_CORR", columnDefinition = "char(1)")
     public String getFlFascAttesaSchedCorr() {
         return this.flFascAttesaSchedCorr;
     }
@@ -64,7 +86,7 @@ public class MonVChkFascByTiFasc implements Serializable {
         this.flFascAttesaSchedCorr = flFascAttesaSchedCorr;
     }
 
-    @Column(name = "FL_FASC_B30GG")
+    @Column(name = "FL_FASC_B30GG", columnDefinition = "char")
     public String getFlFascB30gg() {
         return this.flFascB30gg;
     }
@@ -73,7 +95,7 @@ public class MonVChkFascByTiFasc implements Serializable {
         this.flFascB30gg = flFascB30gg;
     }
 
-    @Column(name = "FL_FASC_CORR")
+    @Column(name = "FL_FASC_CORR", columnDefinition = "char(1)")
     public String getFlFascCorr() {
         return this.flFascCorr;
     }
@@ -82,7 +104,7 @@ public class MonVChkFascByTiFasc implements Serializable {
         this.flFascCorr = flFascCorr;
     }
 
-    @Column(name = "FL_FASC_NOSEL_SCHED_30GG")
+    @Column(name = "FL_FASC_NOSEL_SCHED_30GG", columnDefinition = "char")
     public String getFlFascNoselSched30gg() {
         return this.flFascNoselSched30gg;
     }
@@ -91,7 +113,7 @@ public class MonVChkFascByTiFasc implements Serializable {
         this.flFascNoselSched30gg = flFascNoselSched30gg;
     }
 
-    @Column(name = "FL_FASC_NOSEL_SCHED_B30GG")
+    @Column(name = "FL_FASC_NOSEL_SCHED_B30GG", columnDefinition = "char")
     public String getFlFascNoselSchedB30gg() {
         return this.flFascNoselSchedB30gg;
     }
@@ -100,7 +122,7 @@ public class MonVChkFascByTiFasc implements Serializable {
         this.flFascNoselSchedB30gg = flFascNoselSchedB30gg;
     }
 
-    @Column(name = "FL_FASC_NOSEL_SCHED_CORR")
+    @Column(name = "FL_FASC_NOSEL_SCHED_CORR", columnDefinition = "char(1)")
     public String getFlFascNoselSchedCorr() {
         return this.flFascNoselSchedCorr;
     }

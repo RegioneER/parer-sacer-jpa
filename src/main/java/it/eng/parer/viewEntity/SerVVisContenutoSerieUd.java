@@ -1,9 +1,33 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the SER_V_VIS_CONTENUTO_SERIE_UD database table.
@@ -58,7 +82,7 @@ public class SerVVisContenutoSerieUd implements Serializable {
     private String tiStatoSerie;
     private String tiStatoVerSerie;
 
-    public SerVVisContenutoSerieUd() {
+    public SerVVisContenutoSerieUd() {/* Hibernate */
     }
 
     @Column(name = "AA_SERIE")
@@ -210,7 +234,7 @@ public class SerVVisContenutoSerieUd implements Serializable {
         this.dtStatoContenutoVerSerie = dtStatoContenutoVerSerie;
     }
 
-    @Column(name = "FL_ERR_CONTENUTO")
+    @Column(name = "FL_ERR_CONTENUTO", columnDefinition = "char(1)")
     public String getFlErrContenuto() {
         return this.flErrContenuto;
     }
@@ -219,7 +243,7 @@ public class SerVVisContenutoSerieUd implements Serializable {
         this.flErrContenuto = flErrContenuto;
     }
 
-    @Column(name = "FL_ERR_CONTENUTO_FILE")
+    @Column(name = "FL_ERR_CONTENUTO_FILE", columnDefinition = "char(1)")
     public String getFlErrContenutoFile() {
         return this.flErrContenutoFile;
     }
@@ -228,7 +252,7 @@ public class SerVVisContenutoSerieUd implements Serializable {
         this.flErrContenutoFile = flErrContenutoFile;
     }
 
-    @Column(name = "FL_PRESENZA_LACUNE")
+    @Column(name = "FL_PRESENZA_LACUNE", columnDefinition = "char(1)")
     public String getFlPresenzaLacune() {
         return this.flPresenzaLacune;
     }

@@ -1,52 +1,89 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.grantedEntity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 /**
  * The persistent class for the ORG_STO_ENTE_CONVENZ database table.
- *
  */
 @Entity
-@Table(name = "SACER_IAM.ORG_STO_ENTE_CONVENZ")
+@Table(schema = "SACER_IAM", name = "ORG_STO_ENTE_CONVENZ")
 @NamedQuery(name = "OrgStoEnteConvenz.findAll", query = "SELECT o FROM OrgStoEnteConvenz o")
 public class OrgStoEnteConvenz implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idStoEnteConvenz;
+
+    private Long idStoEnteConvenz;
+
     private String cdCapSedeLegale;
-    private String cdClienteSap;
+
     private String cdEnteConvenz;
+
     private String cdFisc;
+
     private String cdNazioneSedeLegale;
+
     private String dlNote;
+
     private String dsCittaSedeLegale;
+
     private String dsViaSedeLegale;
+
     private Date dtFineVal;
+
     private Date dtIniVal;
-    private String flEnteRegione;
+
     private BigDecimal idAmbitoTerrit;
+
     private BigDecimal idCategEnte;
-    private BigDecimal idEnteConvenzNuovo;
+
     private BigDecimal idProvSedeLegale;
+
     private String nmEnteConvenz;
+
     private String tiCdEnteConvenz;
+
     private SIOrgEnteSiam siOrgEnteConvenz;
 
-    public OrgStoEnteConvenz() {
+    public OrgStoEnteConvenz() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "ORG_STO_ENTE_CONVENZ_IDSTOENTECONVENZ_GENERATOR", sequenceName = "SORG_STO_ENTE_CONVENZ", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ORG_STO_ENTE_CONVENZ_IDSTOENTECONVENZ_GENERATOR")
     @Column(name = "ID_STO_ENTE_CONVENZ")
-    public long getIdStoEnteConvenz() {
+    public Long getIdStoEnteConvenz() {
         return this.idStoEnteConvenz;
     }
 
-    public void setIdStoEnteConvenz(long idStoEnteConvenz) {
+    public void setIdStoEnteConvenz(Long idStoEnteConvenz) {
         this.idStoEnteConvenz = idStoEnteConvenz;
     }
 
@@ -59,14 +96,14 @@ public class OrgStoEnteConvenz implements Serializable {
         this.cdCapSedeLegale = cdCapSedeLegale;
     }
 
-    @Column(name = "CD_CLIENTE_SAP")
-    public String getCdClienteSap() {
-        return this.cdClienteSap;
-    }
+    // @Column(name = "CD_CLIENTE_SAP")
+    // public String getCdClienteSap() {
+    // return this.cdClienteSap;
+    // }
 
-    public void setCdClienteSap(String cdClienteSap) {
-        this.cdClienteSap = cdClienteSap;
-    }
+    // public void setCdClienteSap(String cdClienteSap) {
+    // this.cdClienteSap = cdClienteSap;
+    // }
 
     @Column(name = "CD_ENTE_CONVENZ")
     public String getCdEnteConvenz() {
@@ -142,14 +179,14 @@ public class OrgStoEnteConvenz implements Serializable {
         this.dtIniVal = dtIniVal;
     }
 
-    @Column(name = "FL_ENTE_REGIONE")
-    public String getFlEnteRegione() {
-        return this.flEnteRegione;
-    }
-
-    public void setFlEnteRegione(String flEnteRegione) {
-        this.flEnteRegione = flEnteRegione;
-    }
+    // @Column(name = "FL_ENTE_REGIONE", columnDefinition = "char(1)")
+    // public String getFlEnteRegione() {
+    // return this.flEnteRegione;
+    // }
+    //
+    // public void setFlEnteRegione(String flEnteRegione) {
+    // this.flEnteRegione = flEnteRegione;
+    // }
 
     @Column(name = "ID_AMBITO_TERRIT")
     public BigDecimal getIdAmbitoTerrit() {
@@ -169,15 +206,14 @@ public class OrgStoEnteConvenz implements Serializable {
         this.idCategEnte = idCategEnte;
     }
 
-    @Column(name = "ID_ENTE_CONVENZ_NUOVO")
-    public BigDecimal getIdEnteConvenzNuovo() {
-        return this.idEnteConvenzNuovo;
-    }
-
-    public void setIdEnteConvenzNuovo(BigDecimal idEnteConvenzNuovo) {
-        this.idEnteConvenzNuovo = idEnteConvenzNuovo;
-    }
-
+    // @Column(name = "ID_ENTE_CONVENZ_NUOVO")
+    // public BigDecimal getIdEnteConvenzNuovo() {
+    // return this.idEnteConvenzNuovo;
+    // }
+    //
+    // public void setIdEnteConvenzNuovo(BigDecimal idEnteConvenzNuovo) {
+    // this.idEnteConvenzNuovo = idEnteConvenzNuovo;
+    // }
     @Column(name = "ID_PROV_SEDE_LEGALE")
     public BigDecimal getIdProvSedeLegale() {
         return this.idProvSedeLegale;
@@ -215,5 +251,4 @@ public class OrgStoEnteConvenz implements Serializable {
     public void setSiOrgEnteConvenz(SIOrgEnteSiam siOrgEnteConvenz) {
         this.siOrgEnteConvenz = siOrgEnteConvenz;
     }
-
 }

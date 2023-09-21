@@ -1,45 +1,101 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
+
 /**
  * The persistent class for the SER_CONTENUTO_VER_SERIE database table.
- * 
  */
 @Entity
 @Table(name = "SER_CONTENUTO_VER_SERIE")
 @NamedQuery(name = "SerContenutoVerSerie.findAll", query = "SELECT s FROM SerContenutoVerSerie s")
 public class SerContenutoVerSerie implements Serializable {
-    private static final long serialVersionUID = 1L;
-    private long idContenutoVerSerie;
-    private Date dtStatoContenutoVerSerie;
-    private String flTipoSerieUpd;
-    private BigDecimal idFirstUdAppartVerSerie;
-    private BigDecimal idLastUdAppartVerSerie;
-    private BigDecimal niUdContenutoVerSerie;
-    private String tiContenutoVerSerie;
-    private String tiStatoContenutoVerSerie;
-    private List<AroUdAppartVerSerie> aroUdAppartVerSeries;
-    private SerVerSerie serVerSerie;
-    private List<SerErrContenutoVerSerie> serErrContenutoVerSeries;
-    private List<SerQueryContenutoVerSerie> serQueryContenutoVerSeries;
 
-    public SerContenutoVerSerie() {
+    private static final long serialVersionUID = 1L;
+
+    private Long idContenutoVerSerie;
+
+    private Date dtStatoContenutoVerSerie;
+
+    private String flTipoSerieUpd;
+
+    private BigDecimal idFirstUdAppartVerSerie;
+
+    private BigDecimal idLastUdAppartVerSerie;
+
+    private BigDecimal niUdContenutoVerSerie;
+
+    private String tiContenutoVerSerie;
+
+    private String tiStatoContenutoVerSerie;
+
+    private List<AroUdAppartVerSerie> aroUdAppartVerSeries = new ArrayList<>();
+
+    private SerVerSerie serVerSerie;
+
+    private List<SerErrContenutoVerSerie> serErrContenutoVerSeries = new ArrayList<>();
+
+    private List<SerQueryContenutoVerSerie> serQueryContenutoVerSeries = new ArrayList<>();
+
+    public SerContenutoVerSerie() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "SER_CONTENUTO_VER_SERIE_IDCONTENUTOVERSERIE_GENERATOR", sequenceName = "SSER_CONTENUTO_VER_SERIE", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SER_CONTENUTO_VER_SERIE_IDCONTENUTOVERSERIE_GENERATOR")
+    // "SER_CONTENUTO_VER_SERIE_IDCONTENUTOVERSERIE_GENERATOR",
+    // sequenceName =
+    // "SSER_CONTENUTO_VER_SERIE",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
+    // "SER_CONTENUTO_VER_SERIE_IDCONTENUTOVERSERIE_GENERATOR")
     @Column(name = "ID_CONTENUTO_VER_SERIE")
-    public long getIdContenutoVerSerie() {
+    @GenericGenerator(name = "SSER_CONTENUTO_VER_SERIE_ID_CONTENUTO_VER_SERIE_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SSER_CONTENUTO_VER_SERIE"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SSER_CONTENUTO_VER_SERIE_ID_CONTENUTO_VER_SERIE_GENERATOR")
+    public Long getIdContenutoVerSerie() {
         return this.idContenutoVerSerie;
     }
 
-    public void setIdContenutoVerSerie(long idContenutoVerSerie) {
+    public void setIdContenutoVerSerie(Long idContenutoVerSerie) {
         this.idContenutoVerSerie = idContenutoVerSerie;
     }
 
@@ -53,7 +109,7 @@ public class SerContenutoVerSerie implements Serializable {
         this.dtStatoContenutoVerSerie = dtStatoContenutoVerSerie;
     }
 
-    @Column(name = "FL_TIPO_SERIE_UPD")
+    @Column(name = "FL_TIPO_SERIE_UPD", columnDefinition = "char(1)")
     public String getFlTipoSerieUpd() {
         return this.flTipoSerieUpd;
     }
@@ -120,14 +176,12 @@ public class SerContenutoVerSerie implements Serializable {
     public AroUdAppartVerSerie addAroUdAppartVerSery(AroUdAppartVerSerie aroUdAppartVerSery) {
         getAroUdAppartVerSeries().add(aroUdAppartVerSery);
         aroUdAppartVerSery.setSerContenutoVerSerie(this);
-
         return aroUdAppartVerSery;
     }
 
     public AroUdAppartVerSerie removeAroUdAppartVerSery(AroUdAppartVerSerie aroUdAppartVerSery) {
         getAroUdAppartVerSeries().remove(aroUdAppartVerSery);
         aroUdAppartVerSery.setSerContenutoVerSerie(null);
-
         return aroUdAppartVerSery;
     }
 
@@ -155,14 +209,12 @@ public class SerContenutoVerSerie implements Serializable {
     public SerErrContenutoVerSerie addSerErrContenutoVerSery(SerErrContenutoVerSerie serErrContenutoVerSery) {
         getSerErrContenutoVerSeries().add(serErrContenutoVerSery);
         serErrContenutoVerSery.setSerContenutoVerSerie(this);
-
         return serErrContenutoVerSery;
     }
 
     public SerErrContenutoVerSerie removeSerErrContenutoVerSery(SerErrContenutoVerSerie serErrContenutoVerSery) {
         getSerErrContenutoVerSeries().remove(serErrContenutoVerSery);
         serErrContenutoVerSery.setSerContenutoVerSerie(null);
-
         return serErrContenutoVerSery;
     }
 
@@ -179,7 +231,6 @@ public class SerContenutoVerSerie implements Serializable {
     public SerQueryContenutoVerSerie addSerQueryContenutoVerSery(SerQueryContenutoVerSerie serQueryContenutoVerSery) {
         getSerQueryContenutoVerSeries().add(serQueryContenutoVerSery);
         serQueryContenutoVerSery.setSerContenutoVerSerie(this);
-
         return serQueryContenutoVerSery;
     }
 
@@ -187,7 +238,6 @@ public class SerContenutoVerSerie implements Serializable {
             SerQueryContenutoVerSerie serQueryContenutoVerSery) {
         getSerQueryContenutoVerSeries().remove(serQueryContenutoVerSery);
         serQueryContenutoVerSery.setSerContenutoVerSerie(null);
-
         return serQueryContenutoVerSery;
     }
 

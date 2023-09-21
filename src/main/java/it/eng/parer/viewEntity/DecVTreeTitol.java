@@ -1,11 +1,29 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -32,8 +50,6 @@ public class DecVTreeTitol implements Serializable {
     private String flUsoClassif;
     private BigDecimal idLivelloTitol;
     private BigDecimal idTitol;
-    private BigDecimal idValVoceTitol;
-    private BigDecimal idVoceTitol;
     private BigDecimal idVoceTitolPadre;
     private BigDecimal niAnniConserv;
     private BigDecimal niFascic;
@@ -41,8 +57,18 @@ public class DecVTreeTitol implements Serializable {
     private BigDecimal niLivello;
     private BigDecimal niOrdVoceTitol;
     private String nmLivelloTitol;
+    private DecVTreeTitolId decVTreeTitolId;
 
-    public DecVTreeTitol() {
+    @EmbeddedId
+    public DecVTreeTitolId getDecVTreeTitolId() {
+        return decVTreeTitolId;
+    }
+
+    public void setDecVTreeTitolId(DecVTreeTitolId decVTreeTitolId) {
+        this.decVTreeTitolId = decVTreeTitolId;
+    }
+
+    public DecVTreeTitol() {/* Hibernate */
     }
 
     @Column(name = "CD_COMPOSITO_VOCE_PADRE")
@@ -130,7 +156,7 @@ public class DecVTreeTitol implements Serializable {
         this.dtSoppres = dtSoppres;
     }
 
-    @Column(name = "FL_USO_CLASSIF")
+    @Column(name = "FL_USO_CLASSIF", columnDefinition = "char(1)")
     public String getFlUsoClassif() {
         return this.flUsoClassif;
     }
@@ -155,26 +181,6 @@ public class DecVTreeTitol implements Serializable {
 
     public void setIdTitol(BigDecimal idTitol) {
         this.idTitol = idTitol;
-    }
-
-    @Id
-    @Column(name = "ID_VAL_VOCE_TITOL")
-    public BigDecimal getIdValVoceTitol() {
-        return this.idValVoceTitol;
-    }
-
-    public void setIdValVoceTitol(BigDecimal idValVoceTitol) {
-        this.idValVoceTitol = idValVoceTitol;
-    }
-
-    @Id
-    @Column(name = "ID_VOCE_TITOL")
-    public BigDecimal getIdVoceTitol() {
-        return this.idVoceTitol;
-    }
-
-    public void setIdVoceTitol(BigDecimal idVoceTitol) {
-        this.idVoceTitol = idVoceTitol;
     }
 
     @Column(name = "ID_VOCE_TITOL_PADRE")

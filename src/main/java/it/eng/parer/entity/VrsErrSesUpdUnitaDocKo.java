@@ -1,42 +1,90 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.math.BigDecimal;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 import it.eng.parer.entity.constraint.VrsErrUpdUnitaDocKo.TiErrVrsErrUpdUnitaDocKo;
 
-import java.math.BigDecimal;
-
 /**
  * The persistent class for the VRS_ERR_SES_UPD_UNITA_DOC_KO database table.
- * 
  */
 @Entity
 @Table(name = "VRS_ERR_SES_UPD_UNITA_DOC_KO")
 @NamedQuery(name = "VrsErrSesUpdUnitaDocKo.findAll", query = "SELECT v FROM VrsErrSesUpdUnitaDocKo v")
 public class VrsErrSesUpdUnitaDocKo implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    private long idErrSesUpdUnitaDocKo;
+
+    private Long idErrSesUpdUnitaDocKo;
+
     private String dsErr;
+
     private String flErrPrinc;
+
     private DecControlloWs decControlloWs;
+
     private DecErrSacer decErrSacer;
+
     private VrsSesUpdUnitaDocKo vrsSesUpdUnitaDocKo;
+
     private BigDecimal pgErr;
+
     private TiErrVrsErrUpdUnitaDocKo tiErr;
 
-    public VrsErrSesUpdUnitaDocKo() {
+    public VrsErrSesUpdUnitaDocKo() {/* Hibernate */
     }
 
     @Id
-    @SequenceGenerator(name = "VRS_ERR_SES_UPD_UNITA_DOC_KO_IDERRSESUPDUNITADOCKO_GENERATOR", sequenceName = "SVRS_ERR_SES_UPD_UNITA_DOC_KO", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VRS_ERR_SES_UPD_UNITA_DOC_KO_IDERRSESUPDUNITADOCKO_GENERATOR")
+    // "VRS_ERR_SES_UPD_UNITA_DOC_KO_IDERRSESUPDUNITADOCKO_GENERATOR",
+    // sequenceName =
+    // "SVRS_ERR_SES_UPD_UNITA_DOC_KO",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
+    // "VRS_ERR_SES_UPD_UNITA_DOC_KO_IDERRSESUPDUNITADOCKO_GENERATOR")
     @Column(name = "ID_ERR_SES_UPD_UNITA_DOC_KO")
-    public long getIdErrSesUpdUnitaDocKo() {
+    @GenericGenerator(name = "SVRS_ERR_SES_UPD_UNITA_DOC_KO_ID_ERR_SES_UPD_UNITA_DOC_KO_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SVRS_ERR_SES_UPD_UNITA_DOC_KO"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SVRS_ERR_SES_UPD_UNITA_DOC_KO_ID_ERR_SES_UPD_UNITA_DOC_KO_GENERATOR")
+    public Long getIdErrSesUpdUnitaDocKo() {
         return this.idErrSesUpdUnitaDocKo;
     }
 
-    public void setIdErrSesUpdUnitaDocKo(long idErrSesUpdUnitaDocKo) {
+    public void setIdErrSesUpdUnitaDocKo(Long idErrSesUpdUnitaDocKo) {
         this.idErrSesUpdUnitaDocKo = idErrSesUpdUnitaDocKo;
     }
 
@@ -49,7 +97,7 @@ public class VrsErrSesUpdUnitaDocKo implements Serializable {
         this.dsErr = dsErr;
     }
 
-    @Column(name = "FL_ERR_PRINC")
+    @Column(name = "FL_ERR_PRINC", columnDefinition = "char(1)")
     public String getFlErrPrinc() {
         return this.flErrPrinc;
     }

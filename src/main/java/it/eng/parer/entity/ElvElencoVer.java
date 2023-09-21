@@ -1,19 +1,56 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlID;
 
-import it.eng.parer.entity.constraint.ElvElencoVer.TiValidElenco;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
+
 import it.eng.parer.entity.constraint.ElvElencoVer.TiModValidElenco;
-import java.util.Objects;
+import it.eng.parer.entity.constraint.ElvElencoVer.TiValidElenco;
 
 /**
  * The persistent class for the ELV_ELENCO_VERS database table.
- *
  */
 @Entity
 @Table(name = "ELV_ELENCO_VERS")
@@ -21,69 +58,125 @@ import java.util.Objects;
 public class ElvElencoVer implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private long idElencoVers;
+
+    private Long idElencoVers;
+
     private BigDecimal aaKeyUnitaDoc;
+
     private String dlMotivoChius;
+
     private String dsElenco;
+
     private Date dtChius;
+
     private Date dtCreazioneElenco;
+
     private Date dtCreazioneElencoIxAip;
+
     private Date dtFirmaElencoIxAip;
+
     private Date dtFirmaIndice;
+
     private Date dtMarcaElencoIxAip;
+
     private Date dtScadChius;
+
     private String flElencoFisc;
+
     private String flElencoStandard;
+
     private BigDecimal idStatoElencoVersCor;
+
     private BigDecimal niCompAggElenco;
+
     private BigDecimal niCompVersElenco;
+
     private BigDecimal niDocAggElenco;
+
     private BigDecimal niDocVersElenco;
+
     private BigDecimal niIndiciAip;
+
     private BigDecimal niMaxComp;
+
     private BigDecimal niSizeAggElenco;
+
     private BigDecimal niSizeVersElenco;
+
     private BigDecimal niTempoScadChius;
+
     private BigDecimal niUnitaDocModElenco;
+
     private BigDecimal niUnitaDocVersElenco;
+
     private BigDecimal niUpdUnitaDoc;
+
     private String nmElenco;
+
     private String ntElencoChiuso;
+
     private String ntIndiceElenco;
+
     private String tiGestElenco;
+
     private String tiScadChius;
+
     private String tiStatoElenco;
+
     private String tiTempoScadChius;
+
     private TiValidElenco tiValidElenco;
+
     private TiModValidElenco tiModValidElenco;
-    private List<AroDoc> aroDocs;
-    private List<AroIndiceAipUdDaElab> aroIndiceAipUdDaElabs;
-    private List<AroUnitaDoc> aroUnitaDocs;
-    private List<AroVerIndiceAipUd> aroVerIndiceAipUds;
-    private List<AroUpdUnitaDoc> aroUpdUnitaDocs;
+
+    private List<AroDoc> aroDocs = new ArrayList<>();
+
+    private List<AroIndiceAipUdDaElab> aroIndiceAipUdDaElabs = new ArrayList<>();
+
+    private List<AroUnitaDoc> aroUnitaDocs = new ArrayList<>();
+
+    private List<AroVerIndiceAipUd> aroVerIndiceAipUds = new ArrayList<>();
+
+    private List<AroUpdUnitaDoc> aroUpdUnitaDocs = new ArrayList<>();
+
     private DecCriterioRaggr decCriterioRaggr;
+
     private IamUser iamUserFirmaIndice;
+
     private IamUser iamUserChiusoElenco;
+
     private OrgStrut orgStrut;
-    private List<ElvElencoVersDaElab> elvElencoVersDaElabs;
-    private List<ElvElencoVersUdAnnul> elvElencoVersUdAnnuls;
-    private List<ElvFileElencoVer> elvFileElencoVers;
-    private List<HsmElencoSessioneFirma> hsmElencoSessioneFirmas;
-    private List<ElvUrnElencoVers> elvUrnElencoVerss;
+
+    private List<ElvElencoVersDaElab> elvElencoVersDaElabs = new ArrayList<>();
+
+    private List<ElvElencoVersUdAnnul> elvElencoVersUdAnnuls = new ArrayList<>();
+
+    private List<ElvFileElencoVer> elvFileElencoVers = new ArrayList<>();
+
+    private List<HsmElencoSessioneFirma> hsmElencoSessioneFirmas = new ArrayList<>();
+
+    private List<ElvUrnElencoVers> elvUrnElencoVerss = new ArrayList<>();
 
     public ElvElencoVer() {
+        // hibernate
     }
 
     @Id
-    @SequenceGenerator(name = "ELV_ELENCO_VERS_IDELENCOVERS_GENERATOR", sequenceName = "SELV_ELENCO_VERS", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ELV_ELENCO_VERS_IDELENCOVERS_GENERATOR")
+    // "ELV_ELENCO_VERS_IDELENCOVERS_GENERATOR",
+    // sequenceName = "SELV_ELENCO_VERS",
+    // allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ELV_ELENCO_VERS_IDELENCOVERS_GENERATOR")
     @Column(name = "ID_ELENCO_VERS")
     @XmlID
-    public long getIdElencoVers() {
+    @GenericGenerator(name = "SELV_ELENCO_VERS_ID_ELENCO_VERS_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
+            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SELV_ELENCO_VERS"),
+            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SELV_ELENCO_VERS_ID_ELENCO_VERS_GENERATOR")
+    public Long getIdElencoVers() {
         return this.idElencoVers;
     }
 
-    public void setIdElencoVers(long idElencoVers) {
+    public void setIdElencoVers(Long idElencoVers) {
         this.idElencoVers = idElencoVers;
     }
 
@@ -184,7 +277,7 @@ public class ElvElencoVer implements Serializable {
         this.dtScadChius = dtScadChius;
     }
 
-    @Column(name = "FL_ELENCO_FISC")
+    @Column(name = "FL_ELENCO_FISC", columnDefinition = "char(1)")
     public String getFlElencoFisc() {
         return this.flElencoFisc;
     }
@@ -193,7 +286,7 @@ public class ElvElencoVer implements Serializable {
         this.flElencoFisc = flElencoFisc;
     }
 
-    @Column(name = "FL_ELENCO_STANDARD")
+    @Column(name = "FL_ELENCO_STANDARD", columnDefinition = "char(1)")
     public String getFlElencoStandard() {
         return this.flElencoStandard;
     }
@@ -415,14 +508,12 @@ public class ElvElencoVer implements Serializable {
     public AroDoc addAroDoc(AroDoc aroDoc) {
         getAroDocs().add(aroDoc);
         aroDoc.setElvElencoVer(this);
-
         return aroDoc;
     }
 
     public AroDoc removeAroDoc(AroDoc aroDoc) {
         getAroDocs().remove(aroDoc);
         aroDoc.setElvElencoVer(null);
-
         return aroDoc;
     }
 
@@ -439,14 +530,12 @@ public class ElvElencoVer implements Serializable {
     public AroIndiceAipUdDaElab addAroIndiceAipUdDaElab(AroIndiceAipUdDaElab aroIndiceAipUdDaElab) {
         getAroIndiceAipUdDaElabs().add(aroIndiceAipUdDaElab);
         aroIndiceAipUdDaElab.setElvElencoVer(this);
-
         return aroIndiceAipUdDaElab;
     }
 
     public AroIndiceAipUdDaElab removeAroIndiceAipUdDaElab(AroIndiceAipUdDaElab aroIndiceAipUdDaElab) {
         getAroIndiceAipUdDaElabs().remove(aroIndiceAipUdDaElab);
         aroIndiceAipUdDaElab.setElvElencoVer(null);
-
         return aroIndiceAipUdDaElab;
     }
 
@@ -463,14 +552,12 @@ public class ElvElencoVer implements Serializable {
     public AroUnitaDoc addAroUnitaDoc(AroUnitaDoc aroUnitaDoc) {
         getAroUnitaDocs().add(aroUnitaDoc);
         aroUnitaDoc.setElvElencoVer(this);
-
         return aroUnitaDoc;
     }
 
     public AroUnitaDoc removeAroUnitaDoc(AroUnitaDoc aroUnitaDoc) {
         getAroUnitaDocs().remove(aroUnitaDoc);
         aroUnitaDoc.setElvElencoVer(null);
-
         return aroUnitaDoc;
     }
 
@@ -487,14 +574,12 @@ public class ElvElencoVer implements Serializable {
     public AroVerIndiceAipUd addAroVerIndiceAipUd(AroVerIndiceAipUd aroVerIndiceAipUd) {
         getAroVerIndiceAipUds().add(aroVerIndiceAipUd);
         aroVerIndiceAipUd.setElvElencoVer(this);
-
         return aroVerIndiceAipUd;
     }
 
     public AroVerIndiceAipUd removeAroVerIndiceAipUd(AroVerIndiceAipUd aroVerIndiceAipUd) {
         getAroVerIndiceAipUds().remove(aroVerIndiceAipUd);
         aroVerIndiceAipUd.setElvElencoVer(null);
-
         return aroVerIndiceAipUd;
     }
 
@@ -511,14 +596,12 @@ public class ElvElencoVer implements Serializable {
     public AroUpdUnitaDoc addAroUpdUnitaDoc(AroUpdUnitaDoc aroUpdUnitaDoc) {
         getAroUpdUnitaDocs().add(aroUpdUnitaDoc);
         aroUpdUnitaDoc.setElvElencoVer(this);
-
         return aroUpdUnitaDoc;
     }
 
     public AroUpdUnitaDoc removeAroUpdUnitaDoc(AroUpdUnitaDoc aroUpdUnitaDoc) {
         getAroUpdUnitaDocs().remove(aroUpdUnitaDoc);
         aroUpdUnitaDoc.setElvElencoVer(null);
-
         return aroUpdUnitaDoc;
     }
 
@@ -567,7 +650,7 @@ public class ElvElencoVer implements Serializable {
     }
 
     // bi-directional many-to-one association to ElvElencoVersDaElab
-    @OneToMany(mappedBy = "elvElencoVer")
+    @OneToMany(mappedBy = "elvElencoVer", cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
     public List<ElvElencoVersDaElab> getElvElencoVersDaElabs() {
         return this.elvElencoVersDaElabs;
     }
@@ -579,14 +662,12 @@ public class ElvElencoVer implements Serializable {
     public ElvElencoVersDaElab addElvElencoVersDaElab(ElvElencoVersDaElab elvElencoVersDaElab) {
         getElvElencoVersDaElabs().add(elvElencoVersDaElab);
         elvElencoVersDaElab.setElvElencoVer(this);
-
         return elvElencoVersDaElab;
     }
 
     public ElvElencoVersDaElab removeElvElencoVersDaElab(ElvElencoVersDaElab elvElencoVersDaElab) {
         getElvElencoVersDaElabs().remove(elvElencoVersDaElab);
         elvElencoVersDaElab.setElvElencoVer(null);
-
         return elvElencoVersDaElab;
     }
 
@@ -603,14 +684,12 @@ public class ElvElencoVer implements Serializable {
     public ElvElencoVersUdAnnul addElvElencoVersUdAnnul(ElvElencoVersUdAnnul elvElencoVersUdAnnul) {
         getElvElencoVersUdAnnuls().add(elvElencoVersUdAnnul);
         elvElencoVersUdAnnul.setElvElencoVer(this);
-
         return elvElencoVersUdAnnul;
     }
 
     public ElvElencoVersUdAnnul removeElvElencoVersUdAnnul(ElvElencoVersUdAnnul elvElencoVersUdAnnul) {
         getElvElencoVersUdAnnuls().remove(elvElencoVersUdAnnul);
         elvElencoVersUdAnnul.setElvElencoVer(null);
-
         return elvElencoVersUdAnnul;
     }
 
@@ -628,14 +707,12 @@ public class ElvElencoVer implements Serializable {
     public ElvFileElencoVer addElvFileElencoVer(ElvFileElencoVer elvFileElencoVer) {
         getElvFileElencoVers().add(elvFileElencoVer);
         elvFileElencoVer.setElvElencoVer(this);
-
         return elvFileElencoVer;
     }
 
     public ElvFileElencoVer removeElvFileElencoVer(ElvFileElencoVer elvFileElencoVer) {
         getElvFileElencoVers().remove(elvFileElencoVer);
         elvFileElencoVer.setElvElencoVer(null);
-
         return elvFileElencoVer;
     }
 
@@ -662,14 +739,12 @@ public class ElvElencoVer implements Serializable {
     public ElvUrnElencoVers addElvUrnElencoVers(ElvUrnElencoVers elvUrnElencoVers) {
         getElvUrnElencoVerss().add(elvUrnElencoVers);
         elvUrnElencoVers.setElvElencoVers(this);
-
         return elvUrnElencoVers;
     }
 
     public ElvUrnElencoVers removeElvUrnElencoVers(ElvUrnElencoVers elvUrnElencoVers) {
         getElvUrnElencoVerss().remove(elvUrnElencoVers);
         elvUrnElencoVers.setElvElencoVers(null);
-
         return elvUrnElencoVers;
     }
 
@@ -696,9 +771,6 @@ public class ElvElencoVer implements Serializable {
         if (!Objects.equals(this.nmElenco, other.nmElenco)) {
             return false;
         }
-        if (!Objects.equals(this.orgStrut, other.orgStrut)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.orgStrut, other.orgStrut);
     }
 }
