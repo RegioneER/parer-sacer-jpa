@@ -65,16 +65,14 @@ public class VrsErrSesUpdUnitaDocKo implements Serializable {
 
     private TiErrVrsErrUpdUnitaDocKo tiErr;
 
+    private OrgStrut orgStrut;
+
+    private Integer aaKeyUnitaDoc;
+
     public VrsErrSesUpdUnitaDocKo() {/* Hibernate */
     }
 
     @Id
-    // "VRS_ERR_SES_UPD_UNITA_DOC_KO_IDERRSESUPDUNITADOCKO_GENERATOR",
-    // sequenceName =
-    // "SVRS_ERR_SES_UPD_UNITA_DOC_KO",
-    // allocationSize = 1)
-    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
-    // "VRS_ERR_SES_UPD_UNITA_DOC_KO_IDERRSESUPDUNITADOCKO_GENERATOR")
     @Column(name = "ID_ERR_SES_UPD_UNITA_DOC_KO")
     @GenericGenerator(name = "SVRS_ERR_SES_UPD_UNITA_DOC_KO_ID_ERR_SES_UPD_UNITA_DOC_KO_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
             @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SVRS_ERR_SES_UPD_UNITA_DOC_KO"),
@@ -158,4 +156,22 @@ public class VrsErrSesUpdUnitaDocKo implements Serializable {
         this.tiErr = tiErr;
     }
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_STRUT")
+    public OrgStrut getOrgStrut() {
+        return this.orgStrut;
+    }
+
+    public void setOrgStrut(OrgStrut orgStrut) {
+        this.orgStrut = orgStrut;
+    }
+
+    @Column(name = "AA_KEY_UNITA_DOC")
+    public Integer getAaKeyUnitaDoc() {
+        return aaKeyUnitaDoc;
+    }
+
+    public void setAaKeyUnitaDoc(Integer aaKeyUnitaDoc) {
+        this.aaKeyUnitaDoc = aaKeyUnitaDoc;
+    }
 }

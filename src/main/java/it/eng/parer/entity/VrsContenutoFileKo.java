@@ -17,6 +17,13 @@
 
 package it.eng.parer.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.math.BigDecimal;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -39,38 +46,34 @@ import org.hibernate.id.enhanced.SequenceStyleGenerator;
  * The persistent class for the VRS_CONTENUTO_FILE database table.
  */
 @Entity
-@Table(name = "VRS_CONTENUTO_FILE")
-public class VrsContenutoFile implements Serializable {
+@Table(name = "VRS_CONTENUTO_FILE_KO")
+public class VrsContenutoFileKo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Long idContenutoFile;
+    private Long idContenutoFileKo;
 
     private byte[] blContenutoFileSessione;
 
     private BigDecimal idStrut;
 
-    private VrsFileSessione vrsFileSessione;
+    private VrsFileSessioneKo vrsFileSessioneKo;
 
-    public VrsContenutoFile() {/* Hibernate */
+    public VrsContenutoFileKo() {/* Hibernate */
     }
 
     @Id
-    // "VRS_CONTENUTO_FILE_IDCONTENUTOFILE_GENERATOR",
-    // sequenceName = "SVRS_CONTENUTO_FILE",
-    // allocationSize = 1)
-    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VRS_CONTENUTO_FILE_IDCONTENUTOFILE_GENERATOR")
-    @Column(name = "ID_CONTENUTO_FILE")
+    @Column(name = "ID_CONTENUTO_FILE_KO")
     @GenericGenerator(name = "SVRS_CONTENUTO_FILE_ID_CONTENUTO_FILE_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
             @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SVRS_CONTENUTO_FILE"),
             @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SVRS_CONTENUTO_FILE_ID_CONTENUTO_FILE_GENERATOR")
-    public Long getIdContenutoFile() {
-        return this.idContenutoFile;
+    public Long getIdContenutoFileKo() {
+        return this.idContenutoFileKo;
     }
 
-    public void setIdContenutoFile(Long idContenutoFile) {
-        this.idContenutoFile = idContenutoFile;
+    public void setIdContenutoFileKo(Long idContenutoFileKo) {
+        this.idContenutoFileKo = idContenutoFileKo;
     }
 
     @Lob()
@@ -94,12 +97,12 @@ public class VrsContenutoFile implements Serializable {
 
     // bi-directional many-to-one association to VrsFileSessione
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_FILE_SESSIONE")
-    public VrsFileSessione getVrsFileSessione() {
-        return this.vrsFileSessione;
+    @JoinColumn(name = "ID_FILE_SESSIONE_KO")
+    public VrsFileSessioneKo getVrsFileSessioneKo() {
+        return this.vrsFileSessioneKo;
     }
 
-    public void setVrsFileSessione(VrsFileSessione vrsFileSessione) {
-        this.vrsFileSessione = vrsFileSessione;
+    public void setVrsFileSessioneKo(VrsFileSessioneKo vrsFileSessioneKo) {
+        this.vrsFileSessioneKo = vrsFileSessioneKo;
     }
 }

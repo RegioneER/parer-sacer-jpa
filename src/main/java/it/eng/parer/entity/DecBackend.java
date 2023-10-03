@@ -39,7 +39,7 @@ public class DecBackend implements Serializable {
     private String nmTipoBackend;
     private String dlBackendUri;
     private String dsDescrizioneBackend;
-    private List<VrsFileSesObjectStorage> fileSesObjectStorages;
+    private List<VrsFileSesObjectStorageKo> fileSesObjectStorageKos;
     private List<AroCompObjectStorage> aroCompObjectStorages;
     private List<DecConfigObjectStorage> decConfigObjectStorages;
     private List<FirReport> firReports;
@@ -96,12 +96,12 @@ public class DecBackend implements Serializable {
     }
 
     @OneToMany(mappedBy = "decBackend")
-    public List<VrsFileSesObjectStorage> getFileSesObjectStorages() {
-        return fileSesObjectStorages;
+    public List<VrsFileSesObjectStorageKo> getFileSesObjectStorages() {
+        return fileSesObjectStorageKos;
     }
 
-    public void setFileSesObjectStorages(List<VrsFileSesObjectStorage> fileSesObjectStorages) {
-        this.fileSesObjectStorages = fileSesObjectStorages;
+    public void setFileSesObjectStorages(List<VrsFileSesObjectStorageKo> fileSesObjectStorageKos) {
+        this.fileSesObjectStorageKos = fileSesObjectStorageKos;
     }
 
     @OneToMany(mappedBy = "decBackend")

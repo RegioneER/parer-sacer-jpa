@@ -20,37 +20,20 @@ package it.eng.parer.entity;
 import java.util.ArrayList;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
-import org.hibernate.id.enhanced.SequenceStyleGenerator;
+import javax.persistence.*;
 
 /**
- * The persistent class for the VRS_SESSIONE_VERS database table.
+ * The persistent class for the VRS_SESSIONE_VERS_KO database table.
  */
 @Entity
-@Table(name = "VRS_SESSIONE_VERS")
-public class VrsSessioneVers implements Serializable {
+@Table(name = "VRS_SESSIONE_VERS_KO")
+public class VrsSessioneVersKo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Long idSessioneVers;
+    private Long idSessioneVersKo;
 
     private BigDecimal aaKeyUnitaDoc;
 
@@ -100,7 +83,7 @@ public class VrsSessioneVers implements Serializable {
 
     private String cdIndServer;
 
-    private List<VrsDatiSessioneVers> vrsDatiSessioneVers = new ArrayList<>();
+    private List<VrsDatiSessioneVersKo> vrsDatiSessioneVersKos = new ArrayList<>();
 
     private AroDoc aroDoc;
 
@@ -110,21 +93,18 @@ public class VrsSessioneVers implements Serializable {
 
     private IamUser iamUser;
 
-    public VrsSessioneVers() {/* Hibernate */
+    public VrsSessioneVersKo() {/* Hibernate */
     }
 
     @Id
-    @Column(name = "ID_SESSIONE_VERS")
-    @GenericGenerator(name = "SVRS_SESSIONE_VERS_ID_SESSIONE_VERS_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
-            @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SVRS_SESSIONE_VERS"),
-            @Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SVRS_SESSIONE_VERS_ID_SESSIONE_VERS_GENERATOR")
-    public Long getIdSessioneVers() {
-        return this.idSessioneVers;
+    @Column(name = "ID_SESSIONE_VERS_KO")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Long getIdSessioneVersKo() {
+        return this.idSessioneVersKo;
     }
 
-    public void setIdSessioneVers(Long idSessioneVers) {
-        this.idSessioneVers = idSessioneVers;
+    public void setIdSessioneVersKo(Long idSessioneVersKo) {
+        this.idSessioneVersKo = idSessioneVersKo;
     }
 
     @Column(name = "AA_KEY_UNITA_DOC")
@@ -338,14 +318,14 @@ public class VrsSessioneVers implements Serializable {
         this.cdIndServer = cdIndServer;
     }
 
-    // bi-directional many-to-one association to VrsDatiSessioneVers
-    @OneToMany(mappedBy = "vrsSessioneVers")
-    public List<VrsDatiSessioneVers> getVrsDatiSessioneVers() {
-        return this.vrsDatiSessioneVers;
+    // bi-directional many-to-one association to VrsDatiSessioneVersKo
+    @OneToMany(mappedBy = "vrsSessioneVersKo")
+    public List<VrsDatiSessioneVersKo> getVrsDatiSessioneVersKos() {
+        return this.vrsDatiSessioneVersKos;
     }
 
-    public void setVrsDatiSessioneVers(List<VrsDatiSessioneVers> vrsDatiSessioneVers) {
-        this.vrsDatiSessioneVers = vrsDatiSessioneVers;
+    public void setVrsDatiSessioneVersKos(List<VrsDatiSessioneVersKo> vrsDatiSessioneVersKos) {
+        this.vrsDatiSessioneVersKos = vrsDatiSessioneVersKos;
     }
 
     // bi-directional many-to-one association to AroDoc

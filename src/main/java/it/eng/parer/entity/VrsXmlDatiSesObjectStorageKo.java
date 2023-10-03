@@ -17,40 +17,36 @@
 
 package it.eng.parer.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Entity
-@Table(name = "VRS_FILE_SES_OBJECT_STORAGE")
-public class VrsFileSesObjectStorage {
+@Table(name = "VRS_XML_DATI_SES_OBJECT_STORAGE_KO")
+public class VrsXmlDatiSesObjectStorageKo implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-    public VrsFileSesObjectStorage() {
+    public VrsXmlDatiSesObjectStorageKo() {
         super();
     }
 
-    private Long idVrsFileSesObjectStorage;
+    private Long idXmlDatiSesObjectStorageKo;
     private DecBackend decBackend;
-    private VrsFileSessione fileSessione;
+    private VrsDatiSessioneVersKo datiSessioneVersKo;
     private String nmTenant;
     private String nmBucket;
     private String nmKeyFile;
+    private BigDecimal idStrut;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_VRS_FILE_SES_OBJECT_STORAGE")
-    public Long getIdVrsFileSesObjectStorage() {
-        return idVrsFileSesObjectStorage;
+    @Column(name = "ID_XML_DATI_SES_OBJECT_STORAGE_KO")
+    public Long getIdXmlDatiSesObjectStorageKo() {
+        return idXmlDatiSesObjectStorageKo;
     }
 
-    public void setIdVrsFileSesObjectStorage(Long idVrsFileSesObjectStorage) {
-        this.idVrsFileSesObjectStorage = idVrsFileSesObjectStorage;
+    public void setIdXmlDatiSesObjectStorageKo(Long idXmlDatiSesObjectStorageKo) {
+        this.idXmlDatiSesObjectStorageKo = idXmlDatiSesObjectStorageKo;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -64,13 +60,13 @@ public class VrsFileSesObjectStorage {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_FILE_SESSIONE")
-    public VrsFileSessione getFileSessione() {
-        return fileSessione;
+    @JoinColumn(name = "ID_DATI_SESSIONE_VERS_KO")
+    public VrsDatiSessioneVersKo getDatiSessioneVersKo() {
+        return datiSessioneVersKo;
     }
 
-    public void setFileSessione(VrsFileSessione fileSessione) {
-        this.fileSessione = fileSessione;
+    public void setDatiSessioneVersKo(VrsDatiSessioneVersKo datiSessioneVersKo) {
+        this.datiSessioneVersKo = datiSessioneVersKo;
     }
 
     @Column(name = "NM_TENANT")
@@ -98,5 +94,14 @@ public class VrsFileSesObjectStorage {
 
     public void setNmKeyFile(String nmKeyFile) {
         this.nmKeyFile = nmKeyFile;
+    }
+
+    @Column(name = "ID_STRUT")
+    public BigDecimal getIdStrut() {
+        return this.idStrut;
+    }
+
+    public void setIdStrut(BigDecimal idStrut) {
+        this.idStrut = idStrut;
     }
 }
