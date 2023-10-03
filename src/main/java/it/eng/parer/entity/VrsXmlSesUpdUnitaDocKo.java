@@ -64,16 +64,12 @@ public class VrsXmlSesUpdUnitaDocKo implements Serializable {
 
     private TiXmlVrsXmlSesUpdUnitaDocKo tiXml;
 
+    private Integer aaRegXml;
+
     public VrsXmlSesUpdUnitaDocKo() {/* Hibernate */
     }
 
     @Id
-    // "VRS_XML_SES_UPD_UNITA_DOC_KO_IDXMLSESUPDUNITADOCKO_GENERATOR",
-    // sequenceName =
-    // "SVRS_XML_SES_UPD_UNITA_DOC_KO",
-    // allocationSize = 1)
-    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
-    // "VRS_XML_SES_UPD_UNITA_DOC_KO_IDXMLSESUPDUNITADOCKO_GENERATOR")
     @Column(name = "ID_XML_SES_UPD_UNITA_DOC_KO")
     @GenericGenerator(name = "SVRS_XML_SES_UPD_UNITA_DOC_KO_ID_XML_SES_UPD_UNITA_DOC_KO_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
             @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SVRS_XML_SES_UPD_UNITA_DOC_KO"),
@@ -147,4 +143,12 @@ public class VrsXmlSesUpdUnitaDocKo implements Serializable {
         this.tiXml = tiXml;
     }
 
+    @Column(name = "AA_REG_XML")
+    public Integer getAaRegXml() {
+        return aaRegXml;
+    }
+
+    public void setAaRegXml(Integer aaRegXml) {
+        this.aaRegXml = aaRegXml;
+    }
 }

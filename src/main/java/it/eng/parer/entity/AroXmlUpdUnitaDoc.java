@@ -74,15 +74,12 @@ public class AroXmlUpdUnitaDoc implements Serializable {
 
     private TiXmlUpdUnitaDoc tiXmlUpdUnitaDoc;
 
+    private Integer aaIniSes;
+
     public AroXmlUpdUnitaDoc() {/* Hibernate */
     }
 
     @Id
-    // "ARO_XML_UPD_UNITA_DOC_IDXMLUPDUNITADOC_GENERATOR",
-    // sequenceName = "SARO_XML_UPD_UNITA_DOC",
-    // allocationSize = 1)
-    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
-    // "ARO_XML_UPD_UNITA_DOC_IDXMLUPDUNITADOC_GENERATOR")
     @Column(name = "ID_XML_UPD_UNITA_DOC")
     @GenericGenerator(name = "SARO_XML_UPD_UNITA_DOC_ID_XML_UPD_UNITA_DOC_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
             @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SARO_XML_UPD_UNITA_DOC"),
@@ -201,4 +198,12 @@ public class AroXmlUpdUnitaDoc implements Serializable {
         this.tiXmlUpdUnitaDoc = tiXmlUpdUnitaDoc;
     }
 
+    @Column(name = "AA_INI_SES")
+    public Integer getAaIniSes() {
+        return aaIniSes;
+    }
+
+    public void setAaIniSes(Integer aaIniSes) {
+        this.aaIniSes = aaIniSes;
+    }
 }

@@ -72,16 +72,12 @@ public class AroVersIniDatiSpec implements Serializable {
 
     private TiUsoXsdAroVersIniDatiSpec tiUsoXsd;
 
+    private Integer aaDtReg;
+
     public AroVersIniDatiSpec() {/* Hibernate */
     }
 
     @Id
-    // "ARO_VERS_INI_DATI_SPEC_IDVERSINIDATISPEC_GENERATOR",
-    // sequenceName =
-    // "SARO_VERS_INI_DATI_SPEC",
-    // allocationSize = 1)
-    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
-    // "ARO_VERS_INI_DATI_SPEC_IDVERSINIDATISPEC_GENERATOR")
     @Column(name = "ID_VERS_INI_DATI_SPEC")
     @GenericGenerator(name = "SARO_VERS_INI_DATI_SPEC_ID_VERS_INI_DATI_SPEC_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
             @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SARO_VERS_INI_DATI_SPEC"),
@@ -187,4 +183,12 @@ public class AroVersIniDatiSpec implements Serializable {
         this.tiUsoXsd = tiUsoXsd;
     }
 
+    @Column(name = "AA_DT_REG")
+    public Integer getAaDtReg() {
+        return aaDtReg;
+    }
+
+    public void setAaDtReg(Integer aaDtReg) {
+        this.aaDtReg = aaDtReg;
+    }
 }

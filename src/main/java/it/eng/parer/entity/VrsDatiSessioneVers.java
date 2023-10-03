@@ -62,22 +62,12 @@ public class VrsDatiSessioneVers implements Serializable {
 
     private List<VrsErrSessioneVers> vrsErrSessioneVers = new ArrayList<>();
 
-    private List<VrsFileSessione> vrsFileSessiones = new ArrayList<>();
-
     private List<VrsXmlDatiSessioneVers> vrsXmlDatiSessioneVers = new ArrayList<>();
-
-    private List<VrsXmlDatiSesObjectStorage> xmlDatiSesObjectStorages = new ArrayList<>();
 
     public VrsDatiSessioneVers() {/* Hibernate */
     }
 
     @Id
-    // "VRS_DATI_SESSIONE_VERS_IDDATISESSIONEVERS_GENERATOR",
-    // sequenceName =
-    // "SVRS_DATI_SESSIONE_VERS",
-    // allocationSize = 1)
-    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
-    // "VRS_DATI_SESSIONE_VERS_IDDATISESSIONEVERS_GENERATOR")
     @Column(name = "ID_DATI_SESSIONE_VERS")
     @GenericGenerator(name = "SVRS_DATI_SESSIONE_VERS_ID_DATI_SESSIONE_VERS_GENERATOR", strategy = "it.eng.sequences.hibernate.NonMonotonicSequenceGenerator", parameters = {
             @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = "SVRS_DATI_SESSIONE_VERS"),
@@ -157,16 +147,6 @@ public class VrsDatiSessioneVers implements Serializable {
         this.vrsErrSessioneVers = vrsErrSessioneVers;
     }
 
-    // bi-directional many-to-one association to VrsFileSessione
-    @OneToMany(mappedBy = "vrsDatiSessioneVers")
-    public List<VrsFileSessione> getVrsFileSessiones() {
-        return this.vrsFileSessiones;
-    }
-
-    public void setVrsFileSessiones(List<VrsFileSessione> vrsFileSessiones) {
-        this.vrsFileSessiones = vrsFileSessiones;
-    }
-
     // bi-directional many-to-one association to VrsXmlDatiSessioneVers
     @OneToMany(mappedBy = "vrsDatiSessioneVers")
     public List<VrsXmlDatiSessioneVers> getVrsXmlDatiSessioneVers() {
@@ -176,14 +156,4 @@ public class VrsDatiSessioneVers implements Serializable {
     public void setVrsXmlDatiSessioneVers(List<VrsXmlDatiSessioneVers> vrsXmlDatiSessioneVers) {
         this.vrsXmlDatiSessioneVers = vrsXmlDatiSessioneVers;
     }
-
-    @OneToMany(mappedBy = "datiSessioneVers")
-    public List<VrsXmlDatiSesObjectStorage> getXmlDatiSesObjectStorages() {
-        return xmlDatiSesObjectStorages;
-    }
-
-    public void setXmlDatiSesObjectStorages(List<VrsXmlDatiSesObjectStorage> xmlDatiSesObjectStorages) {
-        this.xmlDatiSesObjectStorages = xmlDatiSesObjectStorages;
-    }
-
 }
