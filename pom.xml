@@ -16,6 +16,13 @@
         <tag>HEAD</tag>
     </scm>
 
+    <distributionManagement>
+        <repository>
+          <id>github</id>
+          <url>https://maven.pkg.github.com/RegioneER/parer-sacer-jpa</url>
+        </repository>      
+      </distributionManagement>
+
     <repositories>
         <repository>
             <id>github</id>
