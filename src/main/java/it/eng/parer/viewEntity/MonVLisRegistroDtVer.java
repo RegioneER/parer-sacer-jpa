@@ -18,44 +18,27 @@
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
+import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 /**
- * The persistent class for the DEC_V_LIS_SIS_VERS_BY_TIPO_UD database table.
- *
+ * The persistent class for the MON_V_LIS_REGISTRO_DT_VERS database table.
+ * 
  */
 @Entity
-@Table(name = "DEC_V_LIS_SIS_VERS_BY_TIPO_UD")
-@NamedQuery(name = "DecVLisSisVersByTipoUd.findAll", query = "SELECT d FROM DecVLisSisVersByTipoUd d")
-public class DecVLisSisVersByTipoUd implements Serializable {
-
+@Table(name = "MON_V_LIS_REGISTRO_DT_VERS")
+@NamedQuery(name = "MonVLisRegistroDtVer.findAll", query = "SELECT m FROM MonVLisRegistroDtVer m")
+public class MonVLisRegistroDtVer implements Serializable {
     private static final long serialVersionUID = 1L;
     private Date dtErog;
     private Date dtLastErog;
-    private String nmSistemaVersante;
-    private DecVLisSisVersByTipoUdId decVLisSisVersByTipoUdId;
+    private BigDecimal idRegistroUnitaDoc;
 
-    public DecVLisSisVersByTipoUd() {/* Hibernate */
+    public MonVLisRegistroDtVer() {
     }
 
-    @EmbeddedId
-    public DecVLisSisVersByTipoUdId getDecVLisSisVersByTipoUdId() {
-        return decVLisSisVersByTipoUdId;
-    }
-
-    public void setDecVLisSisVersByTipoUdId(DecVLisSisVersByTipoUdId decVLisSisVersByTipoUdId) {
-        this.decVLisSisVersByTipoUdId = decVLisSisVersByTipoUdId;
-    }
-
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "DT_EROG")
     public Date getDtErog() {
         return this.dtErog;
@@ -65,7 +48,7 @@ public class DecVLisSisVersByTipoUd implements Serializable {
         this.dtErog = dtErog;
     }
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "DT_LAST_EROG")
     public Date getDtLastErog() {
         return this.dtLastErog;
@@ -75,13 +58,14 @@ public class DecVLisSisVersByTipoUd implements Serializable {
         this.dtLastErog = dtLastErog;
     }
 
-    @Column(name = "NM_SISTEMA_VERSANTE")
-    public String getNmSistemaVersante() {
-        return this.nmSistemaVersante;
+    @Id
+    @Column(name = "ID_REGISTRO_UNITA_DOC")
+    public BigDecimal getIdRegistroUnitaDoc() {
+        return this.idRegistroUnitaDoc;
     }
 
-    public void setNmSistemaVersante(String nmSistemaVersante) {
-        this.nmSistemaVersante = nmSistemaVersante;
+    public void setIdRegistroUnitaDoc(BigDecimal idRegistroUnitaDoc) {
+        this.idRegistroUnitaDoc = idRegistroUnitaDoc;
     }
 
 }

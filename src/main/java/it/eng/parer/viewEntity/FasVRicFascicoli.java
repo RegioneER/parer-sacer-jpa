@@ -48,6 +48,7 @@ public class FasVRicFascicoli implements Serializable {
     private String cdKeyFascicoloPadre;
     private String cdLivelloRiserv;
     private String cdProcAmmin;
+    private String cdVersioneXmlSip;
     private String dsOggettoFascicolo;
     private String dsOggettoFascicoloPadre;
     private String dsProcAmmin;
@@ -206,6 +207,15 @@ public class FasVRicFascicoli implements Serializable {
 
     public void setCdProcAmmin(String cdProcAmmin) {
         this.cdProcAmmin = cdProcAmmin;
+    }
+
+    @Column(name = "CD_VERSIONE_XML_SIP")
+    public String getCdVersioneXmlSip() {
+        return this.cdVersioneXmlSip;
+    }
+
+    public void setCdVersioneXmlSip(String cdVersioneXmlSip) {
+        this.cdVersioneXmlSip = cdVersioneXmlSip;
     }
 
     @Column(name = "DS_OGGETTO_FASCICOLO")

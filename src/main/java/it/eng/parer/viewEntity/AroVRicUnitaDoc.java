@@ -43,6 +43,7 @@ public class AroVRicUnitaDoc implements Serializable {
     private String cdKeyDocVers;
     private String cdKeyUnitaDoc;
     private String cdRegistroKeyUnitaDoc;
+    private String cdVersioneWs;
     private String cdVersioneXsdDoc;
     private String cdVersioneXsdUd;
     private String dlDoc;
@@ -53,6 +54,7 @@ public class AroVRicUnitaDoc implements Serializable {
     private String dsMsgEsitoVerifFirme;
     private Date dtCreazione;
     private Date dtRegUnitaDoc;
+    private String flAggMeta;
     private String flDocAggiunti;
     private String flDocAnnul;
     private String flEsisteProfiloNormativo;
@@ -176,6 +178,15 @@ public class AroVRicUnitaDoc implements Serializable {
         this.cdRegistroKeyUnitaDoc = cdRegistroKeyUnitaDoc;
     }
 
+    @Column(name = "CD_VERSIONE_WS")
+    public String getCdVersioneWs() {
+        return this.cdVersioneWs;
+    }
+
+    public void setCdVersioneWs(String cdVersioneWs) {
+        this.cdVersioneWs = cdVersioneWs;
+    }
+
     @Column(name = "CD_VERSIONE_XSD_DOC")
     public String getCdVersioneXsdDoc() {
         return cdVersioneXsdDoc;
@@ -266,6 +277,15 @@ public class AroVRicUnitaDoc implements Serializable {
 
     public void setDtRegUnitaDoc(Date dtRegUnitaDoc) {
         this.dtRegUnitaDoc = dtRegUnitaDoc;
+    }
+
+    @Column(name = "FL_AGG_META", columnDefinition = "char(1)")
+    public String getFlAggMeta() {
+        return this.flAggMeta;
+    }
+
+    public void setFlAggMeta(String flAggMeta) {
+        this.flAggMeta = flAggMeta;
     }
 
     @Column(name = "FL_DOC_AGGIUNTI", columnDefinition = "char(1)")
