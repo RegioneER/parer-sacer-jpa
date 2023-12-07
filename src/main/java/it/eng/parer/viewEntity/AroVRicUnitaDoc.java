@@ -1,20 +1,3 @@
-/*
- * Engineering Ingegneria Informatica S.p.A.
- *
- * Copyright (C) 2023 Regione Emilia-Romagna
- * <p/>
- * This program is free software: you can redistribute it and/or modify it under the terms of
- * the GNU Affero General Public License as published by the Free Software Foundation,
- * either version 3 of the License, or (at your option) any later version.
- * <p/>
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Affero General Public License for more details.
- * <p/>
- * You should have received a copy of the GNU Affero General Public License along with this program.
- * If not, see <https://www.gnu.org/licenses/>.
- */
-
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
@@ -43,6 +26,7 @@ public class AroVRicUnitaDoc implements Serializable {
     private String cdKeyDocVers;
     private String cdKeyUnitaDoc;
     private String cdRegistroKeyUnitaDoc;
+    private String cdVersioneWs;
     private String cdVersioneXsdDoc;
     private String cdVersioneXsdUd;
     private String dlDoc;
@@ -53,6 +37,7 @@ public class AroVRicUnitaDoc implements Serializable {
     private String dsMsgEsitoVerifFirme;
     private Date dtCreazione;
     private Date dtRegUnitaDoc;
+    private String flAggMeta;
     private String flDocAggiunti;
     private String flDocAnnul;
     private String flEsisteProfiloNormativo;
@@ -176,6 +161,15 @@ public class AroVRicUnitaDoc implements Serializable {
         this.cdRegistroKeyUnitaDoc = cdRegistroKeyUnitaDoc;
     }
 
+    @Column(name = "CD_VERSIONE_WS")
+    public String getCdVersioneWs() {
+        return this.cdVersioneWs;
+    }
+
+    public void setCdVersioneWs(String cdVersioneWs) {
+        this.cdVersioneWs = cdVersioneWs;
+    }
+
     @Column(name = "CD_VERSIONE_XSD_DOC")
     public String getCdVersioneXsdDoc() {
         return cdVersioneXsdDoc;
@@ -266,6 +260,15 @@ public class AroVRicUnitaDoc implements Serializable {
 
     public void setDtRegUnitaDoc(Date dtRegUnitaDoc) {
         this.dtRegUnitaDoc = dtRegUnitaDoc;
+    }
+
+    @Column(name = "FL_AGG_META", columnDefinition = "char(1)")
+    public String getFlAggMeta() {
+        return this.flAggMeta;
+    }
+
+    public void setFlAggMeta(String flAggMeta) {
+        this.flAggMeta = flAggMeta;
     }
 
     @Column(name = "FL_DOC_AGGIUNTI", columnDefinition = "char(1)")
