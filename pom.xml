@@ -7,7 +7,7 @@
     </parent>
 
     <artifactId>sacer-jpa-el</artifactId>
-    <version>2.15.1-SNAPSHOT</version>
+    <version>2.16.1-SNAPSHOT</version>
     <name>sacer-jpa</name>
     <description>Progetto SACER-JPA. Strato jpa comune ai progetti sacer e sacerws.</description>
     

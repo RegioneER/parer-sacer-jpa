@@ -22,6 +22,7 @@ public class DecVLisSisVersByTipoUd implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private Date dtErog;
+    private Date dtLastErog;
     private String nmSistemaVersante;
     private DecVLisSisVersByTipoUdId decVLisSisVersByTipoUdId;
 
@@ -45,6 +46,16 @@ public class DecVLisSisVersByTipoUd implements Serializable {
 
     public void setDtErog(Date dtErog) {
         this.dtErog = dtErog;
+    }
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "DT_LAST_EROG")
+    public Date getDtLastErog() {
+        return this.dtLastErog;
+    }
+
+    public void setDtLastErog(Date dtLastErog) {
+        this.dtLastErog = dtLastErog;
     }
 
     @Column(name = "NM_SISTEMA_VERSANTE")
