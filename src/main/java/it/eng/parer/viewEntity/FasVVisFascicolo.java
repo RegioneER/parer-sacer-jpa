@@ -1,40 +1,56 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 /**
  * The persistent class for the FAS_V_VIS_FASCICOLO database table.
- *
+ * 
  */
 @Entity
 @Table(name = "FAS_V_VIS_FASCICOLO")
+@NamedQuery(name = "FasVVisFascicolo.findAll", query = "SELECT f FROM FasVVisFascicolo f")
 @NamedQuery(name = "FasVVisFascicolo.find", query = "SELECT f FROM FasVVisFascicolo f WHERE f.idFascicolo = :idFascicolo")
 public class FasVVisFascicolo implements Serializable {
-
     private static final long serialVersionUID = 1L;
     private BigDecimal aaFascicolo;
     private BigDecimal aaFascicoloPadre;
     private BigDecimal aaKeyUnitaDocFirst;
     private BigDecimal aaKeyUnitaDocLast;
+    private String blXmlNormativo;
     private String blXmlSegnatura;
+    private String blXmlSpecifico;
     private String blXmlVersProfilo;
     private String blXmlVersRapp;
     private String blXmlVersSip;
+    private String blXsdNormativo;
+    private String blXsdSegnatura;
+    private String blXsdSpecifico;
+    private String blXsdVersProfilo;
     private String cdCompositoVoceTitol;
     private String cdEncodingHashXmlRapp;
     private String cdEncodingHashXmlSip;
     private String cdEnteConvenz;
+    private String cdIndiceClassif;
     private String cdIndIpClient;
     private String cdIndServer;
     private String cdIpaAmminTitol;
@@ -48,31 +64,42 @@ public class FasVVisFascicolo implements Serializable {
     private String cdRegKeyUnitaDocLast;
     private String cdVersioneXmlRapp;
     private String cdVersioneXmlSip;
+    private String cdXsdNormativo;
     private String cdXsdProfilo;
     private String cdXsdSegnatura;
+    private String cdXsdSpecifico;
     private String dsAlgoHashXmlRapp;
     private String dsAlgoHashXmlSip;
     private String dsAmminTitol;
     private String dsHashXmlRapp;
     private String dsHashXmlSip;
+    private String dsIndiceClassif;
     private String dsNota;
     private String dsOggettoFascicolo;
     private String dsOggettoFascicoloPadre;
     private String dsProcAmmin;
     private String dsUrnXmlRapp;
     private String dsUrnXmlSip;
+    private String dsXsdNormativo;
     private String dsXsdProfilo;
     private String dsXsdSegnatura;
+    private String dsXsdSpecifico;
     private Date dtApeFascicolo;
     private Date dtChiuFascicolo;
+    private String flDefaultNormativo;
     private String flDefaultProfilo;
     private String flDefaultSegnatura;
+    private String flDefaultSpecifico;
     private String flForzaContrClassif;
     private String flForzaContrColleg;
     private String flForzaContrNumero;
     private String flUpdAnnulUnitaDoc;
     private String flUpdModifUnitaDoc;
     private BigDecimal idFascicolo;
+    private BigDecimal idModelloXsdProfilo;
+    private BigDecimal idModelloXsdSegnatura;
+    private BigDecimal idModelloXsdNormativo;
+    private BigDecimal idModelloXsdSpecifico;
     private BigDecimal idSistemaVersante;
     private BigDecimal idTipoFascicolo;
     private BigDecimal idUserIamVers;
@@ -87,10 +114,14 @@ public class FasVVisFascicolo implements Serializable {
     private String nmStrut;
     private String nmTipoFascicolo;
     private String nmUserid;
+    private String tiCodiceAmminTitol;
     private String tiConservazione;
+    private String tiModelloXsdProfilo;
+    private String tiModelloXsdSegnatura;
+    private String tiModelloXsdNormativo;
+    private String tiModelloXsdSpecifico;
     private String tiStatoConservazione;
     private String tiStatoFascElencoVers;
-    private String tiCodiceAmminTitol;
     private Date tsIniSes;
 
     public FasVVisFascicolo() {/* Hibernate */
@@ -133,6 +164,16 @@ public class FasVVisFascicolo implements Serializable {
     }
 
     @Lob
+    @Column(name = "BL_XML_NORMATIVO")
+    public String getBlXmlNormativo() {
+        return this.blXmlNormativo;
+    }
+
+    public void setBlXmlNormativo(String blXmlNormativo) {
+        this.blXmlNormativo = blXmlNormativo;
+    }
+
+    @Lob
     @Column(name = "BL_XML_SEGNATURA")
     public String getBlXmlSegnatura() {
         return this.blXmlSegnatura;
@@ -140,6 +181,16 @@ public class FasVVisFascicolo implements Serializable {
 
     public void setBlXmlSegnatura(String blXmlSegnatura) {
         this.blXmlSegnatura = blXmlSegnatura;
+    }
+
+    @Lob
+    @Column(name = "BL_XML_SPECIFICO")
+    public String getBlXmlSpecifico() {
+        return this.blXmlSpecifico;
+    }
+
+    public void setBlXmlSpecifico(String blXmlSpecifico) {
+        this.blXmlSpecifico = blXmlSpecifico;
     }
 
     @Lob
@@ -172,13 +223,44 @@ public class FasVVisFascicolo implements Serializable {
         this.blXmlVersSip = blXmlVersSip;
     }
 
-    @Column(name = "CD_IPA_AMMIN_TITOL")
-    public String getCdIpaAmminTitol() {
-        return this.cdIpaAmminTitol;
+    @Lob
+    @Column(name = "BL_XSD_NORMATIVO")
+    public String getBlXsdNormativo() {
+        return this.blXsdNormativo;
     }
 
-    public void setCdIpaAmminTitol(String cdIpaAmminTitol) {
-        this.cdIpaAmminTitol = cdIpaAmminTitol;
+    public void setBlXsdNormativo(String blXsdNormativo) {
+        this.blXsdNormativo = blXsdNormativo;
+    }
+
+    @Lob
+    @Column(name = "BL_XSD_SEGNATURA")
+    public String getBlXsdSegnatura() {
+        return this.blXsdSegnatura;
+    }
+
+    public void setBlXsdSegnatura(String blXsdSegnatura) {
+        this.blXsdSegnatura = blXsdSegnatura;
+    }
+
+    @Lob
+    @Column(name = "BL_XSD_SPECIFICO")
+    public String getBlXsdSpecifico() {
+        return this.blXsdSpecifico;
+    }
+
+    public void setBlXsdSpecifico(String blXsdSpecifico) {
+        this.blXsdSpecifico = blXsdSpecifico;
+    }
+
+    @Lob
+    @Column(name = "BL_XSD_VERS_PROFILO")
+    public String getBlXsdVersProfilo() {
+        return this.blXsdVersProfilo;
+    }
+
+    public void setBlXsdVersProfilo(String blXsdVersProfilo) {
+        this.blXsdVersProfilo = blXsdVersProfilo;
     }
 
     @Column(name = "CD_COMPOSITO_VOCE_TITOL")
@@ -217,6 +299,15 @@ public class FasVVisFascicolo implements Serializable {
         this.cdEnteConvenz = cdEnteConvenz;
     }
 
+    @Column(name = "CD_INDICE_CLASSIF")
+    public String getCdIndiceClassif() {
+        return this.cdIndiceClassif;
+    }
+
+    public void setCdIndiceClassif(String cdIndiceClassif) {
+        this.cdIndiceClassif = cdIndiceClassif;
+    }
+
     @Column(name = "CD_IND_IP_CLIENT")
     public String getCdIndIpClient() {
         return this.cdIndIpClient;
@@ -233,6 +324,15 @@ public class FasVVisFascicolo implements Serializable {
 
     public void setCdIndServer(String cdIndServer) {
         this.cdIndServer = cdIndServer;
+    }
+
+    @Column(name = "CD_IPA_AMMIN_TITOL")
+    public String getCdIpaAmminTitol() {
+        return this.cdIpaAmminTitol;
+    }
+
+    public void setCdIpaAmminTitol(String cdIpaAmminTitol) {
+        this.cdIpaAmminTitol = cdIpaAmminTitol;
     }
 
     @Column(name = "CD_KEY_FASCICOLO")
@@ -325,6 +425,15 @@ public class FasVVisFascicolo implements Serializable {
         this.cdVersioneXmlSip = cdVersioneXmlSip;
     }
 
+    @Column(name = "CD_XSD_NORMATIVO")
+    public String getCdXsdNormativo() {
+        return this.cdXsdNormativo;
+    }
+
+    public void setCdXsdNormativo(String cdXsdNormativo) {
+        this.cdXsdNormativo = cdXsdNormativo;
+    }
+
     @Column(name = "CD_XSD_PROFILO")
     public String getCdXsdProfilo() {
         return this.cdXsdProfilo;
@@ -341,6 +450,15 @@ public class FasVVisFascicolo implements Serializable {
 
     public void setCdXsdSegnatura(String cdXsdSegnatura) {
         this.cdXsdSegnatura = cdXsdSegnatura;
+    }
+
+    @Column(name = "CD_XSD_SPECIFICO")
+    public String getCdXsdSpecifico() {
+        return this.cdXsdSpecifico;
+    }
+
+    public void setCdXsdSpecifico(String cdXsdSpecifico) {
+        this.cdXsdSpecifico = cdXsdSpecifico;
     }
 
     @Column(name = "DS_ALGO_HASH_XML_RAPP")
@@ -361,15 +479,6 @@ public class FasVVisFascicolo implements Serializable {
         this.dsAlgoHashXmlSip = dsAlgoHashXmlSip;
     }
 
-    @Column(name = "DS_HASH_XML_RAPP")
-    public String getDsHashXmlRapp() {
-        return this.dsHashXmlRapp;
-    }
-
-    public void setDsHashXmlRapp(String dsHashXmlRapp) {
-        this.dsHashXmlRapp = dsHashXmlRapp;
-    }
-
     @Column(name = "DS_AMMIN_TITOL")
     public String getDsAmminTitol() {
         return this.dsAmminTitol;
@@ -379,6 +488,15 @@ public class FasVVisFascicolo implements Serializable {
         this.dsAmminTitol = dsAmminTitol;
     }
 
+    @Column(name = "DS_HASH_XML_RAPP")
+    public String getDsHashXmlRapp() {
+        return this.dsHashXmlRapp;
+    }
+
+    public void setDsHashXmlRapp(String dsHashXmlRapp) {
+        this.dsHashXmlRapp = dsHashXmlRapp;
+    }
+
     @Column(name = "DS_HASH_XML_SIP")
     public String getDsHashXmlSip() {
         return this.dsHashXmlSip;
@@ -386,6 +504,15 @@ public class FasVVisFascicolo implements Serializable {
 
     public void setDsHashXmlSip(String dsHashXmlSip) {
         this.dsHashXmlSip = dsHashXmlSip;
+    }
+
+    @Column(name = "DS_INDICE_CLASSIF")
+    public String getDsIndiceClassif() {
+        return this.dsIndiceClassif;
+    }
+
+    public void setDsIndiceClassif(String dsIndiceClassif) {
+        this.dsIndiceClassif = dsIndiceClassif;
     }
 
     @Column(name = "DS_NOTA")
@@ -442,6 +569,15 @@ public class FasVVisFascicolo implements Serializable {
         this.dsUrnXmlSip = dsUrnXmlSip;
     }
 
+    @Column(name = "DS_XSD_NORMATIVO")
+    public String getDsXsdNormativo() {
+        return this.dsXsdNormativo;
+    }
+
+    public void setDsXsdNormativo(String dsXsdNormativo) {
+        this.dsXsdNormativo = dsXsdNormativo;
+    }
+
     @Column(name = "DS_XSD_PROFILO")
     public String getDsXsdProfilo() {
         return this.dsXsdProfilo;
@@ -460,7 +596,16 @@ public class FasVVisFascicolo implements Serializable {
         this.dsXsdSegnatura = dsXsdSegnatura;
     }
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "DS_XSD_SPECIFICO")
+    public String getDsXsdSpecifico() {
+        return this.dsXsdSpecifico;
+    }
+
+    public void setDsXsdSpecifico(String dsXsdSpecifico) {
+        this.dsXsdSpecifico = dsXsdSpecifico;
+    }
+
+    @Temporal(TemporalType.DATE)
     @Column(name = "DT_APE_FASCICOLO")
     public Date getDtApeFascicolo() {
         return this.dtApeFascicolo;
@@ -470,7 +615,7 @@ public class FasVVisFascicolo implements Serializable {
         this.dtApeFascicolo = dtApeFascicolo;
     }
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "DT_CHIU_FASCICOLO")
     public Date getDtChiuFascicolo() {
         return this.dtChiuFascicolo;
@@ -478,6 +623,15 @@ public class FasVVisFascicolo implements Serializable {
 
     public void setDtChiuFascicolo(Date dtChiuFascicolo) {
         this.dtChiuFascicolo = dtChiuFascicolo;
+    }
+
+    @Column(name = "FL_DEFAULT_NORMATIVO", columnDefinition = "char(1)")
+    public String getFlDefaultNormativo() {
+        return this.flDefaultNormativo;
+    }
+
+    public void setFlDefaultNormativo(String flDefaultNormativo) {
+        this.flDefaultNormativo = flDefaultNormativo;
     }
 
     @Column(name = "FL_DEFAULT_PROFILO", columnDefinition = "char(1)")
@@ -496,6 +650,15 @@ public class FasVVisFascicolo implements Serializable {
 
     public void setFlDefaultSegnatura(String flDefaultSegnatura) {
         this.flDefaultSegnatura = flDefaultSegnatura;
+    }
+
+    @Column(name = "FL_DEFAULT_SPECIFICO", columnDefinition = "char(1)")
+    public String getFlDefaultSpecifico() {
+        return this.flDefaultSpecifico;
+    }
+
+    public void setFlDefaultSpecifico(String flDefaultSpecifico) {
+        this.flDefaultSpecifico = flDefaultSpecifico;
     }
 
     @Column(name = "FL_FORZA_CONTR_CLASSIF", columnDefinition = "char(1)")
@@ -551,6 +714,42 @@ public class FasVVisFascicolo implements Serializable {
 
     public void setIdFascicolo(BigDecimal idFascicolo) {
         this.idFascicolo = idFascicolo;
+    }
+
+    @Column(name = "ID_MODELLO_XSD_PROFILO")
+    public BigDecimal getIdModelloXsdProfilo() {
+        return this.idModelloXsdProfilo;
+    }
+
+    public void setIdModelloXsdProfilo(BigDecimal idModelloXsdProfilo) {
+        this.idModelloXsdProfilo = idModelloXsdProfilo;
+    }
+
+    @Column(name = "ID_MODELLO_XSD_SEGNATURA")
+    public BigDecimal getIdModelloXsdSegnatura() {
+        return this.idModelloXsdSegnatura;
+    }
+
+    public void setIdModelloXsdSegnatura(BigDecimal idModelloXsdSegnatura) {
+        this.idModelloXsdSegnatura = idModelloXsdSegnatura;
+    }
+
+    @Column(name = "ID_MODELLO_XSD_NORMATIVO")
+    public BigDecimal getIdModelloXsdNormativo() {
+        return this.idModelloXsdNormativo;
+    }
+
+    public void setIdModelloXsdNormativo(BigDecimal idModelloXsdNormativo) {
+        this.idModelloXsdNormativo = idModelloXsdNormativo;
+    }
+
+    @Column(name = "ID_MODELLO_XSD_SPECIFICO")
+    public BigDecimal getIdModelloXsdSpecifico() {
+        return this.idModelloXsdSpecifico;
+    }
+
+    public void setIdModelloXsdSpecifico(BigDecimal idModelloXsdSpecifico) {
+        this.idModelloXsdSpecifico = idModelloXsdSpecifico;
     }
 
     @Column(name = "ID_SISTEMA_VERSANTE")
@@ -679,6 +878,15 @@ public class FasVVisFascicolo implements Serializable {
         this.nmUserid = nmUserid;
     }
 
+    @Column(name = "TI_CODICE_AMMIN_TITOL")
+    public String getTiCodiceAmminTitol() {
+        return this.tiCodiceAmminTitol;
+    }
+
+    public void setTiCodiceAmminTitol(String tiCodiceAmminTitol) {
+        this.tiCodiceAmminTitol = tiCodiceAmminTitol;
+    }
+
     @Column(name = "TI_CONSERVAZIONE")
     public String getTiConservazione() {
         return this.tiConservazione;
@@ -686,6 +894,42 @@ public class FasVVisFascicolo implements Serializable {
 
     public void setTiConservazione(String tiConservazione) {
         this.tiConservazione = tiConservazione;
+    }
+
+    @Column(name = "TI_MODELLO_XSD_PROFILO")
+    public String getTiModelloXsdProfilo() {
+        return this.tiModelloXsdProfilo;
+    }
+
+    public void setTiModelloXsdProfilo(String tiModelloXsdProfilo) {
+        this.tiModelloXsdProfilo = tiModelloXsdProfilo;
+    }
+
+    @Column(name = "TI_MODELLO_XSD_SEGNATURA")
+    public String getTiModelloXsdSegnatura() {
+        return this.tiModelloXsdSegnatura;
+    }
+
+    public void setTiModelloXsdSegnatura(String tiModelloXsdSegnatura) {
+        this.tiModelloXsdSegnatura = tiModelloXsdSegnatura;
+    }
+
+    @Column(name = "TI_MODELLO_XSD_NORMATIVO")
+    public String getTiModelloXsdNormativo() {
+        return this.tiModelloXsdNormativo;
+    }
+
+    public void setTiModelloXsdNormativo(String tiModelloXsdNormativo) {
+        this.tiModelloXsdNormativo = tiModelloXsdNormativo;
+    }
+
+    @Column(name = "TI_MODELLO_XSD_SPECIFICO")
+    public String getTiModelloXsdSpecifico() {
+        return this.tiModelloXsdSpecifico;
+    }
+
+    public void setTiModelloXsdSpecifico(String tiModelloXsdSpecifico) {
+        this.tiModelloXsdSpecifico = tiModelloXsdSpecifico;
     }
 
     @Column(name = "TI_STATO_CONSERVAZIONE")
@@ -706,15 +950,6 @@ public class FasVVisFascicolo implements Serializable {
         this.tiStatoFascElencoVers = tiStatoFascElencoVers;
     }
 
-    @Column(name = "TI_CODICE_AMMIN_TITOL")
-    public String getTiCodiceAmminTitol() {
-        return this.tiCodiceAmminTitol;
-    }
-
-    public void setTiCodiceAmminTitol(String tiCodiceAmminTitol) {
-        this.tiCodiceAmminTitol = tiCodiceAmminTitol;
-    }
-
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "TS_INI_SES")
     public Date getTsIniSes() {
@@ -724,4 +959,5 @@ public class FasVVisFascicolo implements Serializable {
     public void setTsIniSes(Date tsIniSes) {
         this.tsIniSes = tsIniSes;
     }
+
 }

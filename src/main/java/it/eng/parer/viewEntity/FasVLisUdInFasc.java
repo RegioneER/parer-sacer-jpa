@@ -1,3 +1,20 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.viewEntity;
 
 import java.io.Serializable;
@@ -30,11 +47,15 @@ public class FasVLisUdInFasc implements Serializable {
 
     private Date dtCreazione;
 
+    private Date dtRegUnitaDoc;
+
     private BigDecimal idUserIamCorrente;
 
     private String nmTipoDoc;
 
     private String nmTipoUnitaDoc;
+
+    private BigDecimal niPosizione;
 
     private String tiStatoConservazione;
 
@@ -78,6 +99,16 @@ public class FasVLisUdInFasc implements Serializable {
         this.dtCreazione = dtCreazione;
     }
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "DT_REG_UNITA_DOC")
+    public Date getDtRegUnitaDoc() {
+        return this.dtRegUnitaDoc;
+    }
+
+    public void setDtRegUnitaDoc(Date dtRegUnitaDoc) {
+        this.dtRegUnitaDoc = dtRegUnitaDoc;
+    }
+
     @Column(name = "ID_USER_IAM_CORRENTE")
     public BigDecimal getIdUserIamCorrente() {
         return this.idUserIamCorrente;
@@ -103,6 +134,15 @@ public class FasVLisUdInFasc implements Serializable {
 
     public void setNmTipoUnitaDoc(String nmTipoUnitaDoc) {
         this.nmTipoUnitaDoc = nmTipoUnitaDoc;
+    }
+
+    @Column(name = "NI_POSIZIONE")
+    public BigDecimal getNiPosizione() {
+        return this.niPosizione;
+    }
+
+    public void setNiPosizione(BigDecimal niPosizione) {
+        this.niPosizione = niPosizione;
     }
 
     @Column(name = "TI_STATO_CONSERVAZIONE")

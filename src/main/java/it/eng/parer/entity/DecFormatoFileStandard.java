@@ -1,7 +1,25 @@
+/*
+ * Engineering Ingegneria Informatica S.p.A.
+ *
+ * Copyright (C) 2023 Regione Emilia-Romagna
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.eng.parer.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Cacheable;
@@ -60,6 +78,10 @@ public class DecFormatoFileStandard implements Serializable {
     private List<DecTipoRapprComp> decTipoRapprComps = new ArrayList<>();
 
     private List<DecFormatoValutazione> decFormatoValutaziones = new ArrayList<>();
+
+    private String ntIdoneita;
+
+    private Date dtValutazioneFormato;
 
     public DecFormatoFileStandard() {/* Hibernate */
     }
@@ -219,5 +241,23 @@ public class DecFormatoFileStandard implements Serializable {
 
     public void setDecFormatoValutaziones(List<DecFormatoValutazione> decFormatoValutaziones) {
         this.decFormatoValutaziones = decFormatoValutaziones;
+    }
+
+    @Column(name = "NT_IDONEITA")
+    public String getNtIdoneita() {
+        return ntIdoneita;
+    }
+
+    public void setNtIdoneita(String ntIdoneita) {
+        this.ntIdoneita = ntIdoneita;
+    }
+
+    @Column(name = "DT_VALUTAZIONE_FORMATO")
+    public Date getDtValutazioneFormato() {
+        return dtValutazioneFormato;
+    }
+
+    public void setDtValutazioneFormato(Date dtValutazioneFormato) {
+        this.dtValutazioneFormato = dtValutazioneFormato;
     }
 }
